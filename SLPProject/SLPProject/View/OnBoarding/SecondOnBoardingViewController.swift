@@ -34,7 +34,6 @@ final class SecondOnBoardingViewController: UIViewController {
             make.trailing.equalTo(-85)
             make.height.equalTo(76)
         }
-        
         imageView.snp.makeConstraints { make in
             make.top.equalTo(textLabel.snp.bottom).inset(-56)
             make.centerX.bottom.equalToSuperview()

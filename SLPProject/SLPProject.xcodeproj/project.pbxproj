@@ -23,6 +23,11 @@
 		77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98C29193CA7008FDA83 /* SLPAssets.swift */; };
 		77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98F291942E4008FDA83 /* CustomColor.swift */; };
 		77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99529194F50008FDA83 /* LoginViewController.swift */; };
+		77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99729195118008FDA83 /* LoginViewModel.swift */; };
+		77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99B2919754B008FDA83 /* MainViewController.swift */; };
+		77C0D99E29197554008FDA83 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99D29197554008FDA83 /* SignUpViewController.swift */; };
+		77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99F29198326008FDA83 /* CertificationViewController.swift */; };
+		77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		77C0D98C29193CA7008FDA83 /* SLPAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPAssets.swift; sourceTree = "<group>"; };
 		77C0D98F291942E4008FDA83 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		77C0D99529194F50008FDA83 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		77C0D99729195118008FDA83 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		77C0D99B2919754B008FDA83 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		77C0D99D29197554008FDA83 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		77C0D99F29198326008FDA83 /* CertificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewController.swift; sourceTree = "<group>"; };
+		77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				77145A68291924490052B2FB /* SLPProject */,
-				77C0D98E291942D8008FDA83 /* Extensions */,
 				77145A67291924490052B2FB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,6 +92,7 @@
 				77C0D97E29192565008FDA83 /* View */,
 				77C0D97D29192562008FDA83 /* ViewModel */,
 				77C0D9802919259C008FDA83 /* Assets */,
+				77C0D98E291942D8008FDA83 /* Extensions */,
 			);
 			path = SLPProject;
 			sourceTree = "<group>";
@@ -98,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */,
+				77C0D99729195118008FDA83 /* LoginViewModel.swift */,
+				77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -105,11 +117,10 @@
 		77C0D97E29192565008FDA83 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				77145A6D291924490052B2FB /* OnBoardingPageViewController.swift */,
-				77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */,
-				77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */,
-				77C0D98A29192F35008FDA83 /* ThirdOnBoardingViewController.swift */,
-				77C0D99529194F50008FDA83 /* LoginViewController.swift */,
+				77C0D999291951CE008FDA83 /* OnBoarding */,
+				77C0D99A291951EA008FDA83 /* Login */,
+				77C0D99B2919754B008FDA83 /* MainViewController.swift */,
+				77C0D99D29197554008FDA83 /* SignUpViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -139,6 +150,26 @@
 				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		77C0D999291951CE008FDA83 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				77145A6D291924490052B2FB /* OnBoardingPageViewController.swift */,
+				77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */,
+				77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */,
+				77C0D98A29192F35008FDA83 /* ThirdOnBoardingViewController.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		77C0D99A291951EA008FDA83 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				77C0D99529194F50008FDA83 /* LoginViewController.swift */,
+				77C0D99F29198326008FDA83 /* CertificationViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,13 +255,18 @@
 			files = (
 				77145A6E291924490052B2FB /* OnBoardingPageViewController.swift in Sources */,
 				77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */,
+				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
+				77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */,
+				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
+				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
 				77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */,
 				77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */,
 				77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */,
+				77C0D99E29197554008FDA83 /* SignUpViewController.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

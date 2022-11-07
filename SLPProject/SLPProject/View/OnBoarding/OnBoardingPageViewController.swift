@@ -25,7 +25,6 @@ final class OnBoardingPageViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
@@ -80,8 +79,9 @@ final class OnBoardingPageViewController: UIViewController {
         output.showLoginVC
             .emit(onNext: { [weak self] _ in
                 let vc = LoginViewController()
-                vc.modalPresentationStyle = .overFullScreen
-                self?.present(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .overFullScreen
+                self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
     }
