@@ -53,7 +53,7 @@ final class CertificationViewController: UIViewController {
     
     private func setNavigation() {
         backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
-        backButton.tintColor = .black
+        backButton.tintColor = SLPAssets.CustomColor.black.color
         navigationItem.leftBarButtonItem = backButton
     }
     
@@ -97,14 +97,14 @@ final class CertificationViewController: UIViewController {
     }
     
     private func setComponentsValue() {
-        view.backgroundColor = .white
+        view.backgroundColor = SLPAssets.CustomColor.white.color
         textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
         textLabel.text = SLPAssets.RawString.loginSecondaryText.text
         textLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
         certificationTextField.placeholder = SLPAssets.RawString.wrtieCertificationCode.text
-        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
+        lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
         
         resendButton.layer.cornerRadius = 8
         resendButton.setTitle(SLPAssets.RawString.resendText.text, for: .normal)
@@ -112,7 +112,7 @@ final class CertificationViewController: UIViewController {
         
         startButton.layer.cornerRadius = 8
         startButton.setTitle(SLPAssets.RawString.getCertificationMessageSecondary.text, for: .normal)
-        startButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
+        startButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         startButton.isEnabled = false
         
         certificationTextField.delegate = self
@@ -131,8 +131,8 @@ final class CertificationViewController: UIViewController {
     
     private func setStartButtonDisabled() {
         startButton.isEnabled = false
-        startButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
-        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
+        startButton.backgroundColor = SLPAssets.CustomColor.gray6.color
+        lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
     }
     
     private func bind() {

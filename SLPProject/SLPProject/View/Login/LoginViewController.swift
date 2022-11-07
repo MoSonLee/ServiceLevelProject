@@ -85,7 +85,7 @@ final class LoginViewController: UIViewController {
     }
     
     private func setComponentsValue() {
-        view.backgroundColor = .white
+        view.backgroundColor = SLPAssets.CustomColor.white.color
         textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
         textLabel.text = SLPAssets.RawString.loginInitialText.text
@@ -93,11 +93,11 @@ final class LoginViewController: UIViewController {
         
         phoneNumberTextField.placeholder = SLPAssets.RawString.certificationPlaceholderText.text
         phoneNumberTextField.delegate = self
-        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
+        lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
         
         sendMessageButton.layer.cornerRadius = 8
         sendMessageButton.setTitle(SLPAssets.RawString.getCertificationMessage.text, for: .normal)
-        sendMessageButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
+        sendMessageButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         sendMessageButton.isEnabled = false
     }
     
@@ -107,15 +107,15 @@ final class LoginViewController: UIViewController {
     }
     
     private func setSendMessageButtonAble() {
-        sendMessageButton.backgroundColor = SLPAssets.CustomColor.green.color
         sendMessageButton.isEnabled = true
+        sendMessageButton.backgroundColor = SLPAssets.CustomColor.green.color
         lineView.backgroundColor = SLPAssets.CustomColor.focus.color
     }
     
     private func setSendMessageButtonDisabled() {
         sendMessageButton.isEnabled = false
-        sendMessageButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
-        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
+        sendMessageButton.backgroundColor = SLPAssets.CustomColor.gray6.color
+        lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
     }
     
     private func bind() {
@@ -147,6 +147,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
+//MARK: 여길 어떻게 뺼 수 있을까
 extension LoginViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let textFieldText = textField.text,

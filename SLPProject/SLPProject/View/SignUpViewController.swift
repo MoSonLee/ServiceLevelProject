@@ -11,6 +11,6 @@ final class SignUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = SLPAssets.CustomColor.black.color
     }
 }

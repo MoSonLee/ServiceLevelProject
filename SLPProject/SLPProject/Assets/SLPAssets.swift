@@ -33,25 +33,59 @@ enum SLPAssets {
     }
     
     enum CustomColor {
+        case white
+        case black
         case green
-        case disabledGrey
-        case grey3
+        case whiteGreen
+        case yellowGreen
+        case gray7
+        case gray6
+        case gray5
+        case gray4
+        case gray3
+        case gray2
+        case gray1
+        case success
+        case error
         case focus
         
         var color: UIColor {
             switch self {
+            case .white:
+                return UIColor().hexStringToUIColor(hex: "#FFFFFF")
+            case .black:
+                return UIColor().hexStringToUIColor(hex: "#33333")
             case .green:
                 return UIColor().hexStringToUIColor(hex: "#49DC92")
-                
-            case .disabledGrey:
+            case .whiteGreen:
+                return UIColor().hexStringToUIColor(hex: "#CDF4E1")
+            case .yellowGreen:
+                return UIColor().hexStringToUIColor(hex: "#B2EB61")
+            case .gray7:
+                return UIColor().hexStringToUIColor(hex: "#888888")
+            case .gray6:
                 return UIColor().hexStringToUIColor(hex: "#AAAAAA")
-                
-            case .grey3:
+            case .gray5:
+                return UIColor().hexStringToUIColor(hex: "#BDBDBD")
+            case .gray4:
+                return UIColor().hexStringToUIColor(hex: "#D1D1D1")
+            case .gray3:
                 return UIColor().hexStringToUIColor(hex: "#E2E2E2")
-                
+            case .gray2:
+                return UIColor().hexStringToUIColor(hex: "#EFEFEF")
+            case .gray1:
+                return UIColor().hexStringToUIColor(hex: "#F7F7F7")
+            case .success:
+                return UIColor().hexStringToUIColor(hex: "#628FE6")
+            case .error:
+                return UIColor().hexStringToUIColor(hex: "#E9666B")
             case .focus:
                 return UIColor().hexStringToUIColor(hex: "#333333")
             }
+        }
+        
+        enum Font {
+            
         }
     }
     

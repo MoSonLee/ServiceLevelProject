@@ -54,11 +54,11 @@ final class OnBoardingPageViewController: UIViewController {
     }
     
     private func setComponentsValue() {
-        view.backgroundColor = .white
-        pageViewController.view.backgroundColor = .white
+        view.backgroundColor = SLPAssets.CustomColor.white.color
+        pageViewController.view.backgroundColor = SLPAssets.CustomColor.white.color
         startButton.backgroundColor = .green
         startButton.setTitle(SLPAssets.RawString.stratButtonTitle.text, for: .normal)
-        startButton.setTitleColor(.white, for: .normal)
+        startButton.setTitleColor(SLPAssets.CustomColor.white.color, for: .normal)
         startButton.layer.cornerRadius = 8
         startButton.backgroundColor = SLPAssets.CustomColor.green.color
     }
@@ -72,7 +72,7 @@ final class OnBoardingPageViewController: UIViewController {
         
         let proxy = UIPageControl.appearance()
         proxy.pageIndicatorTintColor = UIColor.systemGray
-        proxy.currentPageIndicatorTintColor = UIColor.black
+        proxy.currentPageIndicatorTintColor = SLPAssets.CustomColor.black.color
     }
     
     private func bind() {

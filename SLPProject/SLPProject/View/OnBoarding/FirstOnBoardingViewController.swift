@@ -44,7 +44,7 @@ final class FirstOnBoardingViewController: UIViewController {
     
     private func setComponentsValue() {
         let headerText = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 24), NSAttributedString.Key.foregroundColor : SLPAssets.CustomColor.green.color]
-        let tailText = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 24), NSAttributedString.Key.foregroundColor : UIColor.black]
+        let tailText = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 24), NSAttributedString.Key.foregroundColor : SLPAssets.CustomColor.black.color]
         let header = NSMutableAttributedString(string: SLPAssets.RawString.firstOnboardingTextHeader.text , attributes:headerText)
         let tail = NSMutableAttributedString(string: SLPAssets.RawString.firstOnboardingTextTail.text, attributes: tailText)
         textLabel.numberOfLines = 2
