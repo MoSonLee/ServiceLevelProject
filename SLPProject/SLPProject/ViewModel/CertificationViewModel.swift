@@ -48,7 +48,7 @@ final class CertificationViewModel {
         
         input.certificationTextFieldCompleted
             .emit(onNext: { [weak self] text in
-                if text.count == 5 {
+                if text.count == 6 {
                     self?.ableStartButtonRelay.accept(true)
                 } else {
                     self?.ableStartButtonRelay.accept(false)

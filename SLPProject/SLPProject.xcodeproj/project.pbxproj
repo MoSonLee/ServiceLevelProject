@@ -28,6 +28,7 @@
 		77C0D99E29197554008FDA83 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99D29197554008FDA83 /* SignUpViewController.swift */; };
 		77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99F29198326008FDA83 /* CertificationViewController.swift */; };
 		77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */; };
+		77C0D9A429199970008FDA83 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A329199970008FDA83 /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		77C0D99D29197554008FDA83 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		77C0D99F29198326008FDA83 /* CertificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewController.swift; sourceTree = "<group>"; };
 		77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewModel.swift; sourceTree = "<group>"; };
+		77C0D9A329199970008FDA83 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
+				77C0D9A329199970008FDA83 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */,
 				77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */,
 				77C0D99E29197554008FDA83 /* SignUpViewController.swift in Sources */,
+				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

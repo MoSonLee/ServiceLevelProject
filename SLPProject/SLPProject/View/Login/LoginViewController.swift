@@ -23,9 +23,16 @@ final class LoginViewController: UIViewController {
     
     private lazy var input = LoginViewModel.Input(
         viewDidLoad: viewDidLoadEvent.asObservable(),
-        numberTextFiledCompleted: phoneNumberTextField.rx.text.orEmpty
+        numberTextFieldChanged: phoneNumberTextField.rx.text.orEmpty
             .distinctUntilChanged()
             .asSignal(onErrorJustReturn: ""),
+        
+        numberTextFiledCompleted: phoneNumberTextField.rx.text.orEmpty
+            .withLatestFrom(
+                phoneNumberTextField.rx.text.orEmpty
+            )
+            .asSignal(onErrorJustReturn: ""),
+        
         sendMessageButtonTapped: sendMessageButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
@@ -85,6 +92,7 @@ final class LoginViewController: UIViewController {
         textLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
         phoneNumberTextField.placeholder = SLPAssets.RawString.certificationPlaceholderText.text
+        phoneNumberTextField.delegate = self
         lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
         
         sendMessageButton.layer.cornerRadius = 8
@@ -117,6 +125,13 @@ final class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.changeToFormatNumber
+            .emit(onNext: { [weak self] check in
+                guard let text = self?.phoneNumberTextField.text else { return }
+                self?.phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-####-####", replacmentCharacter: "#")
+            })
+            .disposed(by: disposeBag)
+        
         output.ableMessageButton
             .emit(onNext: { [weak self] check in
                 check ? self?.setSendMessageButtonAble() : self?.setSendMessageButtonDisabled()
@@ -129,5 +144,25 @@ final class LoginViewController: UIViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+            return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        let allowedCharacters = "-1234567890"
+        let allowedCharcterSet = CharacterSet(charactersIn: allowedCharacters)
+        let typedCharcterSet = CharacterSet(charactersIn: string)
+        if  allowedCharcterSet.isSuperset(of: typedCharcterSet)
+                , count <= 13 {
+            return true
+        } else {
+            return false
+        }
     }
 }
