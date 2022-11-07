@@ -9,6 +9,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import SnapKit
 
 final class CertificationViewController: UIViewController {
     
@@ -24,7 +25,12 @@ final class CertificationViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private lazy var input = CertificationViewModel.Input(
-        backButtonTapped: backButton.rx.tap.asSignal()
+        viewDidLoad: viewDidLoadEvent.asObservable(),
+        backButtonTapped: backButton.rx.tap.asSignal(),
+        certificationTextFieldCompleted: certificationTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .asSignal(onErrorJustReturn: ""),
+        startButtonTapped: startButton.rx.tap.asSignal()
     )
     
     private lazy var outpt = viewModel.transform(input: input)
@@ -110,21 +116,59 @@ final class CertificationViewController: UIViewController {
         startButton.isEnabled = false
     }
     
+    private func setFirstResponder() {
+        certificationTextField.becomeFirstResponder()
+        certificationTextField.keyboardType = .decimalPad
+    }
+    
     private func setStartButtonAble() {
         startButton.backgroundColor = SLPAssets.CustomColor.green.color
         startButton.isEnabled = true
+        lineView.backgroundColor = SLPAssets.CustomColor.focus.color
     }
     
     private func setStartButtonDisabled() {
         startButton.isEnabled = false
         startButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
+        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
     }
     
     private func bind() {
+        outpt.becomeFirstResponder
+            .emit(onNext: { [weak self] _ in
+                self?.setFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
         outpt.popVC
             .emit(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        outpt.ableStartButton
+            .emit(onNext: { [weak self] check in
+                check ? self?.setStartButtonAble() : self?.setStartButtonDisabled()
+            })
+            .disposed(by: disposeBag)
+        
+        outpt.showSingUpVC
+            .emit(onNext: { [weak self] _ in
+                let vc = MainViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .overFullScreen
+                self?.present(nav, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        outpt.showMainVC
+            .emit(onNext: { [weak self] _ in
+                let vc = MainViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .overFullScreen
+                self?.present(nav, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
     }
 }

@@ -23,11 +23,9 @@ final class LoginViewController: UIViewController {
     
     private lazy var input = LoginViewModel.Input(
         viewDidLoad: viewDidLoadEvent.asObservable(),
-        
         numberTextFiledCompleted: phoneNumberTextField.rx.text.orEmpty
             .distinctUntilChanged()
             .asSignal(onErrorJustReturn: ""),
-        
         sendMessageButtonTapped: sendMessageButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
@@ -95,21 +93,27 @@ final class LoginViewController: UIViewController {
         sendMessageButton.isEnabled = false
     }
     
+    private func setFirstResponder() {
+        phoneNumberTextField.becomeFirstResponder()
+        phoneNumberTextField.keyboardType = .decimalPad
+    }
+    
     private func setSendMessageButtonAble() {
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.green.color
         sendMessageButton.isEnabled = true
+        lineView.backgroundColor = SLPAssets.CustomColor.focus.color
     }
     
     private func setSendMessageButtonDisabled() {
         sendMessageButton.isEnabled = false
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.disabledGrey.color
+        lineView.backgroundColor = SLPAssets.CustomColor.grey3.color
     }
     
     private func bind() {
         output.becomeFirstResponder
             .emit(onNext: { [weak self] _ in
-                self?.phoneNumberTextField.becomeFirstResponder()
-                self?.phoneNumberTextField.keyboardType = .decimalPad
+                self?.setFirstResponder()
             })
             .disposed(by: disposeBag)
         
