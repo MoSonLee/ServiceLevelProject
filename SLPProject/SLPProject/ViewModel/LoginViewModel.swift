@@ -7,6 +7,7 @@
 
 import Foundation
 
+import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -35,6 +36,7 @@ final class LoginViewModel{
     private let showCertificationVCRelay = PublishRelay<Bool>()
     private let showToastRelay = PublishRelay<String>()
     private let checkMultipleTappedRealy = PublishRelay<String>()
+    
     private let dispsseBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -66,11 +68,13 @@ final class LoginViewModel{
             .emit(onNext: { [weak self] text in
                 let filterText = text.filter { "0123456789".contains($0) }
                 let startNumber = "01"
+                let filterTextWithFormat = filterText.applyPatternOnNumbers(pattern: "+82 ###-####-####", replacmentCharacter: "#")
+                
                 if filterText.count < 10 || !filterText.starts(with: startNumber) {
                     self?.showToastRelay.accept(SLPAssets.RawString.notFormattedNumber.text)
                     self?.showCertificationVCRelay.accept((false))
                 } else if filterText.count >= 10 && filterText.starts(with: startNumber) {
-                    self?.showCertificationVCRelay.accept(true)
+                    self?.getCertificationMessage(phoneNumber: filterTextWithFormat)
                 } else {
                     self?.showToastRelay.accept(SLPAssets.RawString.etcError.text)
                     self?.showCertificationVCRelay.accept(false)
@@ -79,10 +83,8 @@ final class LoginViewModel{
             .disposed(by: dispsseBag)
         
         input.multipleTimeMessageButtonTapped
-            .throttle(.seconds(2))
-            .delay(.seconds(1))
             .emit(onNext: { [weak self] text in
-                self?.showToastRelay.accept(SLPAssets.RawString.tooMuchRequest.text)
+                //MARK: 중복 터치 처리
             })
             .disposed(by: dispsseBag)
         
@@ -94,5 +96,23 @@ final class LoginViewModel{
             showToast: showToastRelay.asSignal(),
             checkMultipleTapped: checkMultipleTappedRealy.asSignal()
         )
+    }
+}
+
+extension LoginViewModel {
+    private func getCertificationMessage(phoneNumber: String) {
+        PhoneAuthProvider.provider()
+            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
+                if let id = verificationID {
+                    UserDefaults.standard.set(id, forKey: "verificationID")
+                    self?.showCertificationVCRelay.accept(true)
+                    UserDefaults.standard.set(phoneNumber, forKey: "number")
+                }
+                if let error = error {
+                    self?.showCertificationVCRelay.accept(false)
+                    print(error.localizedDescription)
+                    return
+                }
+            }
     }
 }

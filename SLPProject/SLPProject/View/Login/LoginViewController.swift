@@ -163,6 +163,7 @@ final class LoginViewController: UIViewController {
         output.showToast
             .emit(onNext: { [weak self] text in
                 self?.view.makeToast(text)
+                self?.phoneNumberTextField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         

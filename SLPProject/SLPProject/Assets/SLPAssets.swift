@@ -106,6 +106,7 @@ enum SLPAssets {
         case notFormattedNumber
         case tooMuchRequest
         case etcError
+        case certifciationfailure
         
         var text: String {
             switch self {
@@ -156,6 +157,9 @@ enum SLPAssets {
                 
             case .etcError:
                 return "에러가 발생했습니다. 다시 시도해주세요"
+                
+            case .certifciationfailure:
+                return "전화 번호 인증 실패"
             }
         }
     }

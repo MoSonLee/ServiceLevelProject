@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import Toast
 
 final class CertificationViewController: UIViewController {
     
@@ -30,7 +31,14 @@ final class CertificationViewController: UIViewController {
         certificationTextFieldCompleted: certificationTextField.rx.text.orEmpty
             .distinctUntilChanged()
             .asSignal(onErrorJustReturn: ""),
-        startButtonTapped: startButton.rx.tap.asSignal()
+        
+        startButtonTapped: startButton.rx.tap
+            .withLatestFrom(
+                certificationTextField.rx.text.orEmpty
+            )
+            .asSignal(onErrorJustReturn: ""),
+        
+        resendButtonTapped: resendButton.rx.tap.asSignal()
     )
     
     private lazy var outpt = viewModel.transform(input: input)
@@ -169,6 +177,13 @@ final class CertificationViewController: UIViewController {
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .overFullScreen
                 self?.present(nav, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        outpt.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
+                self?.certificationTextField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
     }
