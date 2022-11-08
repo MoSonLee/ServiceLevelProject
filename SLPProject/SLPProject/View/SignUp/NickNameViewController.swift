@@ -14,6 +14,7 @@ import Toast
 
 final class NickNameViewController: UIViewController {
     
+    private var backButton = UIBarButtonItem()
     private let textLabel = UILabel()
     private let nickcNameTextField = UITextField()
     private let lineView = UIView()
@@ -21,6 +22,23 @@ final class NickNameViewController: UIViewController {
     
     private let viewModel = NickNameViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
+    
+    private lazy var input = NickNameViewModel.Input(
+        viewDidLoad: viewDidLoadEvent.asObservable(),
+        backButtonTapped: backButton.rx.tap.asSignal(),
+        nickNameTextFieldCompleted: nickcNameTextField.rx.text.orEmpty
+            .withLatestFrom(
+                nickcNameTextField.rx.text.orEmpty
+            )
+            .asSignal(onErrorJustReturn: ""),
+        nextButtonTapped: nextButton.rx.tap
+            .withLatestFrom(
+            nickcNameTextField.rx.text.orEmpty
+        )
+            .asSignal(onErrorJustReturn: "")
+    )
+    
+    private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -36,6 +54,13 @@ final class NickNameViewController: UIViewController {
             view.addSubview($0)
         }
         setComponentsValue()
+        setNavigation()
+    }
+    
+    private func setNavigation() {
+        backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
+        backButton.tintColor = SLPAssets.CustomColor.black.color
+        navigationItem.leftBarButtonItem = backButton
     }
     
     private func setConstraints() {
@@ -86,21 +111,50 @@ final class NickNameViewController: UIViewController {
     
     private func setFirstResponder() {
         nickcNameTextField.becomeFirstResponder()
-        nickcNameTextField.keyboardType = .decimalPad
     }
     
-    private func setSendMessageButtonAble() {
+    private func setNextButtonAble() {
         nextButton.backgroundColor = SLPAssets.CustomColor.green.color
         lineView.backgroundColor = SLPAssets.CustomColor.focus.color
     }
     
-    private func setSendMessageButtonDisabled() {
+    private func setNextButtonDisabled() {
         nextButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
     }
     
     private func bind() {
+        output.becomeFirstResponder
+            .emit(onNext: { [weak self] _ in
+                self?.setFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
+        output.popVC
+            .emit(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
+                self?.nickcNameTextField.resignFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
+        output.showBirthVC
+            .emit(onNext: { [weak self] _ in
+                let vc = BirthViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.ableNextButton
+            .emit(onNext: { [weak self] check in
+                check ? self?.setNextButtonAble() : self?.setNextButtonDisabled()
+            })
+            .disposed(by: disposeBag)
         
     }
-        
 }

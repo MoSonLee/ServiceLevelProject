@@ -173,7 +173,7 @@ final class CertificationViewController: UIViewController {
         
         outpt.showMainVC
             .emit(onNext: { [weak self] _ in
-                let vc = MainViewController()
+                let vc = NickNameViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .overFullScreen
                 self?.present(nav, animated: true)

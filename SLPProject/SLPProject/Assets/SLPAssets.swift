@@ -109,6 +109,7 @@ enum SLPAssets {
         case certifciationfailure
         case enterNickName
         case writeTenLetters
+        case writeNickNameLetters
         case next
         
         var text: String {
@@ -172,6 +173,9 @@ enum SLPAssets {
                 
             case .next:
                 return "다음"
+                
+            case .writeNickNameLetters:
+                return "닉네임은 1자 이상 10자 이내로 부탁드려요."
             }
         }
     }
