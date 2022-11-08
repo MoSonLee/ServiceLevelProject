@@ -107,6 +107,9 @@ enum SLPAssets {
         case tooMuchRequest
         case etcError
         case certifciationfailure
+        case enterNickName
+        case writeTenLetters
+        case next
         
         var text: String {
             switch self {
@@ -160,6 +163,15 @@ enum SLPAssets {
                 
             case .certifciationfailure:
                 return "전화 번호 인증 실패"
+                
+            case .enterNickName:
+                return "닉네임을 입력해 주세요"
+                
+            case .writeTenLetters:
+                return "10자 이내로 입력"
+                
+            case .next:
+                return "다음"
             }
         }
     }
