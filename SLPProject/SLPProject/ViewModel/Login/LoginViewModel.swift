@@ -49,7 +49,7 @@ final class LoginViewModel{
         input.numberTextFieldChanged
             .emit(onNext: { [weak self] text in
                 let filterText = text.filter { "0123456789".contains($0) }
-                if filterText.count == 11 {
+                if filterText.count > 0 && filterText.count != 10 {
                     self?.changeToFormatNumberRelay.accept((true))
                 } else if filterText.count == 10 {
                     self?.changeToFormatNumberRelay.accept((false))
