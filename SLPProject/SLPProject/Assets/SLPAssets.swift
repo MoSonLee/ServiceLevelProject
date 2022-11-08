@@ -103,6 +103,9 @@ enum SLPAssets {
         case certificationPlaceholderText
         case resendText
         case wrtieCertificationCode
+        case notFormattedNumber
+        case tooMuchRequest
+        case etcError
         
         var text: String {
             switch self {
@@ -144,6 +147,15 @@ enum SLPAssets {
                 
             case .wrtieCertificationCode:
                 return "인증번호 입력"
+                
+            case .notFormattedNumber:
+                return "잘못된 전화번호 형식입니다."
+                
+            case .tooMuchRequest:
+                return "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요."
+                
+            case .etcError:
+                return "에러가 발생했습니다. 다시 시도해주세요"
             }
         }
     }

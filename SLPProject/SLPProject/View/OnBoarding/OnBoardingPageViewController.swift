@@ -71,7 +71,7 @@ final class OnBoardingPageViewController: UIViewController {
         pageViewController.setViewControllers([first], direction: .forward, animated: true)
         
         let proxy = UIPageControl.appearance()
-        proxy.pageIndicatorTintColor = UIColor.systemGray
+        proxy.pageIndicatorTintColor = SLPAssets.CustomColor.gray6.color
         proxy.currentPageIndicatorTintColor = SLPAssets.CustomColor.black.color
     }
     

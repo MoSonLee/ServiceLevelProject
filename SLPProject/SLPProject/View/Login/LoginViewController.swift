@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import SnapKit
+import Toast
 
 final class LoginViewController: UIViewController {
     
@@ -17,7 +18,6 @@ final class LoginViewController: UIViewController {
     private let phoneNumberTextField = UITextField()
     private let lineView = UIView()
     private let sendMessageButton = UIButton()
-    
     private let viewModel = LoginViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
     
@@ -33,8 +33,15 @@ final class LoginViewController: UIViewController {
             )
             .asSignal(onErrorJustReturn: ""),
         
-        sendMessageButtonTapped: sendMessageButton.rx.tap.asSignal()
+        sendMessageButtonTapped: sendMessageButton.rx.tap
+            .withLatestFrom(
+                phoneNumberTextField.rx.text.orEmpty
+            )
+            .asSignal(onErrorJustReturn: ""),
+        
+        multipleTimeMessageButtonTapped: sendMessageButton.rx.tap.asSignal()
     )
+    
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
@@ -98,7 +105,6 @@ final class LoginViewController: UIViewController {
         sendMessageButton.layer.cornerRadius = 8
         sendMessageButton.setTitle(SLPAssets.RawString.getCertificationMessage.text, for: .normal)
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.gray6.color
-        sendMessageButton.isEnabled = false
     }
     
     private func setFirstResponder() {
@@ -107,15 +113,23 @@ final class LoginViewController: UIViewController {
     }
     
     private func setSendMessageButtonAble() {
-        sendMessageButton.isEnabled = true
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.green.color
         lineView.backgroundColor = SLPAssets.CustomColor.focus.color
     }
     
     private func setSendMessageButtonDisabled() {
-        sendMessageButton.isEnabled = false
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
+    }
+    
+    private func setTenNumberFormat() {
+        guard let text = phoneNumberTextField.text else { return }
+        phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-###-####", replacmentCharacter: "#")
+    }
+    
+    private func setElevenNumberFormat() {
+        guard let text = phoneNumberTextField.text else { return }
+        phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-####-####", replacmentCharacter: "#")
     }
     
     private func bind() {
@@ -127,8 +141,7 @@ final class LoginViewController: UIViewController {
         
         output.changeToFormatNumber
             .emit(onNext: { [weak self] check in
-                guard let text = self?.phoneNumberTextField.text else { return }
-                self?.phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-####-####", replacmentCharacter: "#")
+                check ? self?.setElevenNumberFormat() : self?.setTenNumberFormat()
             })
             .disposed(by: disposeBag)
         
@@ -139,9 +152,23 @@ final class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.showCertificationVC
-            .emit(onNext: { [weak self] _ in
-                let vc = CertificationViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+            .emit(onNext: { [weak self] check in
+                if check {
+                    let vc = CertificationViewController()
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
+            })
+            .disposed(by: disposeBag)
+        
+        output.checkMultipleTapped
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
             })
             .disposed(by: disposeBag)
     }

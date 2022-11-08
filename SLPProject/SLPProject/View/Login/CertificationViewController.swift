@@ -182,7 +182,7 @@ extension CertificationViewController: UITextFieldDelegate {
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        let allowedCharacters = "1234567890"
+        let allowedCharacters = "0123456789"
         let allowedCharcterSet = CharacterSet(charactersIn: allowedCharacters)
         let typedCharcterSet = CharacterSet(charactersIn: string)
         if  allowedCharcterSet.isSuperset(of: typedCharcterSet)
