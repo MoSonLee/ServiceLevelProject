@@ -70,7 +70,7 @@ final class CertificationViewModel {
         
         input.resendButtonTapped
             .emit(onNext: { [weak self] _ in
-                guard let phoneNumber =  UserDefaults.standard.string(forKey: "number") else { return }
+                let phoneNumber =  UserDefaults.userNumber
                 print(phoneNumber)
                 self?.getCertificationMessage(phoneNumber: phoneNumber)
             })
@@ -93,21 +93,22 @@ extension CertificationViewModel {
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
                 if let id = verificationID {
-                    UserDefaults.standard.set(id, forKey: "verificationID")
+                    UserDefaults.userVerificationID = id
                     self?.resendCodeRelay.accept(())
                 }
             }
     }
+    
     private func verificationButtonClicked(code: String?) {
-        guard let verificationID = UserDefaults.standard.string(forKey: "verificationID"), let verificationCode = code else {
-            return
-        }
+        let verificationID = UserDefaults.userVerificationID
+        guard let verificationCode = code else { return  }
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: verificationCode
         )
         logIn(credential: credential)
     }
+    
     private func logIn(credential: PhoneAuthCredential) {
         Auth.auth().signIn(with: credential) { [weak self] authResult, error in
             if let error = error {

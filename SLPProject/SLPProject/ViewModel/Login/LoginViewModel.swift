@@ -104,13 +104,14 @@ extension LoginViewModel {
         PhoneAuthProvider.provider()
             .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
                 if let id = verificationID {
-                    UserDefaults.standard.set(id, forKey: "verificationID")
                     self?.showCertificationVCRelay.accept(true)
-                    UserDefaults.standard.set(phoneNumber, forKey: "number")
+                    UserDefaults.userVerificationID = id
+                    UserDefaults.userNumber = phoneNumber
                 }
+                
                 if let error = error {
                     self?.showCertificationVCRelay.accept(false)
-                    print(error.localizedDescription)
+                    print(error)
                     return
                 }
             }

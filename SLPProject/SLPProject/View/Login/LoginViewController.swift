@@ -90,7 +90,7 @@ final class LoginViewController: UIViewController {
             make.bottom.equalToSuperview().inset(347)
         }
     }
-    
+
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
         textLabel.numberOfLines = 2
