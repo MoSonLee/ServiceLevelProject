@@ -37,14 +37,14 @@ final class LoginViewModel{
     private let showToastRelay = PublishRelay<String>()
     private let checkMultipleTappedRealy = PublishRelay<String>()
     
-    private let dispsseBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.becomeFirstResponderRelay.accept(())
             })
-            .disposed(by: dispsseBag)
+            .disposed(by: disposeBag)
         
         input.numberTextFieldChanged
             .emit(onNext: { [weak self] text in
@@ -55,14 +55,14 @@ final class LoginViewModel{
                     self?.changeToFormatNumberRelay.accept((false))
                 }
             })
-            .disposed(by: dispsseBag)
+            .disposed(by: disposeBag)
         
         input.numberTextFiledCompleted
             .emit(onNext: { [weak self] text in
                 let filterText = text.filter { "0123456789".contains($0) }
                 filterText.count >= 10 ? self?.ableMessageButtonRelay.accept((true)) : self?.ableMessageButtonRelay.accept((false))
             })
-            .disposed(by: dispsseBag)
+            .disposed(by: disposeBag)
         
         input.sendMessageButtonTapped
             .emit(onNext: { [weak self] text in
@@ -80,13 +80,13 @@ final class LoginViewModel{
                     self?.showCertificationVCRelay.accept(false)
                 }
             })
-            .disposed(by: dispsseBag)
+            .disposed(by: disposeBag)
         
         input.multipleTimeMessageButtonTapped
             .emit(onNext: { [weak self] text in
                 //MARK: 중복 터치 처리
             })
-            .disposed(by: dispsseBag)
+            .disposed(by: disposeBag)
         
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),

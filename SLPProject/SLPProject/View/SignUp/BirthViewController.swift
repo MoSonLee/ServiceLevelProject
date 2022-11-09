@@ -26,15 +26,26 @@ final class BirthViewController: UIViewController {
     private let secondLineView = UIView()
     private let thirdLineView = UIView()
     private let nextButton = UIButton()
+    private let pickerView = UIPickerView()
+    
+    private var allYear: [Int] = []
+    private let allMonth: [Int] = Array(1...12)
+    private let allDay: [Int] = Array(1...31)
     
     private let viewModel = BirthViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
+    
+    private lazy var input = BirthViewModel.Input(
+        viewDidLoad: viewDidLoadEvent.asObservable()
+    )
+    private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
+        setDateComponents()
         bind()
         viewDidLoadEvent.accept(())
     }
@@ -129,10 +140,6 @@ final class BirthViewController: UIViewController {
             $0.backgroundColor = SLPAssets.CustomColor.gray3.color
         }
         
-        [yearTextField, monthTextField, dayTextField].forEach {
-            $0.isUserInteractionEnabled = false
-        }
-        
         nextButton.layer.cornerRadius = 8
         nextButton.setTitle(SLPAssets.RawString.next.text, for: .normal)
         nextButton.backgroundColor = SLPAssets.CustomColor.gray6.color
@@ -140,6 +147,27 @@ final class BirthViewController: UIViewController {
         yearLabel.text = "년"
         monthLabel.text = "월"
         dayLabel.text = "일"
+        
+        yearTextField.placeholder = "1990"
+        monthTextField.placeholder = "1"
+        dayTextField.placeholder = "1"
+        
+        yearTextField.inputView = pickerView
+        pickerView.delegate = self
+        pickerView.dataSource = self
+    }
+    
+    private func setDateComponents() {
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: date)
+        let year = components.year
+        guard let year = year else { return }
+        allYear = Array(2000...year).reversed()
+    }
+   
+    private func setFirstResponder() {
+        yearTextField.becomeFirstResponder()
     }
     
     private func setSendMessageButtonAble() {
@@ -151,6 +179,46 @@ final class BirthViewController: UIViewController {
     }
     
     private func bind() {
+        output.becomeFirstResponder
+            .emit(onNext: { [weak self] _ in
+                self?.setFirstResponder()
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension BirthViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return allYear.count
+        case 1:
+            return allMonth.count
+        case 2:
+            return allDay.count
+        default:
+            return 0
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return "\(allYear[row])년"
+        case 1:
+            return "\(allMonth[row])월"
+        case 2:
+            return "\(allDay[row])일"
+        default:
+            return ""
+        }
     }
 }
