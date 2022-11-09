@@ -12,7 +12,7 @@ struct UserDefault<Value> {
     let key: String
     let defaultValue: Value
     var container: UserDefaults = .standard
-
+    
     var wrappedValue: Value {
         get {
             return container.object(forKey: key) as? Value ?? defaultValue
@@ -26,7 +26,10 @@ struct UserDefault<Value> {
 extension UserDefaults {
     @UserDefault(key: "verificationID", defaultValue: "")
     static var userVerificationID: String
-
+    
     @UserDefault(key: "number", defaultValue: "")
     static var userNumber: String
+    
+    @UserDefault(key: "userToken", defaultValue: "")
+    static var userToken: String
 }

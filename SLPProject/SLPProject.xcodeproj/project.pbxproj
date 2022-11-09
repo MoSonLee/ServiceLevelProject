@@ -16,7 +16,6 @@
 		77145A81291924600052B2FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A80291924600052B2FB /* RxSwift */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
 		7737FD26291AA1380029DEA2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7737FD25291AA1380029DEA2 /* FirebaseAuth */; };
-		7737FD2A291AA2430029DEA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7737FD29291AA2430029DEA2 /* GoogleService-Info.plist */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -25,6 +24,7 @@
 		7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */; };
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
+		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -50,7 +50,6 @@
 		77145A752919244A0052B2FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77145A772919244A0052B2FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
-		7737FD29291AA2430029DEA2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
 		7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
@@ -59,6 +58,7 @@
 		7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		77145A68291924490052B2FB /* SLPProject */ = {
 			isa = PBXGroup;
 			children = (
-				7737FD29291AA2430029DEA2 /* GoogleService-Info.plist */,
+				77577013291BDA0800DA331B /* GoogleService-Info.plist */,
 				7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */,
 				77145A772919244A0052B2FB /* Info.plist */,
 				77C0D97F29192568008FDA83 /* Application */,
@@ -326,8 +326,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				77145A762919244A0052B2FB /* LaunchScreen.storyboard in Resources */,
+				77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */,
 				77145A732919244A0052B2FB /* Assets.xcassets in Resources */,
-				7737FD2A291AA2430029DEA2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,9 +499,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SLPProject/SLPProjectDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 682X55S89X;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SLPProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -513,8 +514,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = SLPProject.SLPProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

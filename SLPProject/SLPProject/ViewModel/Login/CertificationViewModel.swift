@@ -116,7 +116,22 @@ extension CertificationViewModel {
                 self?.showToastRelay.accept(SLPAssets.RawString.certifciationfailure.text)
             } else {
                 self?.showSingUpVCRelay.accept(())
+                self?.getToken()
                 UserDefaults.standard.removeObject(forKey: "number")
+            }
+        }
+    }
+    
+    private func getToken() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            print("Success")
+            if let error = error {
+                print(error)
+                return
+            } else {
+                guard let idToken = idToken else { return }
+                UserDefaults.userToken = idToken
             }
         }
     }
