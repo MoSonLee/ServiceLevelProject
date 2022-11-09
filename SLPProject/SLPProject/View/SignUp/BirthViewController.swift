@@ -43,7 +43,6 @@ final class BirthViewController: UIViewController {
         [textLabel, stackView, nextButton].forEach {
             view.addSubview($0)
         }
-        
         [yearTextField, yearLabel, firstLineView, monthTextField, monthLabel, secondLineView, dayTextField, dayLabel, thirdLineView].forEach {
             stackView.addSubview($0)
         }
@@ -58,73 +57,60 @@ final class BirthViewController: UIViewController {
             make.height.equalTo(64)
             make.bottom.equalTo(stackView.snp.top).inset(-80)
         }
-        
         stackView.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.height.equalTo(47)
             make.bottom.equalTo(nextButton.snp.top).inset(-72)
         }
-        
         yearTextField.snp.makeConstraints { make in
             make.leading.equalTo(12)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
             make.trailing.equalTo(yearLabel.snp.leading).inset(-40)
         }
-        
         yearLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(monthTextField.snp.leading).inset(-35)
             make.height.equalTo(26)
         }
-        
         firstLineView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.leading.bottom.equalToSuperview()
             make.height.equalTo(1)
             make.trailing.equalTo(yearLabel.snp.leading).inset(-4)
         }
-
         monthTextField.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
             make.trailing.equalTo(monthLabel.snp.leading).inset(-64)
         }
-        
         monthLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalTo(dayTextField.snp.leading).inset(-35)
             make.height.equalTo(26)
         }
-        
         secondLineView.snp.makeConstraints { make in
             make.leading.equalTo(firstLineView.snp.trailing).inset(-42)
             make.bottom.equalToSuperview()
             make.height.equalTo(1)
             make.trailing.equalTo(monthLabel.snp.leading).inset(-4)
         }
-        
         dayTextField.snp.makeConstraints { make in
             make.leading.equalTo(monthLabel.snp.trailing).inset(-35)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
             make.trailing.equalTo(dayLabel.snp.leading).inset(-64)
         }
-        
         dayLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.centerY.trailing.equalToSuperview()
             make.height.equalTo(26)
         }
-        
         thirdLineView.snp.makeConstraints { make in
             make.leading.equalTo(secondLineView.snp.trailing).inset(-42)
             make.bottom.equalToSuperview()
             make.height.equalTo(1)
             make.trailing.equalTo(dayLabel.snp.leading).inset(-4)
         }
-        
         nextButton.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
@@ -135,14 +121,17 @@ final class BirthViewController: UIViewController {
     
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
-        textLabel.numberOfLines = 2
         textLabel.textAlignment = .center
         textLabel.text = SLPAssets.RawString.enterBirth.text
         textLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        firstLineView.backgroundColor = SLPAssets.CustomColor.gray3.color
-        secondLineView.backgroundColor = SLPAssets.CustomColor.gray3.color
-        thirdLineView.backgroundColor = SLPAssets.CustomColor.gray3.color
+        [firstLineView, secondLineView, thirdLineView].forEach {
+            $0.backgroundColor = SLPAssets.CustomColor.gray3.color
+        }
+        
+        [yearTextField, monthTextField, dayTextField].forEach {
+            $0.isUserInteractionEnabled = false
+        }
         
         nextButton.layer.cornerRadius = 8
         nextButton.setTitle(SLPAssets.RawString.next.text, for: .normal)
@@ -151,10 +140,6 @@ final class BirthViewController: UIViewController {
         yearLabel.text = "년"
         monthLabel.text = "월"
         dayLabel.text = "일"
-        
-        yearTextField.isUserInteractionEnabled = false
-        monthTextField.isUserInteractionEnabled = false
-        dayTextField.isUserInteractionEnabled = false
     }
     
     private func setSendMessageButtonAble() {
