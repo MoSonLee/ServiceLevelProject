@@ -118,7 +118,6 @@ extension CertificationViewModel {
             } else {
                 self?.showSingUpVCRelay.accept(())
                 self?.getToken()
-                UserDefaults.standard.removeObject(forKey: "number")
             }
         }
     }

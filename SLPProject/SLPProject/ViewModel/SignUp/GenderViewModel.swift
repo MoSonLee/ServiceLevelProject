@@ -12,4 +12,15 @@ import RxSwift
 
 final class GenderViewModel {
     
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
+//    func transform(input: Input) -> Output {
+//        
+//    }
 }

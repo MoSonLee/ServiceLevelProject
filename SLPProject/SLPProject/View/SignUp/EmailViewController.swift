@@ -132,16 +132,6 @@ final class EmailViewController: UIViewController {
         emailTextField.keyboardType = .decimalPad
     }
     
-    private func setSendMessageButtonAble() {
-        nextButton.backgroundColor = SLPAssets.CustomColor.green.color
-        lineView.backgroundColor = SLPAssets.CustomColor.focus.color
-    }
-    
-    private func setSendMessageButtonDisabled() {
-        nextButton.backgroundColor = SLPAssets.CustomColor.gray6.color
-        lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
-    }
-    
     private func bind() {
         output.becomeFirstResponder
             .emit(onNext: { [weak self] _ in

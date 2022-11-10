@@ -117,6 +117,10 @@ enum SLPAssets {
         case emailSubtext
         case emailPlaceholder
         case wrongEmailType
+        case selectGender
+        case boy
+        case girl
+        case genderRequired
         case next
         
         var text: String {
@@ -204,6 +208,18 @@ enum SLPAssets {
                 
             case .wrongEmailType:
                 return "메일 형식이 올바르지 않습니다."
+                
+            case .selectGender:
+                return "성별을 선택해 주세요"
+                
+            case .genderRequired:
+                return "새싹 찾기 기능을 이용하기 위해서 필요해요!"
+                
+            case .boy:
+                return "남자"
+                
+            case .girl:
+                return "여자"
             }
         }
     }
