@@ -25,6 +25,7 @@
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
+		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -59,6 +60,8 @@
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
+		77577018291D3A2700DA331B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		77145A68291924490052B2FB /* SLPProject */ = {
 			isa = PBXGroup;
 			children = (
+				77577017291CDF5A00DA331B /* SLPProject.entitlements */,
 				77577013291BDA0800DA331B /* GoogleService-Info.plist */,
 				7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */,
 				77145A772919244A0052B2FB /* Info.plist */,
@@ -230,6 +234,7 @@
 				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
 				77C0D9A329199970008FDA83 /* String.swift */,
 				77577011291BD4D000DA331B /* UserDefaults.swift */,
+				77577018291D3A2700DA331B /* CustomTextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
+				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
@@ -502,7 +508,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 682X55S89X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SLPProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -528,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SLPProject/SLPProject.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 682X55S89X;

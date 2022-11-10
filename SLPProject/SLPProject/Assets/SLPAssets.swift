@@ -111,6 +111,7 @@ enum SLPAssets {
         case writeTenLetters
         case writeNickNameLetters
         case enterBirth
+        case ageLimit
         case next
         
         var text: String {
@@ -171,6 +172,9 @@ enum SLPAssets {
                 
             case .writeTenLetters:
                 return "10자 이내로 입력"
+                
+            case .ageLimit:
+                return "새싹스터디는 만 17세 이상만 사용할 수 있습니다."
                 
             case .next:
                 return "다음"
