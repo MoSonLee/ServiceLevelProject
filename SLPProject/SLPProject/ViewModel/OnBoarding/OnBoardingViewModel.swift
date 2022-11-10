@@ -27,6 +27,7 @@ final class OnBoardingViewModel{
         input.startButtonTapped
             .emit(onNext: { [weak self] _ in
                 self?.showLoginVCRelay.accept(())
+                UserDefaults.showOnboarding = false
             })
             .disposed(by: disposeBag)
         

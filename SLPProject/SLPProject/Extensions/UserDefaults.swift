@@ -24,6 +24,10 @@ struct UserDefault<Value> {
 }
 
 extension UserDefaults {
+    
+    @UserDefault(key: "showOnboarding", defaultValue: true)
+    static var showOnboarding: Bool
+    
     @UserDefault(key: "verificationID", defaultValue: "")
     static var userVerificationID: String
     
