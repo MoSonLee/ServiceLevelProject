@@ -15,7 +15,8 @@ import Toast
 final class EmailViewController: UIViewController {
     
     private let textLabel = UILabel()
-    private let nickcNameTextField = UITextField()
+    private let subTextLabel = UILabel()
+    private let emailTextField = CustomTextField()
     private let lineView = UIView()
     private let nextButton = UIButton()
     
@@ -32,7 +33,7 @@ final class EmailViewController: UIViewController {
     }
     
     private func setComponents() {
-        [textLabel, nickcNameTextField, lineView, nextButton].forEach {
+        [textLabel, emailTextField, lineView, nextButton].forEach {
             view.addSubview($0)
         }
         setComponentsValue()
@@ -44,10 +45,10 @@ final class EmailViewController: UIViewController {
             make.leading.equalTo(74)
             make.trailing.equalTo(-73)
             make.height.equalTo(64)
-            make.bottom.equalTo(nickcNameTextField.snp.top).inset(-77)
+            make.bottom.equalTo(emailTextField.snp.top).inset(-77)
         }
         
-        nickcNameTextField.snp.makeConstraints { make in
+        emailTextField.snp.makeConstraints { make in
             make.leading.equalTo(28)
             make.trailing.equalToSuperview().inset(16)
             make.height.equalTo(22)
@@ -76,7 +77,7 @@ final class EmailViewController: UIViewController {
         textLabel.text = SLPAssets.RawString.enterNickName.text
         textLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
-        nickcNameTextField.placeholder = SLPAssets.RawString.writeTenLetters.text
+        emailTextField.placeholder = SLPAssets.RawString.writeTenLetters.text
         lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
         
         nextButton.layer.cornerRadius = 8
@@ -85,8 +86,8 @@ final class EmailViewController: UIViewController {
     }
     
     private func setFirstResponder() {
-        nickcNameTextField.becomeFirstResponder()
-        nickcNameTextField.keyboardType = .decimalPad
+        emailTextField.becomeFirstResponder()
+        emailTextField.keyboardType = .decimalPad
     }
     
     private func setSendMessageButtonAble() {
@@ -102,5 +103,4 @@ final class EmailViewController: UIViewController {
     private func bind() {
         
     }
-        
 }

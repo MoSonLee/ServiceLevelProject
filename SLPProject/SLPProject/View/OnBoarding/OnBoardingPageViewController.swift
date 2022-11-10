@@ -79,7 +79,7 @@ final class OnBoardingPageViewController: UIViewController {
         output.showLoginVC
             .emit(onNext: { [weak self] _ in
 //                let vc = LoginViewController()
-                let vc = BirthViewController()
+                let vc = EmailViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .overFullScreen
                 self?.present(nav, animated: true)

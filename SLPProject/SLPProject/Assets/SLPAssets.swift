@@ -113,6 +113,9 @@ enum SLPAssets {
         case enterBirth
         case ageLimit
         case writeAllCases
+        case enterEmail
+        case emailSubtext
+        case emailPlaceholder
         case next
         
         var text: String {
@@ -185,6 +188,15 @@ enum SLPAssets {
                 
             case .writeAllCases:
                 return "나이 정보를 모두 입력해주세요"
+                
+            case .enterEmail:
+                return "이메일을 입력해주세요"
+                
+            case .emailSubtext:
+                return "휴대폰 변경 시 이증을 위해 사용해요"
+                
+            case .emailPlaceholder:
+                return "SeSAC@email.com"
                 
             case .enterBirth:
                 return "생년월일을 알려주세요"
