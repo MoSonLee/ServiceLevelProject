@@ -112,6 +112,7 @@ enum SLPAssets {
         case writeNickNameLetters
         case enterBirth
         case ageLimit
+        case writeAllCases
         case next
         
         var text: String {
@@ -181,6 +182,9 @@ enum SLPAssets {
                 
             case .writeNickNameLetters:
                 return "닉네임은 1자 이상 10자 이내로 부탁드려요."
+                
+            case .writeAllCases:
+                return "나이 정보를 모두 입력해주세요"
                 
             case .enterBirth:
                 return "생년월일을 알려주세요"

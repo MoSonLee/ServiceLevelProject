@@ -12,6 +12,7 @@ import RxCocoa
 import RxSwift
 
 final class CertificationViewModel {
+    
     struct Input {
         let viewDidLoad: Observable<Void>
         let backButtonTapped: Signal<Void>

@@ -14,6 +14,7 @@ import Toast
 
 final class BirthViewController: UIViewController {
     
+    private var backButton = UIBarButtonItem()
     private let textLabel = UILabel()
     private let stackView = UIStackView()
     private let blockingButton = UIButton()
@@ -38,7 +39,7 @@ final class BirthViewController: UIViewController {
     
     private lazy var input = BirthViewModel.Input(
         viewDidLoad: viewDidLoadEvent.asObservable(),
-        
+        backButtonTapped: backButton.rx.tap.asSignal(),
         textFieldChanged: pickerView.rx.itemSelected
             .withLatestFrom(
                 Observable.combineLatest(
@@ -52,9 +53,9 @@ final class BirthViewController: UIViewController {
         nextButtonClikced: nextButton.rx.tap
             .withLatestFrom(
                 Observable.combineLatest(
-                    monthTextField.rx.text.orEmpty,
-                    yearTextField.rx.text.orEmpty,
-                    dayTextField.rx.text.orEmpty
+                    (yearTextField.rx.text.orEmpty),
+                    (monthTextField.rx.text.orEmpty),
+                    (dayTextField.rx.text.orEmpty)
                 ) {($0, $1, $2)}
             )
             .asSignal(onErrorJustReturn: ("", "", ""))
@@ -72,6 +73,12 @@ final class BirthViewController: UIViewController {
         viewDidLoadEvent.accept(())
     }
     
+    private func setNavigation() {
+        backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
+        backButton.tintColor = SLPAssets.CustomColor.black.color
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
     private func setComponents() {
         [textLabel, stackView, nextButton, blockingButton].forEach {
             view.addSubview($0)
@@ -80,6 +87,7 @@ final class BirthViewController: UIViewController {
             stackView.addSubview($0)
         }
         setComponentsValue()
+        setNavigation()
     }
     
     private func setConstraints() {
@@ -189,7 +197,7 @@ final class BirthViewController: UIViewController {
         let components = calendar.dateComponents([.year], from: date)
         let year = components.year
         guard let year = year else { return }
-        allYear = Array(2000...year).reversed()
+        allYear = Array(1900...year).reversed()
     }
     
     private func setFirstResponder() {
@@ -219,6 +227,12 @@ final class BirthViewController: UIViewController {
         output.becomeFirstResponder
             .emit(onNext: { [weak self] _ in
                 self?.setFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
+        output.popVC
+            .emit(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
         

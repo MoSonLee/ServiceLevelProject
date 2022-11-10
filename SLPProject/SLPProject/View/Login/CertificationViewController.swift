@@ -41,7 +41,7 @@ final class CertificationViewController: UIViewController {
         resendButtonTapped: resendButton.rx.tap.asSignal()
     )
     
-    private lazy var outpt = viewModel.transform(input: input)
+    private lazy var output = viewModel.transform(input: input)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,25 +144,25 @@ final class CertificationViewController: UIViewController {
     }
     
     private func bind() {
-        outpt.becomeFirstResponder
+        output.becomeFirstResponder
             .emit(onNext: { [weak self] _ in
                 self?.setFirstResponder()
             })
             .disposed(by: disposeBag)
         
-        outpt.popVC
+        output.popVC
             .emit(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
         
-        outpt.ableStartButton
+        output.ableStartButton
             .emit(onNext: { [weak self] check in
                 check ? self?.setStartButtonAble() : self?.setStartButtonDisabled()
             })
             .disposed(by: disposeBag)
         
-        outpt.showSingUpVC
+        output.showSingUpVC
             .emit(onNext: { [weak self] _ in
                 let vc = NickNameViewController()
                 let nav = UINavigationController(rootViewController: vc)
@@ -171,7 +171,7 @@ final class CertificationViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        outpt.showMainVC
+        output.showMainVC
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
                 let nav = UINavigationController(rootViewController: vc)
@@ -180,7 +180,7 @@ final class CertificationViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        outpt.showToast
+        output.showToast
             .emit(onNext: { [weak self] text in
                 self?.view.makeToast(text)
                 self?.certificationTextField.resignFirstResponder()
