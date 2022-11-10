@@ -165,9 +165,7 @@ final class CertificationViewController: UIViewController {
         output.showSingUpVC
             .emit(onNext: { [weak self] _ in
                 let vc = NickNameViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .overFullScreen
-                self?.present(nav, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         

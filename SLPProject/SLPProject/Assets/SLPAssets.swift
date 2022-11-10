@@ -116,6 +116,7 @@ enum SLPAssets {
         case enterEmail
         case emailSubtext
         case emailPlaceholder
+        case wrongEmailType
         case next
         
         var text: String {
@@ -193,13 +194,16 @@ enum SLPAssets {
                 return "이메일을 입력해주세요"
                 
             case .emailSubtext:
-                return "휴대폰 변경 시 이증을 위해 사용해요"
+                return "휴대폰 변경 시 인증을 위해 사용해요"
                 
             case .emailPlaceholder:
                 return "SeSAC@email.com"
                 
             case .enterBirth:
                 return "생년월일을 알려주세요"
+                
+            case .wrongEmailType:
+                return "메일 형식이 올바르지 않습니다."
             }
         }
     }

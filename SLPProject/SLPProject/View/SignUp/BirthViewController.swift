@@ -53,9 +53,9 @@ final class BirthViewController: UIViewController {
         nextButtonClikced: nextButton.rx.tap
             .withLatestFrom(
                 Observable.combineLatest(
-                    (yearTextField.rx.text.orEmpty),
-                    (monthTextField.rx.text.orEmpty),
-                    (dayTextField.rx.text.orEmpty)
+                    yearTextField.rx.text.orEmpty,
+                    monthTextField.rx.text.orEmpty,
+                    dayTextField.rx.text.orEmpty
                 ) {($0, $1, $2)}
             )
             .asSignal(onErrorJustReturn: ("", "", ""))

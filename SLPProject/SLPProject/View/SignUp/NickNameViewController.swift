@@ -155,6 +155,5 @@ final class NickNameViewController: UIViewController {
                 check ? self?.setNextButtonAble() : self?.setNextButtonDisabled()
             })
             .disposed(by: disposeBag)
-        
     }
 }
