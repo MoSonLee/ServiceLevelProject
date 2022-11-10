@@ -80,7 +80,7 @@ final class OnBoardingPageViewController: UIViewController {
             .emit(onNext: { [weak self] _ in
                 let vc = LoginViewController()
                 let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .overFullScreen
+                nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)

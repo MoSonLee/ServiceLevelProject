@@ -13,6 +13,8 @@ enum SLPAssets {
         case firstOnboardingImage
         case secondOnboardingImage
         case thirdOnboardingImage
+        case boyButton
+        case girlButton
         case backButton
         
         var image: UIImage {
@@ -25,6 +27,12 @@ enum SLPAssets {
                 
             case .thirdOnboardingImage:
                 return UIImage(named: "ThirdOnboardingImage")!
+                
+            case .boyButton:
+                return UIImage(named: "boyButton")!
+                
+            case .girlButton:
+                return UIImage(named: "girlButton")!
                 
             case .backButton:
                 return UIImage(systemName: "arrow.backward")!

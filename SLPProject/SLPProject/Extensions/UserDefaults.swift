@@ -36,4 +36,7 @@ extension UserDefaults {
     
     @UserDefault(key: "userToken", defaultValue: "")
     static var userToken: String
+    
+    @UserDefault(key: "gender", defaultValue: -1)
+    static var gender: Int
 }

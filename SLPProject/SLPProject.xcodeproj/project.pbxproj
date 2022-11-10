@@ -121,6 +121,7 @@
 				77C0D97E29192565008FDA83 /* View */,
 				77C0D97D29192562008FDA83 /* ViewModel */,
 				77C0D9802919259C008FDA83 /* Assets */,
+				7757701C291D977800DA331B /* Custom */,
 				77C0D98E291942D8008FDA83 /* Extensions */,
 			);
 			path = SLPProject;
@@ -180,6 +181,15 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		7757701C291D977800DA331B /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
+				77577018291D3A2700DA331B /* CustomTextField.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		77C0D97C2919255E008FDA83 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,10 +241,8 @@
 		77C0D98E291942D8008FDA83 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
 				77C0D9A329199970008FDA83 /* String.swift */,
 				77577011291BD4D000DA331B /* UserDefaults.swift */,
-				77577018291D3A2700DA331B /* CustomTextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

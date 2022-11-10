@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         } else {
-            let vc = LoginViewController()
+//            let vc = LoginViewController()
+            let vc = BirthViewController()
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         }

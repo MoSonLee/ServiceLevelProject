@@ -129,7 +129,6 @@ final class EmailViewController: UIViewController {
     
     private func setFirstResponder() {
         emailTextField.becomeFirstResponder()
-        emailTextField.keyboardType = .decimalPad
     }
     
     private func bind() {

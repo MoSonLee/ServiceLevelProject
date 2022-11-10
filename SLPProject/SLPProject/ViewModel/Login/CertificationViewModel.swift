@@ -72,7 +72,6 @@ final class CertificationViewModel {
         input.resendButtonTapped
             .emit(onNext: { [weak self] _ in
                 let phoneNumber =  UserDefaults.userNumber
-                print(phoneNumber)
                 self?.getCertificationMessage(phoneNumber: phoneNumber)
             })
             .disposed(by: disposeBag)
@@ -125,7 +124,6 @@ extension CertificationViewModel {
     private func getToken() {
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            print("Success")
             if let error = error {
                 print(error)
                 return

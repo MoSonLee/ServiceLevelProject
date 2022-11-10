@@ -60,7 +60,11 @@ final class BirthViewModel {
         
         input.nextButtonClikced
             .emit(onNext: { [weak self] textFieldText in
-                self?.checkValidateAge(text0: textFieldText.0, text1: textFieldText.1, text2: textFieldText.2)
+                if textFieldText.0.isEmpty || textFieldText.1.isEmpty || textFieldText.2.isEmpty {
+                    self?.showToastRelay.accept(SLPAssets.RawString.writeAllCases.text)
+                } else {
+                    self?.checkValidateAge(text0: textFieldText.0, text1: textFieldText.1, text2: textFieldText.2)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -74,44 +78,57 @@ final class BirthViewModel {
     }
 }
 
+//MARK: 로직 분리
 extension BirthViewModel {
-    private func currentDateYearToString() -> String {
-        let date:Date = Date()
+    
+    private func checkValidateAge(text0: String, text1: String, text2: String) {
+        
+        guard let currentYear = Int(currentYear(date: Date())) else { return }
+        guard let currentMonth = Int(currentMonth(date: Date())) else { return }
+        guard let currentDay = Int(currentDay(date: Date())) else { return }
+        guard let yearText = Int(text0) else { return }
+        guard let monthText = Int(text1) else { return}
+        guard let dayText = Int(text2) else { return }
+        
+        if currentYear - yearText > 17 {
+            showMailVCRelay.accept(())
+        } else if currentYear - yearText < 17 {
+            showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
+        } else {
+            if currentMonth > monthText {
+                showMailVCRelay.accept(())
+            } else if currentMonth < monthText {
+                showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
+            } else  {
+                if currentDay >= dayText {
+                    showMailVCRelay.accept(())
+                } else {
+                    showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
+                }
+            }
+        }
+    }
+    
+    private func currentYear(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
     
-    private func currentDateMonthAndDayToString() -> String {
+    private func currentMonth(date: Date) -> String {
         let date:Date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMdd"
+        dateFormatter.dateFormat = "MM"
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
     
-    private func checkValidateAge(text0: String, text1: String, text2: String) {
-        var monthString = ""
-        var dayString = ""
-        if text1 < "10" {
-            monthString = "0\(text1)"
-        } else {
-            monthString = String(text1)
-        }
-        if text2 < "10" {
-            dayString = "0\(text2)"
-        } else {
-            dayString = String(text2)
-        }
-        let monthDay = monthString + dayString
-        
-        if text0.isEmpty || text1.isEmpty || text2.isEmpty {
-            showToastRelay.accept(SLPAssets.RawString.writeAllCases.text)
-        } else if (Int(currentDateYearToString() ) ?? 0) - (Int(text0) ?? 0) >= 17 && (Int(currentDateMonthAndDayToString() ) ?? 0) - (Int(monthDay) ?? 0) >= 0 {
-            showMailVCRelay.accept(())
-        } else {
-            showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
-        }
+    private func currentDay(date: Date) -> String {
+        let date:Date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        let dateString = dateFormatter.string(from: date)
+        return dateString
     }
 }
