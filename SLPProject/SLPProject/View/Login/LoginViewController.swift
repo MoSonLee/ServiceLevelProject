@@ -166,12 +166,6 @@ final class LoginViewController: UIViewController {
                 self?.phoneNumberTextField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
-        
-        output.checkMultipleTapped
-            .emit(onNext: { [weak self] text in
-                self?.view.makeToast(text)
-            })
-            .disposed(by: disposeBag)
     }
 }
 

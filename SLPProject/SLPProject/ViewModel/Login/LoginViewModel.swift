@@ -26,7 +26,7 @@ final class LoginViewModel{
         let ableMessageButton: Signal<Bool>
         let showCertificationVC: Signal<Bool>
         let showToast: Signal<String>
-        let checkMultipleTapped: Signal<String>
+        
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
@@ -34,7 +34,7 @@ final class LoginViewModel{
     private let ableMessageButtonRelay = PublishRelay<Bool>()
     private let showCertificationVCRelay = PublishRelay<Bool>()
     private let showToastRelay = PublishRelay<String>()
-    private let checkMultipleTappedRealy = PublishRelay<String>()
+    
     
     private let disposeBag = DisposeBag()
     
@@ -93,8 +93,7 @@ final class LoginViewModel{
             changeToFormatNumber: changeToFormatNumberRelay.asSignal(),
             ableMessageButton: ableMessageButtonRelay.asSignal(),
             showCertificationVC: showCertificationVCRelay.asSignal(),
-            showToast: showToastRelay.asSignal(),
-            checkMultipleTapped: checkMultipleTappedRealy.asSignal()
+            showToast: showToastRelay.asSignal()
         )
     }
 }

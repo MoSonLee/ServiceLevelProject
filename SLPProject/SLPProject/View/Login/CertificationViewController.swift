@@ -31,14 +31,13 @@ final class CertificationViewController: UIViewController {
         certificationTextFieldCompleted: certificationTextField.rx.text.orEmpty
             .distinctUntilChanged()
             .asSignal(onErrorJustReturn: ""),
-        
         startButtonTapped: startButton.rx.tap
             .withLatestFrom(
                 certificationTextField.rx.text.orEmpty
             )
             .asSignal(onErrorJustReturn: ""),
-        
-        resendButtonTapped: resendButton.rx.tap.asSignal()
+        resendButtonTapped: resendButton.rx.tap.asSignal(),
+        multipleTimeResendButtonTapped: resendButton.rx.tap.asSignal()
     )
     
     private lazy var output = viewModel.transform(input: input)

@@ -18,6 +18,7 @@ final class CertificationViewModel {
         let certificationTextFieldCompleted: Signal<String>
         let startButtonTapped: Signal<String>
         let resendButtonTapped: Signal<Void>
+        let multipleTimeResendButtonTapped: Signal<Void>
     }
     
     struct Output {
@@ -66,6 +67,12 @@ final class CertificationViewModel {
             .emit(onNext: { [weak self] text in
                 self?.verificationButtonClicked(code: text)
             })
+            .disposed(by: disposeBag)
+        
+        input.multipleTimeResendButtonTapped
+            .skip(5)
+            .map{ _ in SLPAssets.RawString.tooMuchRequest.text}
+            .emit(to: showToastRelay)
             .disposed(by: disposeBag)
         
         input.resendButtonTapped
