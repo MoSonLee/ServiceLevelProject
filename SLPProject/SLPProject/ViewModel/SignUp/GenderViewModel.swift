@@ -39,6 +39,7 @@ final class GenderViewModel {
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
+        
         input.backButtonTapped
             .do { [weak self] _ in self?.genderValue = -1 }
             .emit(to: popVCRelay)

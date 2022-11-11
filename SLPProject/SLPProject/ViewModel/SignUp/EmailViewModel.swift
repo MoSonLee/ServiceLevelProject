@@ -29,7 +29,7 @@ final class EmailViewModel {
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
-    private let popVCRealy = PublishRelay<Void>()
+    private let popVCRelay = PublishRelay<Void>()
     private let checkEmailTextFieldRelay = PublishRelay<String>()
     private let showGenerVCRelay = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Bool>()
@@ -45,34 +45,24 @@ final class EmailViewModel {
             .disposed(by: disposeBag)
         
         input.backButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.popVCRealy.accept(())
-            })
+            .emit(to: popVCRelay)
             .disposed(by: disposeBag)
         
         input.emailTextFieldCompleted
-            .emit(onNext: { [weak self] text in
-                if text.count > 5 && text.contains("@") && text.contains(".") {
-                    self?.ableNextButtonRelay.accept(true)
-                } else {
-                    self?.ableNextButtonRelay.accept(false)
-                }
-            })
+            .map { $0.count > 5 && $0.contains("@") && $0.contains(".") }
+            .emit(to: ableNextButtonRelay)
+            
             .disposed(by: disposeBag)
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] text in
-                if text.count > 5 && text.contains("@") && text.contains(".") {
-                    self?.showGenerVCRelay.accept(())
-                } else {
-                    self?.showToastRelay.accept(SLPAssets.RawString.wrongEmailType.text)
-                }
+                text.count > 5 && text.contains("@") && text.contains(".") ? self?.showGenerVCRelay.accept(()) : self?.showToastRelay.accept(SLPAssets.RawString.wrongEmailType.text)
             })
             .disposed(by: disposeBag)
         
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
-            popVC: popVCRealy.asSignal(),
+            popVC: popVCRelay.asSignal(),
             checkEmailTextField: checkEmailTextFieldRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
             ableNextButton: ableNextButtonRelay.asSignal(),

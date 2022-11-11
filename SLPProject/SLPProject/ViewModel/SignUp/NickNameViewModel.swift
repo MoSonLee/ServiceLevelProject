@@ -29,7 +29,7 @@ final class NickNameViewModel {
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
-    private let popVCRealy = PublishRelay<Void>()
+    private let popVCRelay = PublishRelay<Void>()
     private let checkNickNameTextFieldRelay = PublishRelay<String>()
     private let showBirthVCRelay = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Bool>()
@@ -38,6 +38,7 @@ final class NickNameViewModel {
     private let disposeBag = DisposeBag()
 
     func transform(input: Input) -> Output {
+        
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.becomeFirstResponderRelay.accept(())
@@ -45,9 +46,7 @@ final class NickNameViewModel {
             .disposed(by: disposeBag)
         
         input.backButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.popVCRealy.accept(())
-            })
+            .emit(to: popVCRelay)
             .disposed(by: disposeBag)
         
         input.nickNameTextFieldCompleted
@@ -69,7 +68,7 @@ final class NickNameViewModel {
         
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
-            popVC: popVCRealy.asSignal(),
+            popVC: popVCRelay.asSignal(),
             checkNickNameTextField: checkNickNameTextFieldRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
             ableNextButton: ableNextButtonRelay.asSignal(),

@@ -29,7 +29,7 @@ final class BirthViewModel {
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
-    private let popVCRealy = PublishRelay<Void>()
+    private let popVCRelay = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Bool>()
     private let setBirthTextRelay = PublishRelay<(String, String, String)>()
     private let showToastRelay = PublishRelay<String>()
@@ -44,9 +44,7 @@ final class BirthViewModel {
             .disposed(by: disposeBag)
         
         input.backButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.popVCRealy.accept(())
-            })
+            .emit(to: popVCRelay)
             .disposed(by: disposeBag)
         
         input.datePickerValueChanged
@@ -66,7 +64,7 @@ final class BirthViewModel {
         
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
-            popVC: popVCRealy.asSignal(),
+            popVC: popVCRelay.asSignal(),
             ableNextButton: ableNextButtonRelay.asSignal(),
             setBirthData: setBirthTextRelay.asSignal(),
             showToast: showToastRelay.asSignal(),

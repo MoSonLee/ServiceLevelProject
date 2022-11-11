@@ -121,6 +121,7 @@
 				7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */,
 				77145A772919244A0052B2FB /* Info.plist */,
 				77C0D97F29192568008FDA83 /* Application */,
+				77577021291EC8B400DA331B /* Firebase */,
 				77C0D97C2919255E008FDA83 /* Model */,
 				77C0D97E29192565008FDA83 /* View */,
 				77C0D97D29192562008FDA83 /* ViewModel */,
@@ -195,10 +196,17 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
-		77C0D97C2919255E008FDA83 /* Model */ = {
+		77577021291EC8B400DA331B /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 				7757701D291DE2DB00DA331B /* FirebaseAuthorization.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		77C0D97C2919255E008FDA83 /* Model */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Model;
 			sourceTree = "<group>";
