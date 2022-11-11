@@ -70,7 +70,6 @@ final class NickNameViewModel {
             })
             .disposed(by: disposeBag)
         
-        
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
             popVC: popVCRealy.asSignal(),
