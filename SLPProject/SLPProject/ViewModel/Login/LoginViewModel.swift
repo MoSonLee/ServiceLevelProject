@@ -64,6 +64,7 @@ final class LoginViewModel{
             .disposed(by: disposeBag)
         
         input.sendMessageButtonTapped
+            .throttle(.seconds(2), latest: false)
             .emit(onNext: { [weak self] text in
                 let filterText = text.filter { "0123456789".contains($0) }
                 let startNumber = "01"
@@ -82,9 +83,9 @@ final class LoginViewModel{
             .disposed(by: disposeBag)
         
         input.multipleTimeMessageButtonTapped
-            .emit(onNext: { [weak self] text in
-                //MARK: 중복 터치 처리
-            })
+            .skip(5)
+            .map{ _ in SLPAssets.RawString.tooMuchRequest.text}
+            .emit(to: showToastRelay)
             .disposed(by: disposeBag)
         
         return Output(

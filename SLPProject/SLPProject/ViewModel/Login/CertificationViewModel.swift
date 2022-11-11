@@ -69,6 +69,7 @@ final class CertificationViewModel {
             .disposed(by: disposeBag)
         
         input.resendButtonTapped
+            .throttle(.seconds(2), latest: false)
             .emit(onNext: { [weak self] _ in
                 let phoneNumber =  UserDefaults.userNumber
                 self?.getCertificationMessage(phoneNumber: phoneNumber)
