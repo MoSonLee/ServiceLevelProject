@@ -28,7 +28,7 @@ final class GenderViewModel {
         let showMainVC: Signal<Void>
     }
     
-    private var genderValue: Int?
+    private var genderValue = -1
     private let highlightBoyButtonRelay = PublishRelay<Void>()
     private let highlightGirlButtonRelay = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Void>()
@@ -40,34 +40,36 @@ final class GenderViewModel {
     
     func transform(input: Input) -> Output {
         input.backButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.popVCRelay.accept(())
-                UserDefaults.gender = -1
-            })
+            .do { [weak self] _ in self?.genderValue = -1 }
+            .emit(to: popVCRelay)
             .disposed(by: disposeBag)
         
         input.boyButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.highlightBoyButtonRelay.accept(())
-                UserDefaults.gender = 1
-                self?.genderValue = 1
-                self?.ableNextButtonRelay.accept(())
-            })
+            .do { [weak self] _ in self?.genderValue = 1 }
+            .emit(to: highlightBoyButtonRelay)
+            .disposed(by: disposeBag)
+        
+        input.boyButtonTapped
+            .do { [weak self] _ in self?.genderValue = 1 }
+            .emit(to: ableNextButtonRelay)
             .disposed(by: disposeBag)
         
         input.girlButtonTapped
-            .emit(onNext: { [weak self] _ in
-                self?.highlightGirlButtonRelay.accept(())
-                self?.genderValue = 0
-                UserDefaults.gender = 0
-                self?.ableNextButtonRelay.accept(())
-            })
+            .do { [weak self] _ in self?.genderValue = 0 }
+            .emit(to: highlightGirlButtonRelay)
+            .disposed(by: disposeBag)
+        
+        input.girlButtonTapped
+            .do { [weak self] _ in self?.genderValue = 0 }
+            .emit(to: ableNextButtonRelay)
             .disposed(by: disposeBag)
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
-                if self?.genderValue != nil {
+                if self?.genderValue != -1 {
                     self?.showMainVCRelay.accept(())
+                    guard let genderValue = self?.genderValue else { return }
+                    UserDefaults.gender = genderValue
                 } else {
                     self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text)
                 }

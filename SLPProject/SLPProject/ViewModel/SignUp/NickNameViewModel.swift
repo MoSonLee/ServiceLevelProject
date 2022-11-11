@@ -51,23 +51,20 @@ final class NickNameViewModel {
             .disposed(by: disposeBag)
         
         input.nickNameTextFieldCompleted
-            .emit(onNext: { [weak self] text in
-                if text.count > 0 && text.count <= 10 {
-                    self?.ableNextButtonRelay.accept(true)
-                } else {
-                    self?.ableNextButtonRelay.accept(false)
-                }
-            })
+            .map { $0.count > 0 && $0.count <= 10 }
+            .emit(to: ableNextButtonRelay)
             .disposed(by: disposeBag)
         
         input.nextButtonTapped
-            .emit(onNext: { [weak self] text in
-                if text.count > 0 && text.count <= 10 {
-                    self?.showBirthVCRelay.accept(())
-                } else {
-                    self?.showToastRelay.accept(SLPAssets.RawString.writeNickNameLetters.text)
-                }
-            })
+            .filter { $0.count > 0 && $0.count <= 10 }
+            .map { _ in () }
+            .emit(to: showBirthVCRelay)
+            .disposed(by: disposeBag)
+        
+        input.nextButtonTapped
+            .filter { !($0.count > 0 && $0.count <= 10) }
+            .map { _ in SLPAssets.RawString.writeNickNameLetters.text }
+            .emit(to: showToastRelay)
             .disposed(by: disposeBag)
         
         return Output(

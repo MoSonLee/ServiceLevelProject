@@ -19,7 +19,6 @@ final class NickNameViewController: UIViewController {
     private let nickcNameTextField = UITextField()
     private let lineView = UIView()
     private let nextButton = UIButton()
-    
     private let viewModel = NickNameViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
     

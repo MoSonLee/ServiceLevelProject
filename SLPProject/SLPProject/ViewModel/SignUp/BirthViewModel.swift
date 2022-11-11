@@ -49,15 +49,16 @@ final class BirthViewModel {
             .disposed(by: disposeBag)
         
         input.textFieldChanged
-            .emit(onNext: { [weak self] textFieldText in
-                if textFieldText.0.isEmpty || textFieldText.1.isEmpty || textFieldText.2.isEmpty {
-                    self?.ableNextButtonRelay.accept(false)
-                } else {
-                    self?.ableNextButtonRelay.accept(true)
-                }
-            })
+            .map (checkText )
+            .emit(to: ableNextButtonRelay)
             .disposed(by: disposeBag)
         
+//        input.nextButtonClikced
+//            .filter { $0.0.isEmpty || $0.1.isEmpty || $0.2.isEmpty }
+//            .map {_ in SLPAssets.RawString.writeAllCases.text }
+//            .emit(to: showToastRelay)
+//            .disposed(by: disposeBag)
+
         input.nextButtonClikced
             .emit(onNext: { [weak self] textFieldText in
                 if textFieldText.0.isEmpty || textFieldText.1.isEmpty || textFieldText.2.isEmpty {
@@ -78,7 +79,13 @@ final class BirthViewModel {
     }
 }
 
-//MARK: 로직 분리
+extension BirthViewModel {
+    private func checkText( texts: (String, String, String)) -> Bool {
+        return !(texts.0.isEmpty || texts.1.isEmpty || texts.2.isEmpty)
+    }
+}
+
+//MARK: 쓰레기 분리 수거
 extension BirthViewModel {
     
     private func checkValidateAge(text0: String, text1: String, text2: String) {
