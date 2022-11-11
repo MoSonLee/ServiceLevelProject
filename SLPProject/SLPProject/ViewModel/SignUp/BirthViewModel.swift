@@ -15,14 +15,15 @@ final class BirthViewModel {
     struct Input {
         let viewDidLoad: Observable<Void>
         let backButtonTapped: Signal<Void>
-        let textFieldChanged: Signal<(String, String, String)>
-        let nextButtonClikced: Signal<(String, String, String)>
+        let datePickerValueChanged: Signal<Date>
+        let nextButtonClikced: Signal<Date>
     }
     
     struct Output {
         let becomeFirstResponder: Signal<Void>
         let popVC: Signal<Void>
         let ableNextButton: Signal<Bool>
+        let setBirthData: Signal<(String,String,String)>
         let showToast: Signal<String>
         let showMailVC: Signal<Void>
     }
@@ -30,9 +31,9 @@ final class BirthViewModel {
     private let becomeFirstResponderRelay = PublishRelay<Void>()
     private let popVCRealy = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Bool>()
+    private let setBirthTextRelay = PublishRelay<(String, String, String)>()
     private let showToastRelay = PublishRelay<String>()
     private let showMailVCRelay = PublishRelay<Void>()
-    
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -48,24 +49,18 @@ final class BirthViewModel {
             })
             .disposed(by: disposeBag)
         
-        input.textFieldChanged
-            .map (checkText )
-            .emit(to: ableNextButtonRelay)
+        input.datePickerValueChanged
+            .emit { [weak self] date in
+                guard let selectedDateString = self?.dateformat(date: date) else { return }
+                self?.ableNextButtonRelay.accept(true)
+                self?.setBirthTextRelay.accept(selectedDateString)
+            }
             .disposed(by: disposeBag)
         
-//        input.nextButtonClikced
-//            .filter { $0.0.isEmpty || $0.1.isEmpty || $0.2.isEmpty }
-//            .map {_ in SLPAssets.RawString.writeAllCases.text }
-//            .emit(to: showToastRelay)
-//            .disposed(by: disposeBag)
-
         input.nextButtonClikced
-            .emit(onNext: { [weak self] textFieldText in
-                if textFieldText.0.isEmpty || textFieldText.1.isEmpty || textFieldText.2.isEmpty {
-                    self?.showToastRelay.accept(SLPAssets.RawString.writeAllCases.text)
-                } else {
-                    self?.checkValidateAge(text0: textFieldText.0, text1: textFieldText.1, text2: textFieldText.2)
-                }
+            .emit(onNext: { [weak self] selectedDate in
+                guard let age = Calendar.current.dateComponents([.year], from: selectedDate, to: Date()).year else { return }
+                age >= 17 ? self?.showMailVCRelay.accept(()) : self?.showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
             })
             .disposed(by: disposeBag)
         
@@ -73,6 +68,7 @@ final class BirthViewModel {
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
             popVC: popVCRealy.asSignal(),
             ableNextButton: ableNextButtonRelay.asSignal(),
+            setBirthData: setBirthTextRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
             showMailVC: showMailVCRelay.asSignal()
         )
@@ -80,62 +76,14 @@ final class BirthViewModel {
 }
 
 extension BirthViewModel {
-    private func checkText( texts: (String, String, String)) -> Bool {
-        return !(texts.0.isEmpty || texts.1.isEmpty || texts.2.isEmpty)
-    }
-}
-
-//MARK: 쓰레기 분리 수거
-extension BirthViewModel {
-    
-    private func checkValidateAge(text0: String, text1: String, text2: String) {
-        
-        guard let currentYear = Int(currentYear(date: Date())) else { return }
-        guard let currentMonth = Int(currentMonth(date: Date())) else { return }
-        guard let currentDay = Int(currentDay(date: Date())) else { return }
-        guard let yearText = Int(text0) else { return }
-        guard let monthText = Int(text1) else { return}
-        guard let dayText = Int(text2) else { return }
-        
-        if currentYear - yearText > 17 {
-            showMailVCRelay.accept(())
-        } else if currentYear - yearText < 17 {
-            showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
-        } else {
-            if currentMonth > monthText {
-                showMailVCRelay.accept(())
-            } else if currentMonth < monthText {
-                showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
-            } else  {
-                if currentDay >= dayText {
-                    showMailVCRelay.accept(())
-                } else {
-                    showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
-                }
-            }
-        }
-    }
-    
-    private func currentYear(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy"
-        let dateString = dateFormatter.string(from: date)
-        return dateString
-    }
-    
-    private func currentMonth(date: Date) -> String {
-        let date:Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM"
-        let dateString = dateFormatter.string(from: date)
-        return dateString
-    }
-    
-    private func currentDay(date: Date) -> String {
-        let date:Date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd"
-        let dateString = dateFormatter.string(from: date)
-        return dateString
+    private func dateformat(date: Date) -> (String, String, String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        let year = formatter.string(from: date)
+        formatter.dateFormat = "MM"
+        let month = formatter.string(from: date)
+        formatter.dateFormat = "dd"
+        let day = formatter.string(from: date)
+        return (year, month, day)
     }
 }

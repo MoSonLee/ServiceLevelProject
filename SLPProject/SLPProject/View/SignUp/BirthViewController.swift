@@ -16,7 +16,7 @@ final class BirthViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
     private let textLabel = UILabel()
-    private let stackView = UIStackView()
+    private let containerView = UIView()
     private let blockingButton = UIButton()
     private let yearTextField = CustomTextField()
     private let monthTextField = CustomTextField()
@@ -28,11 +28,7 @@ final class BirthViewController: UIViewController {
     private let secondLineView = UIView()
     private let thirdLineView = UIView()
     private let nextButton = UIButton()
-    private let pickerView = UIPickerView()
-    
-    private var allYear: [Int] = []
-    private let allMonth: [Int] = Array(1...12)
-    private let allDay: [Int] = Array(1...31)
+    private let datePicker = UIDatePicker()
     
     private let viewModel = BirthViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -40,25 +36,10 @@ final class BirthViewController: UIViewController {
     private lazy var input = BirthViewModel.Input(
         viewDidLoad: viewDidLoadEvent.asObservable(),
         backButtonTapped: backButton.rx.tap.asSignal(),
-        textFieldChanged: pickerView.rx.itemSelected
-            .withLatestFrom(
-                Observable.combineLatest(
-                    yearTextField.rx.text.orEmpty,
-                    monthTextField.rx.text.orEmpty,
-                    dayTextField.rx.text.orEmpty
-                ) {($0, $1, $2)}
-            )
-            .asSignal(onErrorJustReturn: ("", "", "")),
-        
+        datePickerValueChanged: datePicker.rx.date.asSignal(onErrorJustReturn: Date()),
         nextButtonClikced: nextButton.rx.tap
-            .withLatestFrom(
-                Observable.combineLatest(
-                    yearTextField.rx.text.orEmpty,
-                    monthTextField.rx.text.orEmpty,
-                    dayTextField.rx.text.orEmpty
-                ) {($0, $1, $2)}
-            )
-            .asSignal(onErrorJustReturn: ("", "", ""))
+            .withLatestFrom(datePicker.rx.date)
+            .asSignal(onErrorJustReturn: Date())
     )
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
@@ -68,7 +49,6 @@ final class BirthViewController: UIViewController {
         setComponents()
         setPickerView()
         setConstraints()
-        setDateComponents()
         bind()
         viewDidLoadEvent.accept(())
     }
@@ -80,14 +60,15 @@ final class BirthViewController: UIViewController {
     }
     
     private func setComponents() {
-        [textLabel, stackView, nextButton, blockingButton].forEach {
+        [textLabel, containerView, nextButton, blockingButton].forEach {
             view.addSubview($0)
         }
         [yearTextField, yearLabel, firstLineView, monthTextField, monthLabel, secondLineView, dayTextField, dayLabel, thirdLineView].forEach {
-            stackView.addSubview($0)
+            containerView.addSubview($0)
         }
         setComponentsValue()
         setNavigation()
+        setDatePicker()
     }
     
     private func setConstraints() {
@@ -96,7 +77,7 @@ final class BirthViewController: UIViewController {
             make.leading.equalTo(74)
             make.trailing.equalTo(-73)
             make.height.equalTo(64)
-            make.bottom.equalTo(stackView.snp.top).inset(-80)
+            make.bottom.equalTo(containerView.snp.top).inset(-80)
         }
         blockingButton.snp.makeConstraints { make in
             make.leading.equalTo(16)
@@ -104,7 +85,7 @@ final class BirthViewController: UIViewController {
             make.height.equalTo(47)
             make.bottom.equalTo(nextButton.snp.top).inset(-72)
         }
-        stackView.snp.makeConstraints { make in
+        containerView.snp.makeConstraints { make in
             make.leading.equalTo(16)
             make.trailing.equalTo(-16)
             make.height.equalTo(47)
@@ -171,11 +152,9 @@ final class BirthViewController: UIViewController {
         textLabel.textAlignment = .center
         textLabel.text = SLPAssets.RawString.enterBirth.text
         textLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        
         [firstLineView, secondLineView, thirdLineView].forEach {
             $0.backgroundColor = SLPAssets.CustomColor.gray3.color
         }
-        
         nextButton.layer.cornerRadius = 8
         nextButton.setTitle(SLPAssets.RawString.next.text, for: .normal)
         nextButton.backgroundColor = SLPAssets.CustomColor.gray6.color
@@ -191,13 +170,9 @@ final class BirthViewController: UIViewController {
         dayTextField.placeholder = "1"
     }
     
-    private func setDateComponents() {
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year], from: date)
-        let year = components.year
-        guard let year = year else { return }
-        allYear = Array(1900...year).reversed()
+    private func setDatePicker() {
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .wheels
     }
     
     private func setFirstResponder() {
@@ -209,9 +184,7 @@ final class BirthViewController: UIViewController {
     }
     
     private func setPickerView() {
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        yearTextField.inputView = pickerView
+        yearTextField.inputView = datePicker
         yearTextField.tintColor = .clear
     }
     
@@ -256,62 +229,18 @@ final class BirthViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.setBirthData
+            .emit(onNext: { [weak self] texts in
+                self?.yearTextField.text = texts.0
+                self?.monthTextField.text = texts.1
+                self?.dayTextField.text = texts.2
+            })
+            .disposed(by: disposeBag)
+   
         blockingButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 self?.setFirstResponder()
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension BirthViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0:
-            return allYear.count
-        case 1:
-            return allMonth.count
-        case 2:
-            return allDay.count
-        default:
-            return 0
-        }
-    }
-    
-    //MARK: 너무 러프한 로직 -> 어떻게 효율적으로 수정할 수 있을까?
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch component {
-        case 0:
-            yearTextField.text = String(allYear[row])
-            yearTextField.text?.removeAll()
-            yearTextField.insertText(String(allYear[row]))
-        case 1:
-            monthTextField.text = String(allMonth[row])
-            monthTextField.text?.removeAll()
-            monthTextField.insertText(String(allMonth[row]))
-        case 2:
-            dayTextField.text = String(allDay[row])
-            dayTextField.text?.removeAll()
-            dayTextField.insertText(String(allDay[row]))
-        default:
-            break
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            return "\(allYear[row])년"
-        case 1:
-            return "\(allMonth[row])월"
-        case 2:
-            return "\(allDay[row])일"
-        default:
-            return ""
-        }
     }
 }
