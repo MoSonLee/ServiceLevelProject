@@ -28,6 +28,7 @@ final class GenderViewModel {
         let showMainVC: Signal<Void>
     }
     
+    private var genderValue: Int?
     private let highlightBoyButtonRelay = PublishRelay<Void>()
     private let highlightGirlButtonRelay = PublishRelay<Void>()
     private let ableNextButtonRelay = PublishRelay<Void>()
@@ -49,6 +50,7 @@ final class GenderViewModel {
             .emit(onNext: { [weak self] _ in
                 self?.highlightBoyButtonRelay.accept(())
                 UserDefaults.gender = 1
+                self?.genderValue = 1
                 self?.ableNextButtonRelay.accept(())
             })
             .disposed(by: disposeBag)
@@ -56,6 +58,7 @@ final class GenderViewModel {
         input.girlButtonTapped
             .emit(onNext: { [weak self] _ in
                 self?.highlightGirlButtonRelay.accept(())
+                self?.genderValue = 0
                 UserDefaults.gender = 0
                 self?.ableNextButtonRelay.accept(())
             })
@@ -63,8 +66,7 @@ final class GenderViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
-                
-                if UserDefaults.gender != -1 {
+                if self?.genderValue != nil {
                     self?.showMainVCRelay.accept(())
                 } else {
                     self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text)

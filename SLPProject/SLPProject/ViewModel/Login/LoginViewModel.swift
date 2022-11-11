@@ -7,7 +7,6 @@
 
 import Foundation
 
-import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -100,20 +99,17 @@ final class LoginViewModel{
 }
 
 extension LoginViewModel {
+    
     private func getCertificationMessage(phoneNumber: String) {
-        PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
-                if let id = verificationID {
-                    self?.showCertificationVCRelay.accept(true)
-                    UserDefaults.userVerificationID = id
-                    UserDefaults.userNumber = phoneNumber
-                }
-                
-                if let error = error {
-                    self?.showCertificationVCRelay.accept(false)
-                    print(error)
-                    return
-                }
+        FirebaseAuthorization().getCertificationMessage(phoneNumber: phoneNumber) { [weak self] id, error in
+            if id != nil {
+                guard let id = id else { return }
+                self?.showCertificationVCRelay.accept(true)
+                UserDefaults.userVerificationID = id
+                UserDefaults.userNumber = phoneNumber
+            } else {
+                self?.showCertificationVCRelay.accept(false)
             }
+        }
     }
 }

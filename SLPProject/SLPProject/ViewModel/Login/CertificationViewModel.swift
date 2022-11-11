@@ -7,7 +7,6 @@
 
 import Foundation
 
-import FirebaseAuth
 import RxCocoa
 import RxSwift
 
@@ -89,47 +88,37 @@ final class CertificationViewModel {
 }
 
 extension CertificationViewModel {
+    
     private func getCertificationMessage(phoneNumber: String) {
-        PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] (verificationID, error) in
-                if let id = verificationID {
-                    UserDefaults.userVerificationID = id
-                    self?.resendCodeRelay.accept(())
-                }
+        FirebaseAuthorization().getCertificationMessage(phoneNumber: phoneNumber) { [weak self] id, error in
+            if id != nil {
+                guard let id = id else { return }
+                self?.resendCodeRelay.accept(())
+                UserDefaults.userVerificationID = id
             }
+        }
     }
     
     private func verificationButtonClicked(code: String?) {
-        let verificationID = UserDefaults.userVerificationID
-        guard let verificationCode = code else { return  }
-        let credential = PhoneAuthProvider.provider().credential(
-            withVerificationID: verificationID,
-            verificationCode: verificationCode
-        )
-        logIn(credential: credential)
-    }
-    
-    private func logIn(credential: PhoneAuthCredential) {
-        Auth.auth().signIn(with: credential) { [weak self] authResult, error in
-            if let error = error {
-                print(error.localizedDescription)
-                self?.showToastRelay.accept(SLPAssets.RawString.certifciationfailure.text)
-            } else {
+        FirebaseAuthorization().verificationButtonClicked(code: code) { [weak self] result, error in
+            if result != nil {
                 self?.showSingUpVCRelay.accept(())
                 self?.getToken()
+            } else {
+                self?.showToastRelay.accept(SLPAssets.RawString.certifciationfailure.text)
+                print(error?.localizedDescription ?? "Error")
             }
         }
     }
     
     private func getToken() {
-        let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
-            if let error = error {
-                print(error)
-                return
+        FirebaseAuthorization().getToken { token, error in
+            if token != nil {
+                guard let token = token else { return }
+                UserDefaults.userToken = token
+                print(token)
             } else {
-                guard let idToken = idToken else { return }
-                UserDefaults.userToken = idToken
+                print(error ?? "Error")
             }
         }
     }
