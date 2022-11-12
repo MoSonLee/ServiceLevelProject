@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         } else {
-//                        let vc = LoginViewController()
-            let vc = EmailViewController()
+            let vc = LoginViewController()
+//            let vc = EmailViewController()
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         }

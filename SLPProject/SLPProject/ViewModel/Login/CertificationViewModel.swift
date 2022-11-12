@@ -7,6 +7,7 @@
 
 import Foundation
 
+import Moya
 import RxCocoa
 import RxSwift
 
@@ -39,6 +40,9 @@ final class CertificationViewModel {
     private let resendCodeRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let disposeBag = DisposeBag()
+    
+    private let provider: MoyaProvider<SLPTarget>
+    init() { provider = MoyaProvider<SLPTarget>() }
     
     func transform(input: Input) -> Output {
         input.viewDidLoad
@@ -123,11 +127,50 @@ extension CertificationViewModel {
             if token != nil {
                 guard let token = token else { return }
                 UserDefaults.userToken = token
-                self?.showSingUpVCRelay.accept(())
+                self?.requestUserSigned()
                 print(token)
             } else {
                 self?.showToastRelay.accept(SLPAssets.RawString.etcError.text)
                 print(error ?? "Error")
+            }
+        }
+    }
+}
+
+extension CertificationViewModel {
+    private func requestUserSigned() {
+        let parameters = ["hash": ""]
+        provider.request(.login(parameters: parameters)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserAccounts.self, from: response.data)
+                if data.userId.isEmpty{
+                    self.showMainVCRelay.accept(())
+                    print("already User")
+                }
+            case .failure(let error):
+                print(error)
+                self.showSingUpVCRelay.accept(())
+                print("not user")
+                let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
+                switch error {
+                case .tokenError:
+                    print(SLPLoginError.tokenError)
+                    return
+                case .unRegisteredUser:
+                    self.showSingUpVCRelay.accept(())
+                    return
+                case .serverError:
+                    print(SLPLoginError.serverError)
+                    return
+                case .clientError:
+                    print(SLPLoginError.clientError)
+                    return
+                case .unknown:
+                    print(SLPLoginError.unknown)
+                    return
+                }
             }
         }
     }

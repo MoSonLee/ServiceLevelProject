@@ -7,6 +7,7 @@
 
 import Foundation
 
+import Moya
 import RxCocoa
 import RxSwift
 
@@ -35,8 +36,10 @@ final class GenderViewModel {
     private let popVCRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let showMainVCRelay = PublishRelay<Void>()
-    
     private let disposeBag = DisposeBag()
+    
+    private let provider: MoyaProvider<SLPTarget>
+    init() { provider = MoyaProvider<SLPTarget>() }
     
     func transform(input: Input) -> Output {
         
@@ -89,6 +92,21 @@ final class GenderViewModel {
 }
 
 //MARK: 서버 통신 로직 구현 예정
-extension GenderViewModel {
-    
-}
+//extension GenderViewModel {
+//    private func requestSignUpUser() {
+//        let parameters = ["hash": ""]
+//        provider.request(.login(parameters: parameters)) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let response):
+//                let data = try! JSONDecoder().decode(UserAccounts.self, from: response.data)
+//                if data.userId.isEmpty{
+//                    self.showMainVCRelay.accept(())
+//                    print("already User")
+//                }
+//            case .failure(let error):
+//                }
+//            }
+//        }
+//    }
+//}
