@@ -110,7 +110,6 @@ extension CertificationViewModel {
     private func verificationButtonClicked(code: String?) {
         FirebaseAuthorization().verificationButtonClicked(code: code) { [weak self] result, error in
             if result != nil {
-                self?.showSingUpVCRelay.accept(())
                 self?.getToken()
             } else {
                 self?.showToastRelay.accept(SLPAssets.RawString.certifciationfailure.text)
@@ -120,12 +119,14 @@ extension CertificationViewModel {
     }
     
     private func getToken() {
-        FirebaseAuthorization().getToken { token, error in
+        FirebaseAuthorization().getToken { [weak self] token, error in
             if token != nil {
                 guard let token = token else { return }
                 UserDefaults.userToken = token
+                self?.showSingUpVCRelay.accept(())
                 print(token)
             } else {
+                self?.showToastRelay.accept(SLPAssets.RawString.etcError.text)
                 print(error ?? "Error")
             }
         }

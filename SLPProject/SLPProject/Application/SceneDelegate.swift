@@ -8,7 +8,7 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -19,21 +19,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         } else {
-            let vc = LoginViewController()
-//            let vc = BirthViewController()
+//                        let vc = LoginViewController()
+            let vc = EmailViewController()
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         }
         window?.makeKeyAndVisible()
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {}
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) {}
-
+    
     func sceneWillResignActive(_ scene: UIScene) {}
-
+    
     func sceneWillEnterForeground(_ scene: UIScene) {}
-
+    
     func sceneDidEnterBackground(_ scene: UIScene) {}
 }

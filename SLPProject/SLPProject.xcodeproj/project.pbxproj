@@ -23,6 +23,9 @@
 		7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */; };
 		7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */; };
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
+		7744A34A291FB83B00A065C8 /* SignUpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SignUpAPI.swift */; };
+		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
+		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
@@ -60,6 +63,8 @@
 		7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
+		7744A349291FB83B00A065C8 /* SignUpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAPI.swift; sourceTree = "<group>"; };
+		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
@@ -88,6 +93,7 @@
 			files = (
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7737FD26291AA1380029DEA2 /* FirebaseAuth in Frameworks */,
+				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
 				77C0D985291927B1008FDA83 /* SnapKit in Frameworks */,
 				77145A81291924600052B2FB /* RxSwift in Frameworks */,
 				77145A7F291924600052B2FB /* RxCocoa in Frameworks */,
@@ -121,7 +127,7 @@
 				7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */,
 				77145A772919244A0052B2FB /* Info.plist */,
 				77C0D97F29192568008FDA83 /* Application */,
-				77577021291EC8B400DA331B /* Firebase */,
+				7744A348291FB81500A065C8 /* Network */,
 				77C0D97C2919255E008FDA83 /* Model */,
 				77C0D97E29192565008FDA83 /* View */,
 				77C0D97D29192562008FDA83 /* ViewModel */,
@@ -184,6 +190,16 @@
 			children = (
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		7744A348291FB81500A065C8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				77577021291EC8B400DA331B /* Firebase */,
+				7744A349291FB83B00A065C8 /* SignUpAPI.swift */,
+				7744A34E291FBA9000A065C8 /* APIURL.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		7757701C291D977800DA331B /* Custom */ = {
@@ -303,6 +319,7 @@
 				77145A83291924690052B2FB /* Toast */,
 				77C0D984291927B1008FDA83 /* SnapKit */,
 				7737FD25291AA1380029DEA2 /* FirebaseAuth */,
+				7744A34C291FB8A500A065C8 /* Moya */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -337,6 +354,7 @@
 				77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7737FD24291AA1380029DEA2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -375,6 +393,7 @@
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
+				7744A34A291FB83B00A065C8 /* SignUpAPI.swift in Sources */,
 				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
@@ -389,6 +408,7 @@
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
+				7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */,
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
@@ -629,6 +649,14 @@
 				kind = branch;
 			};
 		};
+		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = exactVersion;
+				version = 15.0.3;
+			};
+		};
 		77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -659,6 +687,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7737FD24291AA1380029DEA2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		7744A34C291FB8A500A065C8 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
 		};
 		77C0D984291927B1008FDA83 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
