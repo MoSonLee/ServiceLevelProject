@@ -162,5 +162,11 @@ final class GenderViewController: UIViewController {
                 self?.view.makeToast(text)
             })
             .disposed(by: disposeBag)
+        
+        output.moveToNicknameVC
+            .emit(onNext: { [weak self] text in
+                self?.navigationController?.popToViewController(of: NickNameViewController.self, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }

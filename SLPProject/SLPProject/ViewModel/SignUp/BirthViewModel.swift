@@ -58,7 +58,14 @@ final class BirthViewModel {
         input.nextButtonClikced
             .emit(onNext: { [weak self] selectedDate in
                 guard let age = Calendar.current.dateComponents([.year], from: selectedDate, to: Date()).year else { return }
-                age >= 17 ? self?.showMailVCRelay.accept(()) : self?.showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
+                guard let date = self?.dateformatFull(date: selectedDate) else { return }
+                if age >= 17 {
+                    self?.showMailVCRelay.accept(())
+                    UserDefaults.birth = date
+                } else {
+                    self?.showToastRelay.accept(SLPAssets.RawString.ageLimit.text)
+                }
+                
             })
             .disposed(by: disposeBag)
         
@@ -83,5 +90,12 @@ extension BirthViewModel {
         formatter.dateFormat = "dd"
         let day = formatter.string(from: date)
         return (year, month, day)
+    }
+    
+    private func dateformatFull(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = formatter.string(from: date)
+        return date
     }
 }

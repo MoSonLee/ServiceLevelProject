@@ -55,6 +55,7 @@ final class NickNameViewModel {
             .disposed(by: disposeBag)
         
         input.nextButtonTapped
+            .do { nick in UserDefaults.nick = nick }
             .filter { $0.count > 0 && $0.count <= 10 }
             .map { _ in () }
             .emit(to: showBirthVCRelay)

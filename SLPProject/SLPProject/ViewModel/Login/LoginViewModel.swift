@@ -66,14 +66,14 @@ final class LoginViewModel{
         input.sendMessageButtonTapped
             .throttle(.seconds(2), latest: false)
             .emit(onNext: { [weak self] text in
-                let filterText = text.filter { "0123456789".contains($0) }
+                let filterText = String(text.filter { "0123456789".contains($0) }.dropFirst(0))
                 let startNumber = "01"
-                let filterTextWithFormat = filterText.applyPatternOnNumbers(pattern: "+82 ###-####-####", replacmentCharacter: "#")
+                let filterTextWithFormat = filterText.applyPatternOnNumbers(pattern: "+82##########", replacmentCharacter: "#")
                 
-                if filterText.count < 10 || !filterText.starts(with: startNumber) {
+                if filterText.count < 9 || !filterText.starts(with: startNumber) {
                     self?.showToastRelay.accept(SLPAssets.RawString.notFormattedNumber.text)
                     self?.showCertificationVCRelay.accept((false))
-                } else if filterText.count >= 10 && filterText.starts(with: startNumber) {
+                } else if filterText.count >= 9 && filterText.starts(with: startNumber) {
                     self?.getCertificationMessage(phoneNumber: filterTextWithFormat)
                 } else {
                     self?.showToastRelay.accept(SLPAssets.RawString.etcError.text)
@@ -99,16 +99,17 @@ final class LoginViewModel{
 }
 
 extension LoginViewModel {
-    
     private func getCertificationMessage(phoneNumber: String) {
         FirebaseAuthorization().getCertificationMessage(phoneNumber: phoneNumber) { [weak self] id, error in
-            if id != nil {
+            if let error = error {
+                self?.showCertificationVCRelay.accept(false)
+                print(error)
+            } else {
                 guard let id = id else { return }
                 self?.showCertificationVCRelay.accept(true)
                 UserDefaults.userVerificationID = id
                 UserDefaults.userNumber = phoneNumber
-            } else {
-                self?.showCertificationVCRelay.accept(false)
+                print(id)
             }
         }
     }

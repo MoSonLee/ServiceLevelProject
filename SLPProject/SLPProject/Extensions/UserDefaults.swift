@@ -31,11 +31,23 @@ extension UserDefaults {
     @UserDefault(key: "verificationID", defaultValue: "")
     static var userVerificationID: String
     
+    @UserDefault(key: "fcmToken", defaultValue: "")
+    static var fcmToken: String
+    
     @UserDefault(key: "number", defaultValue: "")
     static var userNumber: String
     
     @UserDefault(key: "userToken", defaultValue: "")
     static var userToken: String
+    
+    @UserDefault(key: "nick", defaultValue: "")
+    static var nick: String
+    
+    @UserDefault(key: "birth", defaultValue: "")
+    static var birth: String
+    
+    @UserDefault(key: "email", defaultValue: "")
+    static var userEmail: String
     
     @UserDefault(key: "gender", defaultValue: -1)
     static var gender: Int

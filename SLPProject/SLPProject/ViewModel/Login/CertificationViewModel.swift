@@ -30,6 +30,7 @@ final class CertificationViewModel {
         let showMainVC: Signal<Void>
         let resendCode: Signal<Void>
         let showToast: Signal<String>
+        let changeRootView: Signal<Void>
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
@@ -39,6 +40,7 @@ final class CertificationViewModel {
     private let showMainVCRelay = PublishRelay<Void>()
     private let resendCodeRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
+    private let changeRootViewRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     private let provider: MoyaProvider<SLPTarget>
@@ -94,7 +96,8 @@ final class CertificationViewModel {
             showSingUpVC: showSingUpVCRelay.asSignal(),
             showMainVC: showMainVCRelay.asSignal(),
             resendCode: resendCodeRelay.asSignal(),
-            showToast: showToastRelay.asSignal()
+            showToast: showToastRelay.asSignal(),
+            changeRootView: changeRootViewRelay.asSignal()
         )
     }
 }
@@ -139,20 +142,15 @@ extension CertificationViewModel {
 
 extension CertificationViewModel {
     private func requestUserSigned() {
-        let parameters = ["hash": ""]
-        provider.request(.login(parameters: parameters)) { [weak self] result in
+        provider.request(.login) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let response):
-                let data = try! JSONDecoder().decode(UserAccounts.self, from: response.data)
-                if data.userId.isEmpty{
-                    self.showMainVCRelay.accept(())
-                    print("already User")
-                }
-            case .failure(let error):
-                print(error)
+            case .success(_):
+//                self.showMainVCRelay.accept(())
+//                self.changeRootViewRelay.accept(())
                 self.showSingUpVCRelay.accept(())
-                print("not user")
+
+            case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
                 switch error {
                 case .tokenError:

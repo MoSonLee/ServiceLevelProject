@@ -183,6 +183,13 @@ final class CertificationViewController: UIViewController {
                 self?.certificationTextField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
+        
+        output.changeRootView
+            .emit(onNext: { [weak self] _ in
+                let vc = MainViewController()
+                self?.changeRootViewController(vc)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

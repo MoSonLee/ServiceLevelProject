@@ -7,13 +7,23 @@
 
 import Foundation
 
-struct UserAccounts: Decodable{
-    let userId: String
-    let userPhoneNumber: String
-    let userEmail: String
-    let fcmToken: String
+struct UserAccounts: Codable {
+    var toDictionary: [String: Any] {
+        let dictionary: [String: Any] = [
+            "phoneNumber": phoneNumber,
+            "FCMtoken": FCMtoken,
+            "nick": nick,
+            "birth": birth,
+            "email": email,
+            "gender": gender,
+        ]
+        return dictionary
+    }
+    
+    let phoneNumber: String
+    let FCMtoken: String
     let nick: String
     let birth: String
+    let email: String
     let gender: Int
-    let hash: String
 }

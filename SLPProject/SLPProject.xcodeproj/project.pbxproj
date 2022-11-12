@@ -15,7 +15,6 @@
 		77145A7F291924600052B2FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A7E291924600052B2FB /* RxCocoa */; };
 		77145A81291924600052B2FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A80291924600052B2FB /* RxSwift */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
-		7737FD26291AA1380029DEA2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7737FD25291AA1380029DEA2 /* FirebaseAuth */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -31,6 +30,11 @@
 		7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A356291FBD7300A065C8 /* WithdrawError.swift */; };
 		7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */; };
 		7744A35C291FC32600A065C8 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A35B291FC32600A065C8 /* UserInfo.swift */; };
+		7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A35E291FDD3F00A065C8 /* FirebaseAuth */; };
+		7744A361291FDD3F00A065C8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A360291FDD3F00A065C8 /* FirebaseMessaging */; };
+		7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3622920013D00A065C8 /* UIViewController+Extension.swift */; };
+		7744A3652920048000A065C8 /* UINavigationViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */; };
+		7744A36729200B0800A065C8 /* UserLoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36629200B0800A065C8 /* UserLoginInfo.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
@@ -75,6 +79,9 @@
 		7744A356291FBD7300A065C8 /* WithdrawError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawError.swift; sourceTree = "<group>"; };
 		7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFcmTokenError.swift; sourceTree = "<group>"; };
 		7744A35B291FC32600A065C8 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		7744A3622920013D00A065C8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extensions.swift"; sourceTree = "<group>"; };
+		7744A36629200B0800A065C8 /* UserLoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginInfo.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
@@ -102,7 +109,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				77145A84291924690052B2FB /* Toast in Frameworks */,
-				7737FD26291AA1380029DEA2 /* FirebaseAuth in Frameworks */,
+				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
+				7744A361291FDD3F00A065C8 /* FirebaseMessaging in Frameworks */,
 				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
 				77C0D985291927B1008FDA83 /* SnapKit in Frameworks */,
 				77145A81291924600052B2FB /* RxSwift in Frameworks */,
@@ -262,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				7744A35B291FC32600A065C8 /* UserInfo.swift */,
+				7744A36629200B0800A065C8 /* UserLoginInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -312,6 +321,8 @@
 			children = (
 				77C0D9A329199970008FDA83 /* String.swift */,
 				77577011291BD4D000DA331B /* UserDefaults.swift */,
+				7744A3622920013D00A065C8 /* UIViewController+Extension.swift */,
+				7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -357,8 +368,9 @@
 				77145A80291924600052B2FB /* RxSwift */,
 				77145A83291924690052B2FB /* Toast */,
 				77C0D984291927B1008FDA83 /* SnapKit */,
-				7737FD25291AA1380029DEA2 /* FirebaseAuth */,
 				7744A34C291FB8A500A065C8 /* Moya */,
+				7744A35E291FDD3F00A065C8 /* FirebaseAuth */,
+				7744A360291FDD3F00A065C8 /* FirebaseMessaging */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -392,8 +404,8 @@
 				77145A7D291924600052B2FB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				7737FD24291AA1380029DEA2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */,
+				7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -423,9 +435,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				77145A6E291924490052B2FB /* OnBoardingPageViewController.swift in Sources */,
+				7744A3652920048000A065C8 /* UINavigationViewController+Extensions.swift in Sources */,
+				7744A36729200B0800A065C8 /* UserLoginInfo.swift in Sources */,
 				77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */,
 				7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */,
 				7744A353291FBD5A00A065C8 /* LoginError.swift in Sources */,
+				7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */,
 				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
@@ -685,20 +700,20 @@
 				kind = branch;
 			};
 		};
-		7737FD24291AA1380029DEA2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
 			requirement = {
 				kind = exactVersion;
 				version = 15.0.3;
+			};
+		};
+		7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
 			};
 		};
 		77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -727,15 +742,20 @@
 			package = 77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
 		};
-		7737FD25291AA1380029DEA2 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7737FD24291AA1380029DEA2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
 		7744A34C291FB8A500A065C8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		7744A35E291FDD3F00A065C8 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7744A360291FDD3F00A065C8 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		77C0D984291927B1008FDA83 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

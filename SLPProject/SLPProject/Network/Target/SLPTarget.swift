@@ -12,10 +12,10 @@ import Moya
 typealias DictionaryType = [String: Any]
 
 enum SLPTarget {
-    case login(parameters: DictionaryType)
+    case login
     case signUp(parameters: DictionaryType)
-    case withdraw(parameters: DictionaryType)
-    case update_fcm_token(parameters: DictionaryType)
+    case withdraw
+    case update_fcm_token
 }
 
 extension SLPTarget: TargetType {
@@ -30,13 +30,13 @@ extension SLPTarget: TargetType {
     var path: String {
         switch self {
         case .login, .signUp:
-            return "/v1/user"
+            return "/user"
             
         case .withdraw:
-            return "/v1/user/withdraw"
+            return "/user/withdraw"
             
         case .update_fcm_token:
-            return "v1/user/update_fcm_token"
+            return "/user/update_fcm_token"
         }
     }
     
@@ -55,11 +55,10 @@ extension SLPTarget: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .login(let parameters),
-                .signUp(let parameters),
-                .withdraw(let parameters),
-                .update_fcm_token(let parameters):
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .login, .withdraw, .update_fcm_token:
+            return .requestPlain
+        case .signUp(let parameters):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
     
@@ -69,8 +68,8 @@ extension SLPTarget: TargetType {
     
     var headers: [String : String]? {
         return [
-            "Content-Type": "application/json",
-            "x-api-key": UserDefaults.userToken
+            "Content-Type": "application/x-www-form-urlencoded",
+            "idtoken": UserDefaults.userToken
         ]
     }
 }

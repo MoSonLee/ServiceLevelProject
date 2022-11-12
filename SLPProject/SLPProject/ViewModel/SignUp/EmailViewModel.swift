@@ -56,7 +56,12 @@ final class EmailViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] text in
-                text.count > 5 && text.contains("@") && text.contains(".") ? self?.showGenerVCRelay.accept(()) : self?.showToastRelay.accept(SLPAssets.RawString.wrongEmailType.text)
+                if text.count > 5 && text.contains("@") && text.contains(".") {
+                    UserDefaults.userEmail = text
+                    self?.showGenerVCRelay.accept(())
+                } else {
+                    self?.showToastRelay.accept(SLPAssets.RawString.wrongEmailType.text)
+                }
             })
             .disposed(by: disposeBag)
         

@@ -27,6 +27,7 @@ final class GenderViewModel {
         let popVC: Signal<Void>
         let showToast: Signal<String>
         let showMainVC: Signal<Void>
+        let moveToNicknameVC: Signal<Void>
     }
     
     private var genderValue = -1
@@ -36,7 +37,17 @@ final class GenderViewModel {
     private let popVCRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let showMainVCRelay = PublishRelay<Void>()
+    private let moveToNicknameVCRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
+    
+    private lazy var User = UserAccounts(
+        phoneNumber: "",
+        FCMtoken: "",
+        nick: "",
+        birth: "",
+        email: "",
+        gender: -1
+    )
     
     private let provider: MoyaProvider<SLPTarget>
     init() { provider = MoyaProvider<SLPTarget>() }
@@ -70,13 +81,7 @@ final class GenderViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
-                if self?.genderValue != -1 {
-                    self?.showMainVCRelay.accept(())
-                    guard let genderValue = self?.genderValue else { return }
-                    UserDefaults.gender = genderValue
-                } else {
-                    self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text)
-                }
+                self?.requestSignUpUser()
             })
             .disposed(by: disposeBag)
         
@@ -86,27 +91,51 @@ final class GenderViewModel {
             ableNextButton: ableNextButtonRelay.asSignal(),
             popVC: popVCRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
-            showMainVC: showMainVCRelay.asSignal()
+            showMainVC: showMainVCRelay.asSignal(),
+            moveToNicknameVC: moveToNicknameVCRelay.asSignal()
         )
     }
 }
 
-//MARK: 서버 통신 로직 구현 예정
-//extension GenderViewModel {
-//    private func requestSignUpUser() {
-//        let parameters = ["hash": ""]
-//        provider.request(.login(parameters: parameters)) { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success(let response):
-//                let data = try! JSONDecoder().decode(UserAccounts.self, from: response.data)
-//                if data.userId.isEmpty{
-//                    self.showMainVCRelay.accept(())
-//                    print("already User")
-//                }
-//            case .failure(let error):
-//                }
-//            }
-//        }
-//    }
-//}
+extension GenderViewModel {
+    private func requestSignUpUser() {
+        self.User = UserAccounts(
+            phoneNumber: UserDefaults.userNumber,
+            FCMtoken: AppDelegate.fcmToken,
+            nick: UserDefaults.nick,
+            birth: UserDefaults.birth,
+            email: UserDefaults.userEmail,
+            gender: genderValue
+        )
+        provider.request(.signUp(parameters: self.User.toDictionary)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                self.showMainVCRelay.accept(())
+                
+            case .failure(let error):
+                self.showToastRelay.accept(SLPAssets.RawString.selectGender.text)
+                print(error)
+                let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .registeredUser:
+                    print(SLPSignUpError.registeredUser)
+                case .invalidateNickname:
+                    print(SLPSignUpError.invalidateNickname)
+                    self.moveToNicknameVCRelay.accept(())
+                case .tokenError:
+                    print(SLPSignUpError.tokenError)
+                case .unRegisteredUser:
+                    print(SLPSignUpError.unRegisteredUser)
+                case .serverError:
+                    print(SLPSignUpError.serverError)
+                case .clientError:
+                    print(SLPSignUpError.clientError)
+                case .unknown:
+                    print(SLPSignUpError.unknown)
+                }
+            }
+        }
+    }
+}
+
