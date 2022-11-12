@@ -27,3 +27,12 @@ struct UserAccounts: Codable {
     let email: String
     let gender: Int
 }
+
+struct UserFCMtoken: Codable {
+    var toDictionary: [String: Any] {
+        let dictionary: [String: Any] = [ "FCMtoken": FCMtoken ]
+        return dictionary
+    }
+    
+    let FCMtoken: String
+}

@@ -15,7 +15,7 @@ enum SLPTarget {
     case login
     case signUp(parameters: DictionaryType)
     case withdraw
-    case update_fcm_token
+    case update_fcm_token(parmeters: DictionaryType)
 }
 
 extension SLPTarget: TargetType {
@@ -55,9 +55,10 @@ extension SLPTarget: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .login, .withdraw, .update_fcm_token:
+        case .login, .withdraw:
             return .requestPlain
-        case .signUp(let parameters):
+            
+        case .signUp(let parameters), .update_fcm_token(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }

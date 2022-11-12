@@ -49,6 +49,8 @@ final class GenderViewModel {
         gender: -1
     )
     
+    private let fcmtoken = UserFCMtoken(FCMtoken: UserDefaults.fcmToken)
+    
     private let provider: MoyaProvider<SLPTarget>
     init() { provider = MoyaProvider<SLPTarget>() }
     
@@ -81,7 +83,7 @@ final class GenderViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
-                self?.requestSignUpUser()
+                self?.genderValue == -1 ? self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text) : self?.requestSignUpUser()
             })
             .disposed(by: disposeBag)
         
@@ -114,16 +116,16 @@ extension GenderViewModel {
                 self.showMainVCRelay.accept(())
                 
             case .failure(let error):
-                self.showToastRelay.accept(SLPAssets.RawString.selectGender.text)
                 print(error)
                 let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
                 case .registeredUser:
                     print(SLPSignUpError.registeredUser)
                 case .invalidateNickname:
-                    print(SLPSignUpError.invalidateNickname)
                     self.moveToNicknameVCRelay.accept(())
+                    print(SLPSignUpError.invalidateNickname)
                 case .tokenError:
+                    self.updateFMCtoken()
                     print(SLPSignUpError.tokenError)
                 case .unRegisteredUser:
                     print(SLPSignUpError.unRegisteredUser)
@@ -137,5 +139,17 @@ extension GenderViewModel {
             }
         }
     }
+    
+    private func updateFMCtoken() {
+        provider.request(.update_fcm_token(parmeters: fcmtoken.toDictionary)) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                self.requestSignUpUser()
+            case .failure(let error):
+                let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                print(error)
+            }
+        }
+    }
 }
-

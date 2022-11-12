@@ -40,4 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         completionHandler(UIBackgroundFetchResult.newData)
     }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        AppDelegate.fcmToken = fcmToken
+    }
 }

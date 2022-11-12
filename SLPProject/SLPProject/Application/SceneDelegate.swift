@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         } else {
-//            let vc = GenderViewController()
-            let vc = LoginViewController()
+            let vc = GenderViewController()
+//            let vc = LoginViewController()
             let navigationVC = UINavigationController(rootViewController: vc)
             window?.rootViewController = navigationVC
         }
