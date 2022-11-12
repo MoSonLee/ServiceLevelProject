@@ -24,7 +24,7 @@ final class FirebaseAuthorization {
     
     func verificationButtonClicked(code: String?, completion: @escaping (AuthDataResult?, Error?) -> Void) {
         let verificationID = UserDefaults.userVerificationID
-        guard let verificationCode = code else { return  }
+        guard let verificationCode = code else { return }
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: verificationCode

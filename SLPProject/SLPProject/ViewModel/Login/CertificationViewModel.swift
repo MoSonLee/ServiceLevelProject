@@ -146,9 +146,8 @@ extension CertificationViewModel {
             guard let self = self else { return }
             switch result {
             case .success(_):
-//                self.showMainVCRelay.accept(())
-//                self.changeRootViewRelay.accept(())
-                self.showSingUpVCRelay.accept(())
+                self.showMainVCRelay.accept(())
+                self.changeRootViewRelay.accept(())
 
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
