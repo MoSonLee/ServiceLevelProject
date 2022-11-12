@@ -23,9 +23,13 @@
 		7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */; };
 		7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */; };
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
-		7744A34A291FB83B00A065C8 /* SignUpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SignUpAPI.swift */; };
+		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
+		7744A353291FBD5A00A065C8 /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A352291FBD5A00A065C8 /* LoginError.swift */; };
+		7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A354291FBD6600A065C8 /* SignUpError.swift */; };
+		7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A356291FBD7300A065C8 /* WithdrawError.swift */; };
+		7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
@@ -63,8 +67,12 @@
 		7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
-		7744A349291FB83B00A065C8 /* SignUpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpAPI.swift; sourceTree = "<group>"; };
+		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
+		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
+		7744A354291FBD6600A065C8 /* SignUpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpError.swift; sourceTree = "<group>"; };
+		7744A356291FBD7300A065C8 /* WithdrawError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawError.swift; sourceTree = "<group>"; };
+		7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFcmTokenError.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
@@ -196,10 +204,30 @@
 			isa = PBXGroup;
 			children = (
 				77577021291EC8B400DA331B /* Firebase */,
-				7744A349291FB83B00A065C8 /* SignUpAPI.swift */,
-				7744A34E291FBA9000A065C8 /* APIURL.swift */,
+				7744A349291FB83B00A065C8 /* SLPTarget.swift */,
+				7744A351291FBD4700A065C8 /* URL */,
+				7744A350291FBD2400A065C8 /* Error */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		7744A350291FBD2400A065C8 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				7744A352291FBD5A00A065C8 /* LoginError.swift */,
+				7744A354291FBD6600A065C8 /* SignUpError.swift */,
+				7744A356291FBD7300A065C8 /* WithdrawError.swift */,
+				7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		7744A351291FBD4700A065C8 /* URL */ = {
+			isa = PBXGroup;
+			children = (
+				7744A34E291FBA9000A065C8 /* APIURL.swift */,
+			);
+			path = URL;
 			sourceTree = "<group>";
 		};
 		7757701C291D977800DA331B /* Custom */ = {
@@ -385,15 +413,19 @@
 			files = (
 				77145A6E291924490052B2FB /* OnBoardingPageViewController.swift in Sources */,
 				77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */,
+				7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */,
+				7744A353291FBD5A00A065C8 /* LoginError.swift in Sources */,
 				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
+				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
+				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
 				77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */,
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
-				7744A34A291FB83B00A065C8 /* SignUpAPI.swift in Sources */,
+				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,
 				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,

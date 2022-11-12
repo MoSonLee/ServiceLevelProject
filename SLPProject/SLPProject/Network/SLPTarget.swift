@@ -1,5 +1,5 @@
 //
-//  SignUpAPI.swift
+//  SLPTarget.swift
 //  SLPProject
 //
 //  Created by 이승후 on 2022/11/12.
@@ -61,6 +61,10 @@ extension SLPTarget: TargetType {
                 .update_fcm_token(let parameters):
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
         }
+    }
+    
+    var validationType: ValidationType {
+        return .customCodes([200])
     }
     
     var headers: [String : String]? {
