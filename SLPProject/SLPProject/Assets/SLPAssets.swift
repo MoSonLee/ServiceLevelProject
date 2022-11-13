@@ -16,6 +16,8 @@ enum SLPAssets {
         case boyButton
         case girlButton
         case backButton
+        case splashImage
+        case splashTextImage
         
         var image: UIImage {
             switch self {
@@ -36,6 +38,12 @@ enum SLPAssets {
                 
             case .backButton:
                 return UIImage(systemName: "arrow.backward")!
+                
+            case .splashImage:
+                return UIImage(named: "splashLogo")!
+                
+            case .splashTextImage:
+                return UIImage(named: "splashText")!
             }
         }
     }

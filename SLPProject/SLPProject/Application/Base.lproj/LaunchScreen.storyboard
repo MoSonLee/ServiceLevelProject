@@ -18,13 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashLogo" translatesAutoresizingMaskIntoConstraints="NO" id="44l-n9-Lif">
-                                <rect key="frame" x="77" y="259" width="240" height="264"/>
+                                <rect key="frame" x="76" y="220.66666666666663" width="241" height="264"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="264" id="Hnn-Ld-2qw"/>
+                                    <constraint firstAttribute="height" constant="264" id="Rll-ac-jNB"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashText" translatesAutoresizingMaskIntoConstraints="NO" id="Lof-nD-MnN">
-                                <rect key="frame" x="41" y="558.33333333333337" width="310" height="101"/>
+                                <rect key="frame" x="41" y="520" width="311" height="101"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="101" id="nA3-As-LcS"/>
                                 </constraints>
@@ -34,10 +34,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Lof-nD-MnN" firstAttribute="top" secondItem="44l-n9-Lif" secondAttribute="bottom" constant="35.439999999999998" id="362-F1-tA0"/>
-                            <constraint firstItem="44l-n9-Lif" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="77" id="Bes-lI-wyL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Lof-nD-MnN" secondAttribute="trailing" constant="42" id="JZ1-6q-MNS"/>
+                            <constraint firstItem="44l-n9-Lif" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="Bes-lI-wyL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Lof-nD-MnN" secondAttribute="trailing" constant="41" id="JZ1-6q-MNS"/>
                             <constraint firstItem="Lof-nD-MnN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="41" id="cuq-cM-PnT"/>
-                            <constraint firstItem="44l-n9-Lif" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="sHu-N5-myW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Lof-nD-MnN" secondAttribute="bottom" constant="197" id="dJg-mt-RTf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="44l-n9-Lif" secondAttribute="trailing" constant="76" id="xKk-xv-k7n"/>
                         </constraints>
                     </view>
