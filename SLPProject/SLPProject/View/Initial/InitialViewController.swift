@@ -64,27 +64,42 @@ final class InitialViewController: UIViewController {
         output.showMainVC
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
-                self?.present(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
         
         output.showOnboardingVC
             .emit(onNext: { [weak self] _ in
                 let vc = OnBoardingPageViewController()
-                self?.present(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
         
         output.showLoginVC
             .emit(onNext: { [weak self] _ in
                 let vc = LoginViewController()
-                self?.present(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
         
         output.showToast
             .emit(onNext: { [weak self] text in
                 self?.view.makeToast(text)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showNicknameVC
+            .emit(onNext: { [weak self] _ in
+                let vc = NickNameViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
     }

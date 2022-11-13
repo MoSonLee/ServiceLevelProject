@@ -19,4 +19,13 @@ extension UIViewController {
             self.present(viewControllerToPresent, animated: true, completion: nil)
         }
     }
+    
+    func showAlert(title: String, okTitle: String,completion: @escaping () -> Void) {
+        let alert =  UIAlertController(title: "부적합한 닉네임입니다.", message: "", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style:.destructive, handler: { _ in
+            completion()
+        })
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
 }

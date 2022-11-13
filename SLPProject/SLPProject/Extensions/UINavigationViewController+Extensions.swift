@@ -17,5 +17,3 @@ extension UINavigationController {
         self.popToViewController(viewController, animated: animated)
     }
 }
-
-//self.navigationController?.popToViewController(of: YourViewController.self, animated: true)

@@ -16,7 +16,7 @@ final class CertificationViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
     private let textLabel = UILabel()
-    private let certificationTextField = UITextField()
+    private let certificationTextField = CustomOnlyNumberTextField()
     private let lineView = UIView()
     private let startButton = UIButton()
     private let resendButton = UIButton()
@@ -122,7 +122,7 @@ final class CertificationViewController: UIViewController {
         startButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         startButton.isEnabled = false
         
-        certificationTextField.delegate = self
+//        certificationTextField.delegate = self
     }
     
     private func setFirstResponder() {
@@ -165,6 +165,7 @@ final class CertificationViewController: UIViewController {
             .emit(onNext: { [weak self] _ in
                 let vc = NickNameViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
+                self?.changeRootViewController(vc)
             })
             .disposed(by: disposeBag)
         
@@ -184,31 +185,38 @@ final class CertificationViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.changeRootView
+        output.changeRootViewToMain
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
+                self?.changeRootViewController(vc)
+            })
+            .disposed(by: disposeBag)
+        
+        output.changeRootViewToNickname
+            .emit(onNext: { [weak self] _ in
+                let vc = NickNameViewController()
                 self?.changeRootViewController(vc)
             })
             .disposed(by: disposeBag)
     }
 }
 
-extension CertificationViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let textFieldText = textField.text,
-              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
-            return false
-        }
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        let allowedCharacters = "0123456789"
-        let allowedCharcterSet = CharacterSet(charactersIn: allowedCharacters)
-        let typedCharcterSet = CharacterSet(charactersIn: string)
-        if  allowedCharcterSet.isSuperset(of: typedCharcterSet)
-                ,count <= 6 {
-            return true
-        } else {
-            return false
-        }
-    }
-}
+//extension CertificationViewController: UITextFieldDelegate {
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        guard let textFieldText = textField.text,
+//              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+//            return false
+//        }
+//        let substringToReplace = textFieldText[rangeOfTextToReplace]
+//        let count = textFieldText.count - substringToReplace.count + string.count
+//        let allowedCharacters = "0123456789"
+//        let allowedCharcterSet = CharacterSet(charactersIn: allowedCharacters)
+//        let typedCharcterSet = CharacterSet(charactersIn: string)
+//        if  allowedCharcterSet.isSuperset(of: typedCharcterSet)
+//                ,count <= 6 {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+//}

@@ -21,6 +21,7 @@ final class InitialViewModel {
         let showOnboardingVC: Signal<Void>
         let showMainVC: Signal<Void>
         let showLoginVC: Signal<Void>
+        let showNicknameVC: Signal<Void>
     }
     
     private let checkNetworkRelay = PublishRelay<Void>()
@@ -28,6 +29,7 @@ final class InitialViewModel {
     private let showOnboardingVCRelay = PublishRelay<Void>()
     private let showMainVCRelay = PublishRelay<Void>()
     private let showLoginVCRelay = PublishRelay<Void>()
+    private let showNicknameVCRelay = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -42,13 +44,26 @@ final class InitialViewModel {
             showToast: showToastRelay.asSignal(),
             showOnboardingVC: showOnboardingVCRelay.asSignal(),
             showMainVC: showMainVCRelay.asSignal(),
-            showLoginVC: showLoginVCRelay.asSignal()
+            showLoginVC: showLoginVCRelay.asSignal(),
+            showNicknameVC: showNicknameVCRelay.asSignal()
         )
     }
 }
 
 extension InitialViewModel {
     private func checkNetwork() {
-        
+        if InternetConnectionManager.isConnectedToNetwork() { 
+            if UserDefaults.showOnboarding {
+                showOnboardingVCRelay.accept(())
+            } else {
+                if UserDefaults.verified {
+                    showNicknameVCRelay.accept(())
+                } else {
+                    showLoginVCRelay.accept(())
+                }
+            }
+        } else {
+            showToastRelay.accept(SLPAssets.RawString.checkNetwork.text)
+        }
     }
 }

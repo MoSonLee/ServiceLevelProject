@@ -51,4 +51,7 @@ extension UserDefaults {
     
     @UserDefault(key: "gender", defaultValue: -1)
     static var gender: Int
+    
+    @UserDefault(key: "verfied", defaultValue: false)
+    static var verified: Bool
 }

@@ -17,17 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = InitialViewController()
         let navigationVC = UINavigationController(rootViewController: vc)
         window?.rootViewController = navigationVC
-        
-//        if UserDefaults.showOnboarding {
-//            let vc = OnBoardingPageViewController()
-//            let navigationVC = UINavigationController(rootViewController: vc)
-//            window?.rootViewController = navigationVC
-//        } else {
-//            let vc = GenderViewController()
-////            let vc = LoginViewController()
-//            let navigationVC = UINavigationController(rootViewController: vc)
-//            window?.rootViewController = navigationVC
-//        }
         window?.makeKeyAndVisible()
     }
     

@@ -164,8 +164,10 @@ final class GenderViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.moveToNicknameVC
-            .emit(onNext: { [weak self] text in
-                self?.navigationController?.popToViewController(of: NickNameViewController.self, animated: true)
+            .emit(onNext: { [weak self] _ in
+                self?.showAlert(title: SLPAssets.RawString.invalidateNickname.text, okTitle: SLPAssets.RawString.confirm.text, completion: {
+                    self?.navigationController?.popToViewController(of: NickNameViewController.self, animated: true)
+                })
             })
             .disposed(by: disposeBag)
     }

@@ -138,6 +138,9 @@ enum SLPAssets {
         case girl
         case genderRequired
         case next
+        case checkNetwork
+        case invalidateNickname
+        case confirm
         
         var text: String {
             switch self {
@@ -236,6 +239,15 @@ enum SLPAssets {
                 
             case .girl:
                 return "여자"
+                
+            case .checkNetwork:
+                return "네트워크 연결 상태를 확인해주세요"
+                
+            case .invalidateNickname:
+                return "부적합한 닉네임입니다."
+                
+            case .confirm:
+                return "확인"
             }
         }
     }

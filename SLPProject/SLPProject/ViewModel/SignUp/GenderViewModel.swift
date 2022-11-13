@@ -41,12 +41,12 @@ final class GenderViewModel {
     private let disposeBag = DisposeBag()
     
     private lazy var User = UserAccounts(
-        phoneNumber: "",
-        FCMtoken: "",
-        nick: "",
-        birth: "",
-        email: "",
-        gender: -1
+        phoneNumber: UserDefaults.userNumber,
+        FCMtoken: AppDelegate.fcmToken,
+        nick: UserDefaults.nick,
+        birth: UserDefaults.birth,
+        email: UserDefaults.userEmail,
+        gender: genderValue
     )
     
     private let fcmtoken = UserFCMtoken(FCMtoken: UserDefaults.fcmToken)
@@ -83,6 +83,10 @@ final class GenderViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
+                print(self?.User)
+//                print(UserDefaults.userToken)
+//                print(UserDefaults.fcmToken)
+//                print(UserDefaults.userVerificationID)
                 self?.genderValue == -1 ? self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text) : self?.requestSignUpUser()
             })
             .disposed(by: disposeBag)
@@ -101,38 +105,33 @@ final class GenderViewModel {
 
 extension GenderViewModel {
     private func requestSignUpUser() {
-        self.User = UserAccounts(
-            phoneNumber: UserDefaults.userNumber,
-            FCMtoken: AppDelegate.fcmToken,
-            nick: UserDefaults.nick,
-            birth: UserDefaults.birth,
-            email: UserDefaults.userEmail,
-            gender: genderValue
-        )
-        provider.request(.signUp(parameters: self.User.toDictionary)) { [weak self] result in
-            guard let self = self else { return }
+        APIService().requestSignUpUser(dictionary: self.User.toDictionary) { result in
             switch result {
             case .success(_):
                 self.showMainVCRelay.accept(())
-                
             case .failure(let error):
-                print(error)
                 let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
                 case .registeredUser:
                     print(SLPSignUpError.registeredUser)
+                    
                 case .invalidateNickname:
                     self.moveToNicknameVCRelay.accept(())
                     print(SLPSignUpError.invalidateNickname)
+                    
                 case .tokenError:
                     self.updateFMCtoken()
                     print(SLPSignUpError.tokenError)
+                    
                 case .unRegisteredUser:
                     print(SLPSignUpError.unRegisteredUser)
+                    
                 case .serverError:
                     print(SLPSignUpError.serverError)
+                    
                 case .clientError:
                     print(SLPSignUpError.clientError)
+                    
                 case .unknown:
                     print(SLPSignUpError.unknown)
                 }
@@ -141,11 +140,12 @@ extension GenderViewModel {
     }
     
     private func updateFMCtoken() {
-        provider.request(.update_fcm_token(parmeters: fcmtoken.toDictionary)) { [weak self] result in
+        APIService().updateFMCtoken(dictionary: self.User.toDictionary) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
                 self.requestSignUpUser()
+                print("token 갱신 완료")
             case .failure(let error):
                 let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 print(error)

@@ -37,6 +37,8 @@
 		7744A36729200B0800A065C8 /* UserLoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36629200B0800A065C8 /* UserLoginInfo.swift */; };
 		7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3692920F75E00A065C8 /* InitialViewController.swift */; };
 		7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36C2920F77E00A065C8 /* InitialViewModel.swift */; };
+		7744A370292105CE00A065C8 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36F292105CE00A065C8 /* NetworkReachability.swift */; };
+		7744A37429210F0B00A065C8 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A37329210F0B00A065C8 /* APIService.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
@@ -86,6 +88,8 @@
 		7744A36629200B0800A065C8 /* UserLoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginInfo.swift; sourceTree = "<group>"; };
 		7744A3692920F75E00A065C8 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		7744A36C2920F77E00A065C8 /* InitialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModel.swift; sourceTree = "<group>"; };
+		7744A36F292105CE00A065C8 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		7744A37329210F0B00A065C8 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
@@ -217,10 +221,12 @@
 		7744A348291FB81500A065C8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				7744A36E292105B900A065C8 /* NetworkReachability */,
 				77577021291EC8B400DA331B /* Firebase */,
 				7744A35A291FC24700A065C8 /* Target */,
 				7744A351291FBD4700A065C8 /* URL */,
 				7744A350291FBD2400A065C8 /* Error */,
+				7744A37329210F0B00A065C8 /* APIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -266,6 +272,14 @@
 				7744A36C2920F77E00A065C8 /* InitialViewModel.swift */,
 			);
 			path = Initial;
+			sourceTree = "<group>";
+		};
+		7744A36E292105B900A065C8 /* NetworkReachability */ = {
+			isa = PBXGroup;
+			children = (
+				7744A36F292105CE00A065C8 /* NetworkReachability.swift */,
+			);
+			path = NetworkReachability;
 			sourceTree = "<group>";
 		};
 		7757701C291D977800DA331B /* Custom */ = {
@@ -477,6 +491,7 @@
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
 				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,
 				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
+				7744A37429210F0B00A065C8 /* APIService.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
@@ -495,6 +510,7 @@
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
+				7744A370292105CE00A065C8 /* NetworkReachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

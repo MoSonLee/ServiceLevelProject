@@ -30,7 +30,8 @@ final class CertificationViewModel {
         let showMainVC: Signal<Void>
         let resendCode: Signal<Void>
         let showToast: Signal<String>
-        let changeRootView: Signal<Void>
+        let changeRootViewToMain: Signal<Void>
+        let changeRootViewToNickname: Signal<Void>
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
@@ -41,6 +42,8 @@ final class CertificationViewModel {
     private let resendCodeRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let changeRootViewRelay = PublishRelay<Void>()
+    private let changeRootViewToNicknameRelay = PublishRelay<Void>()
+    
     private let disposeBag = DisposeBag()
     
     private let provider: MoyaProvider<SLPTarget>
@@ -97,7 +100,8 @@ final class CertificationViewModel {
             showMainVC: showMainVCRelay.asSignal(),
             resendCode: resendCodeRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
-            changeRootView: changeRootViewRelay.asSignal()
+            changeRootViewToMain: changeRootViewRelay.asSignal(),
+            changeRootViewToNickname: changeRootViewToNicknameRelay.asSignal()
         )
     }
 }
@@ -157,6 +161,8 @@ extension CertificationViewModel {
                     return
                 case .unRegisteredUser:
                     self.showSingUpVCRelay.accept(())
+                    self.changeRootViewToNicknameRelay.accept(())
+                    UserDefaults.verified = true
                     return
                 case .serverError:
                     print(SLPLoginError.serverError)
