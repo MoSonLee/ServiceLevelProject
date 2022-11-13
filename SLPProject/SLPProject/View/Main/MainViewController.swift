@@ -8,9 +8,22 @@
 import UIKit
 
 final class MainViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = SLPAssets.CustomColor.black.color
+        setComponents()
+        setConstraints()
+    }
+    
+    private func setComponents() {
+        setComponentsValue()
+    }
+    
+    private func setConstraints() {
+        
+    }
+    
+    private func setComponentsValue() {
+        view.backgroundColor = SLPAssets.CustomColor.white.color
     }
 }

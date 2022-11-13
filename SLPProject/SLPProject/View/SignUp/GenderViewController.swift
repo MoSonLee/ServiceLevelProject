@@ -142,7 +142,6 @@ final class GenderViewController: UIViewController {
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)
-                self?.changeRootViewController(nav)
             })
             .disposed(by: disposeBag)
         
@@ -171,6 +170,14 @@ final class GenderViewController: UIViewController {
                 self?.showAlert(title: SLPAssets.RawString.invalidateNickname.text, okTitle: SLPAssets.RawString.confirm.text, completion: {
                     self?.navigationController?.popToViewController(of: NickNameViewController.self, animated: true)
                 })
+            })
+            .disposed(by: disposeBag)
+        
+        output.changeRootViewToMain
+            .emit(onNext: { [weak self] _ in
+                let vc = MainViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                self?.changeRootViewController(nav)
             })
             .disposed(by: disposeBag)
     }
