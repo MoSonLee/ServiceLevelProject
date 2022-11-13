@@ -28,6 +28,7 @@ final class GenderViewModel {
         let showToast: Signal<String>
         let showMainVC: Signal<Void>
         let moveToNicknameVC: Signal<Void>
+        let changeRootViewToMain: Signal<Void>
     }
     
     private var genderValue = -1
@@ -38,6 +39,7 @@ final class GenderViewModel {
     private let showToastRelay = PublishRelay<String>()
     private let showMainVCRelay = PublishRelay<Void>()
     private let moveToNicknameVCRelay = PublishRelay<Void>()
+    private let changeRootViewToMainRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     private lazy var User = UserAccounts(
@@ -97,7 +99,7 @@ final class GenderViewModel {
             popVC: popVCRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
             showMainVC: showMainVCRelay.asSignal(),
-            moveToNicknameVC: moveToNicknameVCRelay.asSignal()
+            moveToNicknameVC: moveToNicknameVCRelay.asSignal(), changeRootViewToMain: changeRootViewToMainRelay.asSignal()
         )
     }
 }
@@ -108,6 +110,7 @@ extension GenderViewModel {
             switch result {
             case .success(_):
                 self.showMainVCRelay.accept(())
+                self.changeRootViewToMainRelay.accept(())
                 UserDefaults.signed = true
                 
             case .failure(let error):
