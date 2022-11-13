@@ -64,21 +64,21 @@ final class InitialViewController: UIViewController {
         output.showMainVC
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         output.showOnboardingVC
             .emit(onNext: { [weak self] _ in
                 let vc = OnBoardingPageViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         output.showLoginVC
             .emit(onNext: { [weak self] _ in
                 let vc = LoginViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
