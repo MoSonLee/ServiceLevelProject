@@ -35,6 +35,8 @@
 		7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3622920013D00A065C8 /* UIViewController+Extension.swift */; };
 		7744A3652920048000A065C8 /* UINavigationViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */; };
 		7744A36729200B0800A065C8 /* UserLoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36629200B0800A065C8 /* UserLoginInfo.swift */; };
+		7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A3692920F75E00A065C8 /* InitialViewController.swift */; };
+		7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A36C2920F77E00A065C8 /* InitialViewModel.swift */; };
 		77577012291BD4D000DA331B /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577011291BD4D000DA331B /* UserDefaults.swift */; };
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
@@ -82,6 +84,8 @@
 		7744A3622920013D00A065C8 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Extensions.swift"; sourceTree = "<group>"; };
 		7744A36629200B0800A065C8 /* UserLoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginInfo.swift; sourceTree = "<group>"; };
+		7744A3692920F75E00A065C8 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		7744A36C2920F77E00A065C8 /* InitialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModel.swift; sourceTree = "<group>"; };
 		77577011291BD4D000DA331B /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		77577013291BDA0800DA331B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Sesac pdf/Sesac 강의 자료/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
@@ -248,6 +252,22 @@
 			path = Target;
 			sourceTree = "<group>";
 		};
+		7744A3682920F74F00A065C8 /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				7744A3692920F75E00A065C8 /* InitialViewController.swift */,
+			);
+			path = Initial;
+			sourceTree = "<group>";
+		};
+		7744A36B2920F76F00A065C8 /* Initial */ = {
+			isa = PBXGroup;
+			children = (
+				7744A36C2920F77E00A065C8 /* InitialViewModel.swift */,
+			);
+			path = Initial;
+			sourceTree = "<group>";
+		};
 		7757701C291D977800DA331B /* Custom */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +298,7 @@
 		77C0D97D29192562008FDA83 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7744A36B2920F76F00A065C8 /* Initial */,
 				7737FD30291AC74B0029DEA2 /* OnBoarding */,
 				7737FD31291AC7580029DEA2 /* Login */,
 				7737FD32291AC7770029DEA2 /* SignUp */,
@@ -289,6 +310,7 @@
 		77C0D97E29192565008FDA83 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7744A3682920F74F00A065C8 /* Initial */,
 				77C0D999291951CE008FDA83 /* OnBoarding */,
 				77C0D99A291951EA008FDA83 /* Login */,
 				7737FD2E291AC70E0029DEA2 /* SignUp */,
@@ -446,9 +468,11 @@
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
+				7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
 				77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */,
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
+				7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
 				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,
