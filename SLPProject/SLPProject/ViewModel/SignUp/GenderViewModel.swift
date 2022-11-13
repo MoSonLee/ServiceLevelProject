@@ -84,9 +84,8 @@ final class GenderViewModel {
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
                 print(self?.User)
-//                print(UserDefaults.userToken)
-//                print(UserDefaults.fcmToken)
-//                print(UserDefaults.userVerificationID)
+                print(UserDefaults.fcmToken)
+                print(UserDefaults.userToken)
                 self?.genderValue == -1 ? self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text) : self?.requestSignUpUser()
             })
             .disposed(by: disposeBag)
@@ -109,6 +108,8 @@ extension GenderViewModel {
             switch result {
             case .success(_):
                 self.showMainVCRelay.accept(())
+                UserDefaults.signed = true
+                
             case .failure(let error):
                 let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {

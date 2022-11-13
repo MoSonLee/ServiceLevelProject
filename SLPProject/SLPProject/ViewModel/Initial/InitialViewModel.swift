@@ -52,14 +52,18 @@ final class InitialViewModel {
 
 extension InitialViewModel {
     private func checkNetwork() {
-        if InternetConnectionManager.isConnectedToNetwork() { 
-            if UserDefaults.showOnboarding {
-                showOnboardingVCRelay.accept(())
+        if InternetConnectionManager.isConnectedToNetwork() {
+            if UserDefaults.signed {
+                showMainVCRelay.accept(())
             } else {
-                if UserDefaults.verified {
-                    showNicknameVCRelay.accept(())
+                if UserDefaults.showOnboarding {
+                    showOnboardingVCRelay.accept(())
                 } else {
-                    showLoginVCRelay.accept(())
+                    if UserDefaults.verified {
+                        showNicknameVCRelay.accept(())
+                    } else {
+                        showLoginVCRelay.accept(())
+                    }
                 }
             }
         } else {

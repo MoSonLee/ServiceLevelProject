@@ -139,7 +139,10 @@ final class GenderViewController: UIViewController {
         output.showMainVC
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
+                self?.changeRootViewController(nav)
             })
             .disposed(by: disposeBag)
         

@@ -54,4 +54,7 @@ extension UserDefaults {
     
     @UserDefault(key: "verfied", defaultValue: false)
     static var verified: Bool
+    
+    @UserDefault(key: "signed", defaultValue: false)
+    static var signed: Bool
 }

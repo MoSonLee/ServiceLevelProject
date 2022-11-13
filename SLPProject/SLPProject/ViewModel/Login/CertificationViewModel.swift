@@ -41,7 +41,7 @@ final class CertificationViewModel {
     private let showMainVCRelay = PublishRelay<Void>()
     private let resendCodeRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
-    private let changeRootViewRelay = PublishRelay<Void>()
+    private let changeRootViewToMainRelay = PublishRelay<Void>()
     private let changeRootViewToNicknameRelay = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
@@ -100,7 +100,7 @@ final class CertificationViewModel {
             showMainVC: showMainVCRelay.asSignal(),
             resendCode: resendCodeRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
-            changeRootViewToMain: changeRootViewRelay.asSignal(),
+            changeRootViewToMain: changeRootViewToMainRelay.asSignal(),
             changeRootViewToNickname: changeRootViewToNicknameRelay.asSignal()
         )
     }
@@ -151,7 +151,8 @@ extension CertificationViewModel {
             switch result {
             case .success(_):
                 self.showMainVCRelay.accept(())
-                self.changeRootViewRelay.accept(())
+                self.changeRootViewToMainRelay.accept(())
+                UserDefaults.verified = true
 
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
