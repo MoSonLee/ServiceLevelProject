@@ -81,7 +81,8 @@ final class InitialViewController: UIViewController {
         
         output.showLoginVC
             .emit(onNext: { [weak self] _ in
-                let vc = LoginViewController()
+//                let vc = LoginViewController()
+                let vc = BirthViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)

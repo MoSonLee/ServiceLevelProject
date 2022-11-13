@@ -80,19 +80,17 @@ final class BirthViewController: UIViewController {
             make.bottom.equalTo(containerView.snp.top).inset(-80)
         }
         blockingButton.snp.makeConstraints { make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(47)
             make.bottom.equalTo(nextButton.snp.top).inset(-72)
         }
         containerView.snp.makeConstraints { make in
-            make.leading.equalTo(16)
-            make.trailing.equalTo(-16)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(47)
             make.bottom.equalTo(nextButton.snp.top).inset(-72)
         }
         yearTextField.snp.makeConstraints { make in
-            make.leading.equalTo(12)
+            make.leading.equalToSuperview().inset(12)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
             make.trailing.equalTo(yearLabel.snp.leading).inset(-40)
@@ -110,7 +108,7 @@ final class BirthViewController: UIViewController {
         monthTextField.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
-            make.trailing.equalTo(monthLabel.snp.leading).inset(-64)
+            make.trailing.equalTo(monthLabel.snp.leading).inset(-56)
         }
         monthLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -127,11 +125,12 @@ final class BirthViewController: UIViewController {
             make.leading.equalTo(monthLabel.snp.trailing).inset(-35)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
-            make.trailing.equalTo(dayLabel.snp.leading).inset(-64)
+            make.trailing.equalTo(dayLabel.snp.leading).inset(-56)
         }
         dayLabel.snp.makeConstraints { make in
             make.centerY.trailing.equalToSuperview()
             make.height.equalTo(26)
+            make.trailing.equalToSuperview()
         }
         thirdLineView.snp.makeConstraints { make in
             make.leading.equalTo(secondLineView.snp.trailing).inset(-42)
