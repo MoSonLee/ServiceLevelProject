@@ -7,18 +7,29 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
+import Toast
 
 final class InitialViewController: UIViewController {
     
     private let splashImage = UIImageView()
     private let splashTextImage = UIImageView()
     
+    private let viewModel = InitialViewModel()
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    
+    private lazy var input = InitialViewModel.Input(viewDidLoad: viewDidLoadEvent.asObservable())
+    private lazy var output = viewModel.transform(input: input)
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bind()
+        viewDidLoadEvent.accept(())
     }
     
     private func setComponents() {
@@ -50,6 +61,31 @@ final class InitialViewController: UIViewController {
     }
     
     private func bind() {
+        output.showMainVC
+            .emit(onNext: { [weak self] _ in
+                let vc = MainViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
         
+        output.showOnboardingVC
+            .emit(onNext: { [weak self] _ in
+                let vc = OnBoardingPageViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showLoginVC
+            .emit(onNext: { [weak self] _ in
+                let vc = LoginViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
+            })
+            .disposed(by: disposeBag)
     }
 }
