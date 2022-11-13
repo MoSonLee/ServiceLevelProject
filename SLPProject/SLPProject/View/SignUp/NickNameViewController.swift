@@ -53,7 +53,9 @@ final class NickNameViewController: UIViewController {
             view.addSubview($0)
         }
         setComponentsValue()
-        setNavigation()
+        if !UserDefaults.verified {
+            setNavigation()
+        }
     }
     
     private func setNavigation() {

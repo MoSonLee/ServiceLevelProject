@@ -165,7 +165,6 @@ final class CertificationViewController: UIViewController {
             .emit(onNext: { [weak self] _ in
                 let vc = NickNameViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
-                self?.changeRootViewController(vc)
             })
             .disposed(by: disposeBag)
         
@@ -173,7 +172,7 @@ final class CertificationViewController: UIViewController {
             .emit(onNext: { [weak self] _ in
                 let vc = MainViewController()
                 let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .overFullScreen
+                nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)
             })
             .disposed(by: disposeBag)
