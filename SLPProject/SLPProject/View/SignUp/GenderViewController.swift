@@ -33,11 +33,6 @@ final class GenderViewController: UIViewController {
     
     private lazy var output = viewModel.transform(input: input)
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
