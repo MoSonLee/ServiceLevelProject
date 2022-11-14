@@ -12,14 +12,20 @@
 		77145A6E291924490052B2FB /* OnBoardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77145A6D291924490052B2FB /* OnBoardingPageViewController.swift */; };
 		77145A732919244A0052B2FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77145A722919244A0052B2FB /* Assets.xcassets */; };
 		77145A762919244A0052B2FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77145A742919244A0052B2FB /* LaunchScreen.storyboard */; };
-		77145A7F291924600052B2FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A7E291924600052B2FB /* RxCocoa */; };
-		77145A81291924600052B2FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A80291924600052B2FB /* RxSwift */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
 		77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A0C2921DD8B000DC6CE /* DoubleSlider */; };
 		77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A0E29229525000DC6CE /* HomeTabViewController.swift */; };
 		77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1029229537000DC6CE /* SeSACShopViewController.swift */; };
 		77217A1329229545000DC6CE /* SeSACFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1229229545000DC6CE /* SeSACFriendViewController.swift */; };
 		77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1429229550000DC6CE /* MyInfoViewController.swift */; };
+		77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */; };
+		77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */; };
+		77217A202922ADF7000DC6CE /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A1F2922ADF7000DC6CE /* RxCocoa */; };
+		77217A222922ADF7000DC6CE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A212922ADF7000DC6CE /* RxSwift */; };
+		77217A252922AE21000DC6CE /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A242922AE21000DC6CE /* Differentiator */; };
+		77217A272922AE21000DC6CE /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A262922AE21000DC6CE /* RxDataSources */; };
+		77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */; };
+		77217A302922DFC3000DC6CE /* MySecondInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -77,6 +83,10 @@
 		77217A1029229537000DC6CE /* SeSACShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewController.swift; sourceTree = "<group>"; };
 		77217A1229229545000DC6CE /* SeSACFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFriendViewController.swift; sourceTree = "<group>"; };
 		77217A1429229550000DC6CE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
+		77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
+		77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
+		77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableModel.swift; sourceTree = "<group>"; };
+		77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoViewController.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -128,11 +138,13 @@
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
 				77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */,
+				77217A272922AE21000DC6CE /* RxDataSources in Frameworks */,
+				77217A202922ADF7000DC6CE /* RxCocoa in Frameworks */,
 				7744A361291FDD3F00A065C8 /* FirebaseMessaging in Frameworks */,
 				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
+				77217A222922ADF7000DC6CE /* RxSwift in Frameworks */,
+				77217A252922AE21000DC6CE /* Differentiator in Frameworks */,
 				77C0D985291927B1008FDA83 /* SnapKit in Frameworks */,
-				77145A81291924600052B2FB /* RxSwift in Frameworks */,
-				77145A7F291924600052B2FB /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,12 +178,38 @@
 				7744A348291FB81500A065C8 /* Network */,
 				77C0D97C2919255E008FDA83 /* Model */,
 				77C0D97E29192565008FDA83 /* View */,
+				77217A322922E3F2000DC6CE /* ViewCell */,
 				77C0D97D29192562008FDA83 /* ViewModel */,
 				77C0D9802919259C008FDA83 /* Assets */,
 				7757701C291D977800DA331B /* Custom */,
 				77C0D98E291942D8008FDA83 /* Extensions */,
 			);
 			path = SLPProject;
+			sourceTree = "<group>";
+		};
+		77217A192922A39A000DC6CE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		77217A312922E3CF000DC6CE /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				77217A1429229550000DC6CE /* MyInfoViewController.swift */,
+				77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		77217A322922E3F2000DC6CE /* ViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				77217A192922A39A000DC6CE /* Cell */,
+			);
+			path = ViewCell;
 			sourceTree = "<group>";
 		};
 		7737FD2E291AC70E0029DEA2 /* SignUp */ = {
@@ -188,11 +226,11 @@
 		7737FD2F291AC72C0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				77217A312922E3CF000DC6CE /* MyInfo */,
 				77C0D99B2919754B008FDA83 /* MainTabViewController.swift */,
 				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
 				77217A1229229545000DC6CE /* SeSACFriendViewController.swift */,
-				77217A1429229550000DC6CE /* MyInfoViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -228,6 +266,7 @@
 		7737FD33291AC79D0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -319,6 +358,7 @@
 			children = (
 				7744A35B291FC32600A065C8 /* UserInfo.swift */,
 				7744A36629200B0800A065C8 /* UserLoginInfo.swift */,
+				77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -414,14 +454,16 @@
 			);
 			name = SLPProject;
 			packageProductDependencies = (
-				77145A7E291924600052B2FB /* RxCocoa */,
-				77145A80291924600052B2FB /* RxSwift */,
 				77145A83291924690052B2FB /* Toast */,
 				77C0D984291927B1008FDA83 /* SnapKit */,
 				7744A34C291FB8A500A065C8 /* Moya */,
 				7744A35E291FDD3F00A065C8 /* FirebaseAuth */,
 				7744A360291FDD3F00A065C8 /* FirebaseMessaging */,
 				77217A0C2921DD8B000DC6CE /* DoubleSlider */,
+				77217A1F2922ADF7000DC6CE /* RxCocoa */,
+				77217A212922ADF7000DC6CE /* RxSwift */,
+				77217A242922AE21000DC6CE /* Differentiator */,
+				77217A262922AE21000DC6CE /* RxDataSources */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -452,12 +494,13 @@
 			);
 			mainGroup = 77145A5D291924490052B2FB;
 			packageReferences = (
-				77145A7D291924600052B2FB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */,
 				7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */,
+				77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */,
+				77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -501,10 +544,12 @@
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
+				77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */,
 				7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
 				77C0D99C2919754B008FDA83 /* MainTabViewController.swift in Sources */,
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
+				77217A302922DFC3000DC6CE /* MySecondInfoViewController.swift in Sources */,
 				7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */,
 				77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
@@ -512,6 +557,7 @@
 				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,
 				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
 				7744A37429210F0B00A065C8 /* APIService.swift in Sources */,
+				77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
@@ -523,6 +569,7 @@
 				7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */,
 				7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */,
 				7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */,
+				77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
@@ -744,14 +791,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		77145A7D291924600052B2FB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -766,6 +805,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
@@ -795,16 +850,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		77145A7E291924600052B2FB /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 77145A7D291924600052B2FB /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		77145A80291924600052B2FB /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 77145A7D291924600052B2FB /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
 		77145A83291924690052B2FB /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
@@ -814,6 +859,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */;
 			productName = DoubleSlider;
+		};
+		77217A1F2922ADF7000DC6CE /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		77217A212922ADF7000DC6CE /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		77217A242922AE21000DC6CE /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		77217A262922AE21000DC6CE /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		7744A34C291FB8A500A065C8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;

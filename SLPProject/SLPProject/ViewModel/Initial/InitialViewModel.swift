@@ -69,7 +69,8 @@ extension InitialViewModel {
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
                 case .tokenError:
-                    self?.updateFMCtoken()
+                    self?.getToken()
+                    self?.checkUserSigned()
                     
                 case .unRegisteredUser:
                     self?.setInitialView()
@@ -96,23 +97,6 @@ extension InitialViewModel {
                showNicknameVCRelay.accept(())
             } else {
                showLoginVCRelay.accept(())
-            }
-        }
-    }
-    
-    private func updateFMCtoken() {
-        getToken()
-        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { [weak self] result in
-            switch result {
-            case .success(_):
-                print("token 갱신 완료")
-                self?.checkUserSigned()
-                
-            case .failure(let error):
-                let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                print(error)
-                print(UserDefaults.userToken)
-                print(UserDefaults.fcmToken)
             }
         }
     }

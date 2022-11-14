@@ -22,6 +22,7 @@ enum SLPAssets {
         case shopIcon
         case friendIcon
         case infoIcon
+        case rightButton
         
         var image: UIImage {
             switch self {
@@ -60,6 +61,9 @@ enum SLPAssets {
                 
             case .infoIcon:
                 return UIImage(named: "infoIcon")!
+                
+            case .rightButton:
+                return UIImage(systemName: "chevron.right")!
             }
         }
     }
@@ -157,6 +161,17 @@ enum SLPAssets {
         case checkNetwork
         case invalidateNickname
         case confirm
+        case profileImageString
+        case noticeImageString
+        case qnaImageString
+        case alarmImageString
+        case permitImageString
+        case faqImageString
+        case notice
+        case qna
+        case alaram
+        case permit
+        case faq
         
         var text: String {
             switch self {
@@ -264,6 +279,39 @@ enum SLPAssets {
                 
             case .confirm:
                 return "확인"
+                
+            case .profileImageString:
+                return "profile"
+                
+            case .noticeImageString:
+                return "notice"
+                
+            case .qnaImageString:
+                return "qna"
+                
+            case .alarmImageString:
+                return "setting_alarm"
+                
+            case .permitImageString:
+                return "permit"
+                
+            case .faqImageString:
+                return "faq"
+                
+            case .notice:
+                return "공지사항"
+                
+            case .qna:
+                return "1:1 문의"
+                
+            case .alaram:
+                return "알림 설정"
+                
+            case .permit:
+                return "이용약관"
+                
+            case .faq:
+                return "자주 묻는 질문"
             }
         }
     }
