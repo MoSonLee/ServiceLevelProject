@@ -111,7 +111,6 @@ extension GenderViewModel {
             case .success(_):
                 self.showMainVCRelay.accept(())
                 self.changeRootViewToMainRelay.accept(())
-                UserDefaults.signed = true
                 
             case .failure(let error):
                 let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown

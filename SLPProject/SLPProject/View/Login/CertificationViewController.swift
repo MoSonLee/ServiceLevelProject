@@ -37,7 +37,8 @@ final class CertificationViewController: UIViewController {
             )
             .asSignal(onErrorJustReturn: ""),
         resendButtonTapped: resendButton.rx.tap.asSignal(),
-        multipleTimeResendButtonTapped: resendButton.rx.tap.asSignal()
+        multipleTimeResendButtonTapped: resendButton.rx.tap.asSignal(),
+        multipleTimeCertificationButtonTapped: startButton.rx.tap.asSignal()
     )
     
     private lazy var output = viewModel.transform(input: input)

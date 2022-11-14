@@ -25,4 +25,10 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func responseGetUser(completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.login) { result in
+            completion(result)
+        }
+    }
 }

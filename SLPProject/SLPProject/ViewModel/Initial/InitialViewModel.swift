@@ -52,22 +52,26 @@ final class InitialViewModel {
 
 extension InitialViewModel {
     private func checkNetwork() {
-        if InternetConnectionManager.isConnectedToNetwork() {
-            if UserDefaults.signed {
-                showMainVCRelay.accept(())
-            } else {
+        InternetConnectionManager.isConnectedToNetwork() ? checkUserSigned() : showToastRelay.accept(SLPAssets.RawString.checkNetwork.text)
+    }
+    
+    private func checkUserSigned() {
+        APIService().responseGetUser { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.showMainVCRelay.accept(())
+                
+            case .failure(_):
                 if UserDefaults.showOnboarding {
-                    showOnboardingVCRelay.accept(())
+                    self?.showOnboardingVCRelay.accept(())
                 } else {
                     if UserDefaults.verified {
-                        showNicknameVCRelay.accept(())
+                        self?.showNicknameVCRelay.accept(())
                     } else {
-                        showLoginVCRelay.accept(())
+                        self?.showLoginVCRelay.accept(())
                     }
                 }
             }
-        } else {
-            showToastRelay.accept(SLPAssets.RawString.checkNetwork.text)
         }
     }
 }

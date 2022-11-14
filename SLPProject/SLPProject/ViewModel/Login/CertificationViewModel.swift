@@ -20,6 +20,7 @@ final class CertificationViewModel {
         let startButtonTapped: Signal<String>
         let resendButtonTapped: Signal<Void>
         let multipleTimeResendButtonTapped: Signal<Void>
+        let multipleTimeCertificationButtonTapped: Signal<Void>
     }
     
     struct Output {
@@ -73,6 +74,7 @@ final class CertificationViewModel {
             .disposed(by: disposeBag)
         
         input.startButtonTapped
+            .throttle(.seconds(3), latest: false)
             .emit(onNext: { [weak self] text in
                 self?.verificationButtonClicked(code: text)
             })
@@ -90,6 +92,12 @@ final class CertificationViewModel {
                 let phoneNumber =  UserDefaults.userNumber
                 self?.getCertificationMessage(phoneNumber: phoneNumber)
             })
+            .disposed(by: disposeBag)
+        
+        input.multipleTimeResendButtonTapped
+            .skip(2)
+            .map{ _ in SLPAssets.RawString.tooMuchRequest.text}
+            .emit(to: showToastRelay)
             .disposed(by: disposeBag)
         
         return Output(
@@ -142,9 +150,7 @@ extension CertificationViewModel {
             }
         }
     }
-}
-
-extension CertificationViewModel {
+    
     private func requestUserSigned() {
         provider.request(.login) { [weak self] result in
             guard let self = self else { return }
@@ -153,7 +159,7 @@ extension CertificationViewModel {
                 self.showMainVCRelay.accept(())
                 self.changeRootViewToMainRelay.accept(())
                 UserDefaults.verified = true
-
+                
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
                 switch error {
