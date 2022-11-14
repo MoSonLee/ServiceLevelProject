@@ -63,6 +63,7 @@ extension InitialViewModel {
         APIService().responseGetUser { [weak self] result in
             switch result {
             case .success(_):
+                print("success")
                 self?.showMainVCRelay.accept(())
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
@@ -71,21 +72,14 @@ extension InitialViewModel {
                     self?.updateFMCtoken()
                     
                 case .unRegisteredUser:
-                    if UserDefaults.showOnboarding {
-                        self?.showOnboardingVCRelay.accept(())
-                    } else {
-                        if UserDefaults.verified {
-                            self?.showNicknameVCRelay.accept(())
-                        } else {
-                            self?.showLoginVCRelay.accept(())
-                        }
-                    }
+                    self?.setInitialView()
                     
                 case .serverError:
                     print(SLPLoginError.serverError)
                     
                 case .clientError:
-                    self?.getToken()
+                    self?.setInitialView()
+                    print(SLPLoginError.clientError)
                     
                 case .unknown:
                     print(SLPLoginError.unknown)
@@ -94,7 +88,20 @@ extension InitialViewModel {
         }
     }
     
+    private func setInitialView() {
+        if UserDefaults.showOnboarding {
+           showOnboardingVCRelay.accept(())
+        } else {
+            if UserDefaults.verified {
+               showNicknameVCRelay.accept(())
+            } else {
+               showLoginVCRelay.accept(())
+            }
+        }
+    }
+    
     private func updateFMCtoken() {
+        getToken()
         APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { [weak self] result in
             switch result {
             case .success(_):
