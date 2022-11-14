@@ -54,6 +54,8 @@ final class InitialViewModel {
 
 extension InitialViewModel {
     private func checkNetwork() {
+        print(UserDefaults.fcmToken)
+        print(UserDefaults.userToken)
         InternetConnectionManager.isConnectedToNetwork() ? checkUserSigned() : showToastRelay.accept(SLPAssets.RawString.checkNetwork.text)
     }
     
@@ -62,7 +64,6 @@ extension InitialViewModel {
             switch result {
             case .success(_):
                 self?.showMainVCRelay.accept(())
-                
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
@@ -79,6 +80,7 @@ extension InitialViewModel {
                             self?.showLoginVCRelay.accept(())
                         }
                     }
+                    
                 case .serverError:
                     print(SLPLoginError.serverError)
                     
@@ -87,17 +89,17 @@ extension InitialViewModel {
                     
                 case .unknown:
                     print(SLPLoginError.unknown)
-                    
                 }
             }
         }
     }
     
     private func updateFMCtoken() {
-        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { result in
+        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { [weak self] result in
             switch result {
             case .success(_):
                 print("token 갱신 완료")
+                self?.checkUserSigned()
                 
             case .failure(let error):
                 let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown

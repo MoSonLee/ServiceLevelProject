@@ -15,6 +15,7 @@
 		77145A7F291924600052B2FB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A7E291924600052B2FB /* RxCocoa */; };
 		77145A81291924600052B2FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A80291924600052B2FB /* RxSwift */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
+		77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A0C2921DD8B000DC6CE /* DoubleSlider */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -118,6 +119,7 @@
 			files = (
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
+				77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */,
 				7744A361291FDD3F00A065C8 /* FirebaseMessaging in Frameworks */,
 				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
 				77C0D985291927B1008FDA83 /* SnapKit in Frameworks */,
@@ -407,6 +409,7 @@
 				7744A34C291FB8A500A065C8 /* Moya */,
 				7744A35E291FDD3F00A065C8 /* FirebaseAuth */,
 				7744A360291FDD3F00A065C8 /* FirebaseMessaging */,
+				77217A0C2921DD8B000DC6CE /* DoubleSlider */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -442,6 +445,7 @@
 				77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */,
 				7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -740,6 +744,14 @@
 				kind = branch;
 			};
 		};
+		77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yhkaplan/DoubleSlider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -781,6 +793,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77145A82291924690052B2FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		77217A0C2921DD8B000DC6CE /* DoubleSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */;
+			productName = DoubleSlider;
 		};
 		7744A34C291FB8A500A065C8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
