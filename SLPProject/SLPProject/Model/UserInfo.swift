@@ -30,7 +30,7 @@ struct UserAccounts: Codable {
 
 struct UserFCMtoken: Codable {
     var toDictionary: [String: Any] {
-        let dictionary: [String: Any] = [ "FCMtoken": FCMtoken ]
+        let dictionary: [String: Any] = ["FCMtoken": FCMtoken]
         return dictionary
     }
     

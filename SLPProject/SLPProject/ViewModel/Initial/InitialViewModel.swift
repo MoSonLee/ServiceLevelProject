@@ -85,7 +85,7 @@ extension InitialViewModel {
                     print(SLPLoginError.serverError)
                     
                 case .clientError:
-                    print(SLPLoginError.clientError)
+                    self?.getToken()
                     
                 case .unknown:
                     print(SLPLoginError.unknown)
@@ -104,6 +104,18 @@ extension InitialViewModel {
             case .failure(let error):
                 let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 print(error)
+                print(UserDefaults.userToken)
+                print(UserDefaults.fcmToken)
+            }
+        }
+    }
+    
+    private func getToken() {
+        FirebaseAuthorization().getToken { token, error in
+            if token != nil {
+                guard let token = token else { return }
+                UserDefaults.userToken = token
+                print(token)
             }
         }
     }

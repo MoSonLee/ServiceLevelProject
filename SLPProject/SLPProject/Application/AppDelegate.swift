@@ -12,7 +12,6 @@ import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
-    static var fcmToken = ""
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
@@ -30,10 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let fcmToken = fcmToken else { return }
-        AppDelegate.fcmToken = fcmToken
         let dataDict:[String: String] = ["token": fcmToken ]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-        UserDefaults.fcmToken = AppDelegate.fcmToken
+        UserDefaults.fcmToken = fcmToken
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -42,6 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        AppDelegate.fcmToken = fcmToken
+        UserDefaults.fcmToken = fcmToken
     }
 }

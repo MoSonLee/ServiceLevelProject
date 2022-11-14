@@ -44,7 +44,7 @@ final class GenderViewModel {
     
     private lazy var User = UserAccounts(
         phoneNumber: UserDefaults.userNumber,
-        FCMtoken: AppDelegate.fcmToken,
+        FCMtoken: UserDefaults.fcmToken,
         nick: UserDefaults.nick,
         birth: UserDefaults.birth,
         email: UserDefaults.userEmail,
