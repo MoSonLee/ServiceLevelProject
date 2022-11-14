@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in}
         application.registerForRemoteNotifications()
+        UITabBar.appearance().tintColor = SLPAssets.CustomColor.yellowGreen.color
         return true
     }
     

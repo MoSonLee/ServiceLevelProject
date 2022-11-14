@@ -18,6 +18,10 @@ enum SLPAssets {
         case backButton
         case splashImage
         case splashTextImage
+        case homeIcon
+        case shopIcon
+        case friendIcon
+        case infoIcon
         
         var image: UIImage {
             switch self {
@@ -44,6 +48,18 @@ enum SLPAssets {
                 
             case .splashTextImage:
                 return UIImage(named: "splashText")!
+                
+            case .homeIcon:
+                return UIImage(named: "homeIcon")!
+                
+            case .shopIcon:
+                return UIImage(named: "shopIcon")!
+                
+            case .friendIcon:
+                return UIImage(named: "friendIcon")!
+                
+            case .infoIcon:
+                return UIImage(named: "infoIcon")!
             }
         }
     }
