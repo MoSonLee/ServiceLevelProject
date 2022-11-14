@@ -16,6 +16,10 @@
 		77145A81291924600052B2FB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A80291924600052B2FB /* RxSwift */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
 		77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A0C2921DD8B000DC6CE /* DoubleSlider */; };
+		77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A0E29229525000DC6CE /* HomeTabViewController.swift */; };
+		77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1029229537000DC6CE /* SeSACShopViewController.swift */; };
+		77217A1329229545000DC6CE /* SeSACFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1229229545000DC6CE /* SeSACFriendViewController.swift */; };
+		77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1429229550000DC6CE /* MyInfoViewController.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -54,7 +58,7 @@
 		77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98F291942E4008FDA83 /* CustomColor.swift */; };
 		77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99529194F50008FDA83 /* LoginViewController.swift */; };
 		77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99729195118008FDA83 /* LoginViewModel.swift */; };
-		77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99B2919754B008FDA83 /* MainViewController.swift */; };
+		77C0D99C2919754B008FDA83 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99B2919754B008FDA83 /* MainTabViewController.swift */; };
 		77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99D29197554008FDA83 /* NickNameViewController.swift */; };
 		77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99F29198326008FDA83 /* CertificationViewController.swift */; };
 		77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */; };
@@ -69,6 +73,10 @@
 		77145A722919244A0052B2FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77145A752919244A0052B2FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77145A772919244A0052B2FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77217A0E29229525000DC6CE /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		77217A1029229537000DC6CE /* SeSACShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewController.swift; sourceTree = "<group>"; };
+		77217A1229229545000DC6CE /* SeSACFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFriendViewController.swift; sourceTree = "<group>"; };
+		77217A1429229550000DC6CE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -105,7 +113,7 @@
 		77C0D98F291942E4008FDA83 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
 		77C0D99529194F50008FDA83 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		77C0D99729195118008FDA83 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		77C0D99B2919754B008FDA83 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		77C0D99B2919754B008FDA83 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		77C0D99D29197554008FDA83 /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
 		77C0D99F29198326008FDA83 /* CertificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewController.swift; sourceTree = "<group>"; };
 		77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationViewModel.swift; sourceTree = "<group>"; };
@@ -180,7 +188,11 @@
 		7737FD2F291AC72C0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				77C0D99B2919754B008FDA83 /* MainViewController.swift */,
+				77C0D99B2919754B008FDA83 /* MainTabViewController.swift */,
+				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
+				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
+				77217A1229229545000DC6CE /* SeSACFriendViewController.swift */,
+				77217A1429229550000DC6CE /* MyInfoViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -481,6 +493,9 @@
 				7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */,
 				7744A353291FBD5A00A065C8 /* LoginError.swift in Sources */,
 				7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */,
+				77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */,
+				77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */,
+				77217A1329229545000DC6CE /* SeSACFriendViewController.swift in Sources */,
 				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
@@ -488,9 +503,10 @@
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
 				7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
-				77C0D99C2919754B008FDA83 /* MainViewController.swift in Sources */,
+				77C0D99C2919754B008FDA83 /* MainTabViewController.swift in Sources */,
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
 				7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */,
+				77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */,
 				77C0D98929192F28008FDA83 /* SecondOnBoardingViewController.swift in Sources */,
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
 				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,

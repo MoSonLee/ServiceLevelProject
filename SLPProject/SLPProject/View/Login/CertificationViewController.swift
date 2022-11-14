@@ -169,7 +169,7 @@ final class CertificationViewController: UIViewController {
         
         output.showMainVC
             .emit(onNext: { [weak self] _ in
-                let vc = MainViewController()
+                let vc = MainTabViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)
@@ -185,7 +185,7 @@ final class CertificationViewController: UIViewController {
         
         output.changeRootViewToMain
             .emit(onNext: { [weak self] _ in
-                let vc = MainViewController()
+                let vc = MainTabViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 self?.changeRootViewController(nav)
             })

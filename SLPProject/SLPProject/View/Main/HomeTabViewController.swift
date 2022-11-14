@@ -1,14 +1,14 @@
 //
-//  MainViewController.swift
+//  HomeTabViewController.swift
 //  SLPProject
 //
-//  Created by 이승후 on 2022/11/08.
+//  Created by 이승후 on 2022/11/15.
 //
 
 import UIKit
 
-final class MainViewController: UIViewController {
-    
+final class HomeTabViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()

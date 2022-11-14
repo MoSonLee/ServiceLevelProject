@@ -63,7 +63,7 @@ final class InitialViewController: UIViewController {
     private func bind() {
         output.showMainVC
             .emit(onNext: { [weak self] _ in
-                let vc = MainViewController()
+                let vc = MainTabViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self?.present(nav, animated: true)
