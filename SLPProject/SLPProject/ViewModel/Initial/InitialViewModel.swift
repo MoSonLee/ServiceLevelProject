@@ -24,6 +24,8 @@ final class InitialViewModel {
         let showNicknameVC: Signal<Void>
     }
     
+    private let userFCMtoken = UserFCMtoken(FCMtoken: UserDefaults.fcmToken)
+    
     private let checkNetworkRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let showOnboardingVCRelay = PublishRelay<Void>()
@@ -61,16 +63,45 @@ extension InitialViewModel {
             case .success(_):
                 self?.showMainVCRelay.accept(())
                 
-            case .failure(_):
-                if UserDefaults.showOnboarding {
-                    self?.showOnboardingVCRelay.accept(())
-                } else {
-                    if UserDefaults.verified {
-                        self?.showNicknameVCRelay.accept(())
+            case .failure(let error):
+                let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .tokenError:
+                    self?.updateFMCtoken()
+                    
+                case .unRegisteredUser:
+                    if UserDefaults.showOnboarding {
+                        self?.showOnboardingVCRelay.accept(())
                     } else {
-                        self?.showLoginVCRelay.accept(())
+                        if UserDefaults.verified {
+                            self?.showNicknameVCRelay.accept(())
+                        } else {
+                            self?.showLoginVCRelay.accept(())
+                        }
                     }
+                case .serverError:
+                    print(SLPLoginError.serverError)
+                    
+                case .clientError:
+                    print(SLPLoginError.clientError)
+                    
+                case .unknown:
+                    print(SLPLoginError.unknown)
+                    
                 }
+            }
+        }
+    }
+    
+    private func updateFMCtoken() {
+        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { result in
+            switch result {
+            case .success(_):
+                print("token 갱신 완료")
+                
+            case .failure(let error):
+                let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                print(error)
             }
         }
     }

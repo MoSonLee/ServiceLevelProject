@@ -51,6 +51,8 @@ final class GenderViewModel {
         gender: genderValue
     )
     
+    private var userFCMtoken = UserFCMtoken(FCMtoken: UserDefaults.fcmToken)
+    
     private let fcmtoken = UserFCMtoken(FCMtoken: UserDefaults.fcmToken)
     
     private let provider: MoyaProvider<SLPTarget>
@@ -143,12 +145,13 @@ extension GenderViewModel {
     }
     
     private func updateFMCtoken() {
-        APIService().updateFMCtoken(dictionary: self.User.toDictionary) { [weak self] result in
+        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
                 self.requestSignUpUser()
                 print("token 갱신 완료")
+                
             case .failure(let error):
                 let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 print(error)
