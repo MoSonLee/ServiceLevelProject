@@ -10,12 +10,12 @@ import Foundation
 import RxDataSources
 
 struct MySecondInfoTableModel {
-    var title: String
-    var gender: Int
-    var study: String
-    var switchType: Bool
-    var age: String
-    var slider: String
+    var title: String?
+    var gender: Int?
+    var study: String?
+    var switchType: Bool?
+    var age: String?
+    var slider: String?
 }
 
 struct MySecondInfoTableSectionModel {
