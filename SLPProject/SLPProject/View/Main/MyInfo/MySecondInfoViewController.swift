@@ -29,7 +29,6 @@ final class MySecondInfoViewController: UIViewController {
             MySecondInfoTableModel(title: "회원탈퇴", gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
         ])
     ])
-    
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -37,6 +36,7 @@ final class MySecondInfoViewController: UIViewController {
         setComponents()
         setConstraints()
         bindTableView()
+        
     }
     
     private func setNavigationItems() {
@@ -78,9 +78,16 @@ final class MySecondInfoViewController: UIViewController {
     
     private func bindTableView() {
         tableView.separatorStyle = .none
-        let dataSource = RxTableViewSectionedAnimatedDataSource<MySecondInfoTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<MySecondInfoTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MySecondInfoTableViewCell.identifider, for: indexPath) as? MySecondInfoTableViewCell else { return UITableViewCell() }
+            
             cell.setConstraints(indexPath: indexPath)
+            cell.showInfoButton.rx.tap
+                .subscribe(onNext: {
+                    cell.setExpandFirstCell()
+                })
+                .disposed(by: self!.disposeBag)
+            
             cell.configure(indexPath: indexPath, item: item)
             return cell
         }
@@ -96,6 +103,6 @@ final class MySecondInfoViewController: UIViewController {
 
 extension MySecondInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        indexPath.section == 0 ? 78 : 65
+        indexPath.section == 0  ? UITableView.automaticDimension : 75
     }
 }

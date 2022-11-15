@@ -12,7 +12,7 @@ import DoubleSlider
 final class MySecondInfoTableViewCell: UITableViewCell {
     
     private let backView = UIView()
-    private let showInfoButton = UIButton()
+    let showInfoButton = UIButton()
     private let leftLabel = UILabel()
     private let boyButton = UIButton()
     private let girlButton = UIButton()
@@ -22,13 +22,24 @@ final class MySecondInfoTableViewCell: UITableViewCell {
     private let doubleSlider = DoubleSlider()
     private let withdrawButton = UIButton()
     
+    private let titleLabel = UILabel()
+    private let reviewLabel = UILabel()
+    private let waitingLabel = UILabel()
+    
+    private let mannerButton = UIButton()
+    private let timeButton = UIButton()
+    private let responseButton = UIButton()
+    private let kindButton = UIButton()
+    private let niceSkillButton = UIButton()
+    private let niceTimeButton = UIButton()
+    
     static var identifider: String {
         return "MySecondInfoTableViewCell"
     }
     
     override func layoutSubviews() {
-      super.layoutSubviews()
-      contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,11 +53,13 @@ final class MySecondInfoTableViewCell: UITableViewCell {
     func setFirstCell() {
         contentView.addSubview(backView)
         [leftLabel, showInfoButton].forEach {
-            backView.addSubview($0)
+            contentView.addSubview($0)
         }
         backView.snp.makeConstraints { make in
             make.top.left.bottom.right.equalToSuperview()
+            make.height.equalTo(100)
         }
+        
         leftLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(16)
@@ -58,6 +71,7 @@ final class MySecondInfoTableViewCell: UITableViewCell {
             make.width.equalTo(24)
             make.height.equalTo(12)
         }
+        showInfoButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
     }
     
     func setLeftLabel() {
@@ -139,6 +153,91 @@ final class MySecondInfoTableViewCell: UITableViewCell {
         setLeftLabel()
     }
     
+    func setExpandFirstCell() {
+        [titleLabel, mannerButton, timeButton, responseButton, kindButton, niceSkillButton, niceTimeButton, waitingLabel, reviewLabel].forEach {
+            contentView.addSubview($0)
+        }
+        
+        backView.snp.makeConstraints { make in
+            make.top.left.bottom.right.equalToSuperview()
+            
+        }
+        
+        leftLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.right.equalTo(showInfoButton.snp.left).offset(-10)
+            make.bottom.equalTo(titleLabel.snp.top).offset(24)
+        }
+        showInfoButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(-26)
+            make.width.equalTo(24)
+            make.height.equalTo(12)
+            make.bottom.equalTo(titleLabel.snp.top).offset(24)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.width.equalTo(100)
+            make.height.equalTo(18)
+            make.bottom.equalTo(mannerButton.snp.top).offset(16)
+        }
+        
+        mannerButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.height.equalTo(32)
+            make.right.equalTo(timeButton.snp.left).offset(-8)
+            make.bottom.equalTo(timeButton.snp.top).offset(16)
+        }
+        
+        timeButton.snp.makeConstraints { make in
+            make.height.equalTo(32)
+            make.bottom.equalTo(timeButton.snp.top).offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
+        
+        responseButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.height.equalTo(32)
+            make.right.equalTo(kindButton.snp.left).offset(-8)
+            make.bottom.equalTo(niceSkillButton.snp.top).offset(16)
+        }
+        
+        kindButton.snp.makeConstraints { make in
+            make.height.equalTo(32)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalTo(niceSkillButton.snp.top).offset(16)
+        }
+        
+        niceSkillButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.height.equalTo(32)
+            make.right.equalTo(kindButton.snp.left).offset(-8)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-29)
+        }
+        
+        niceTimeButton.snp.makeConstraints { make in
+            make.height.equalTo(32)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-29)
+        }
+        
+        reviewLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.width.equalTo(47)
+            make.height.equalTo(18)
+            make.bottom.equalTo(waitingLabel.snp.top).offset(-16)
+        }
+        
+        waitingLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.width.equalTo(169)
+            make.height.equalTo(24)
+            make.bottom.equalToSuperview().offset(-16)
+        }
+        showInfoButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+    }
+    
     func setConstraints(indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
@@ -149,7 +248,7 @@ final class MySecondInfoTableViewCell: UITableViewCell {
             leftLabel.font = UIFont.systemFont(ofSize: 14)
             switch indexPath.row {
             case 0:
-               setSecondCell()
+                setSecondCell()
             case 1:
                 setThirdCell()
             case 2:
@@ -191,5 +290,26 @@ final class MySecondInfoTableViewCell: UITableViewCell {
         backView.layer.borderWidth = 1
         backView.layer.cornerRadius = 8
         backView.layer.borderColor = SLPAssets.CustomColor.gray2.color.cgColor
+        
+        mannerButton.setTitle("좋은 매너", for: .normal)
+        timeButton.setTitle("정확한 시간 약속", for: .normal)
+        responseButton.setTitle("빠른 응답", for: .normal)
+        kindButton.setTitle("친절한 성격", for: .normal)
+        niceSkillButton.setTitle("능숙한 실력", for: .normal)
+        niceTimeButton.setTitle("유익한 시간", for: .normal)
+        
+        [mannerButton, timeButton, responseButton, kindButton, niceSkillButton, niceTimeButton].forEach {
+            $0.layer.cornerRadius = 8
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = SLPAssets.CustomColor.gray2.color.cgColor
+            $0.tintColor = SLPAssets.CustomColor.green.color
+            $0.backgroundColor = .gray
+        }
+        
+        titleLabel.text = "새싹 타이틀"
+        reviewLabel.text = "새싹 리뷰"
+        waitingLabel.text = "첫 리뷰를 기다리는 중이에요!"
+        reviewLabel.textColor = SLPAssets.CustomColor.black.color
+        waitingLabel.textColor = SLPAssets.CustomColor.gray6.color
     }
 }
