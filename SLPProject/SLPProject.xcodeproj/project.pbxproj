@@ -26,6 +26,8 @@
 		77217A272922AE21000DC6CE /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A262922AE21000DC6CE /* RxDataSources */; };
 		77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */; };
 		77217A302922DFC3000DC6CE /* MySecondInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */; };
+		77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */; };
+		77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -87,6 +89,8 @@
 		77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
 		77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableModel.swift; sourceTree = "<group>"; };
 		77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoViewController.swift; sourceTree = "<group>"; };
+		77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoTableViewCell.swift; sourceTree = "<group>"; };
+		77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoTableModel.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -187,12 +191,13 @@
 			path = SLPProject;
 			sourceTree = "<group>";
 		};
-		77217A192922A39A000DC6CE /* Cell */ = {
+		77217A192922A39A000DC6CE /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */,
+				77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */,
 			);
-			path = Cell;
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		77217A312922E3CF000DC6CE /* MyInfo */ = {
@@ -207,7 +212,7 @@
 		77217A322922E3F2000DC6CE /* ViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				77217A192922A39A000DC6CE /* Cell */,
+				77217A192922A39A000DC6CE /* TableViewCell */,
 			);
 			path = ViewCell;
 			sourceTree = "<group>";
@@ -226,11 +231,11 @@
 		7737FD2F291AC72C0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				77217A312922E3CF000DC6CE /* MyInfo */,
 				77C0D99B2919754B008FDA83 /* MainTabViewController.swift */,
 				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
 				77217A1229229545000DC6CE /* SeSACFriendViewController.swift */,
+				77217A312922E3CF000DC6CE /* MyInfo */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				7744A35B291FC32600A065C8 /* UserInfo.swift */,
 				7744A36629200B0800A065C8 /* UserLoginInfo.swift */,
 				77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */,
+				77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -570,8 +576,10 @@
 				7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */,
 				7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */,
 				77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */,
+				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
+				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
 				7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */,
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,

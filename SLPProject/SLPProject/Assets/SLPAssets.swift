@@ -23,6 +23,7 @@ enum SLPAssets {
         case friendIcon
         case infoIcon
         case rightButton
+        case myInfoProfile
         
         var image: UIImage {
             switch self {
@@ -64,6 +65,9 @@ enum SLPAssets {
                 
             case .rightButton:
                 return UIImage(systemName: "chevron.right")!
+                
+            case .myInfoProfile:
+                return UIImage(named: "myInfoProfile")!
             }
         }
     }
