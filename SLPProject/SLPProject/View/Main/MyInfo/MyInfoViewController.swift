@@ -35,9 +35,7 @@ final class MyInfoViewController: UIViewController {
         ])
     ])
     
-    private lazy var input = MyInfoViewModel.Input(
-        firstCellTapped: tableView.rx.itemSelected.asControlEvent()
-        )
+    private lazy var input = MyInfoViewModel.Input(cellTapped: tableView.rx.itemSelected.asControlEvent())
     
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
@@ -72,14 +70,14 @@ final class MyInfoViewController: UIViewController {
     private func bindTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<MyInfoTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoTableViewCell.identifider, for: indexPath) as? MyInfoTableViewCell else { return UITableViewCell() }
-            
             cell.configure(indexPath: indexPath, item: item)
-            
             return cell
         }
+        
         sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
