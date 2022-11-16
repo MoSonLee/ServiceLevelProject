@@ -31,17 +31,11 @@ final class MySecondInfoViewController: UIViewController {
     ])
     private let disposeBag = DisposeBag()
     
-    deinit {
-        print("deinit")
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bindTableView()
-
     }
     
     private func setNavigationItems() {
@@ -89,7 +83,47 @@ final class MySecondInfoViewController: UIViewController {
                     .subscribe(onNext: {
                         self.toggle = !self.toggle
                         cell.setExpand(toggle: self.toggle)
-                        tableView.reloadData()
+                        UIView.transition(
+                            with: tableView,
+                            duration: 0.35,
+                            options: .transitionCrossDissolve,
+                            animations: { self.tableView.reloadData()})
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.mannerButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.mannerButtonClicked()
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.timeButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.timeButtonClicked()
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.responseButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.responseButtonClicked()
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.kindButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.kindButtonClicked()
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.niceSkillButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.skilButtonClicked()
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.niceTimeButton.rx.tap
+                    .subscribe(onNext: {
+                        cell.niceTimeButtonClicked()
                     })
                     .disposed(by: cell.disposeBag)
                 
@@ -97,6 +131,19 @@ final class MySecondInfoViewController: UIViewController {
                 switch indexPath.row {
                 case 0:
                     cell = tableView.dequeueReusableCell(withIdentifier: GenderCell.identifider, for: indexPath) as? GenderCell ?? MyPageDetailViewCell()
+                    guard let cell = cell as? GenderCell else { return MyPageDetailViewCell() }
+                    cell.boyButton.rx.tap
+                        .subscribe(onNext: {
+                            cell.boyButtonClicked()
+                        })
+                        .disposed(by: cell.disposeBag)
+                    
+                    cell.girlButton.rx.tap
+                        .subscribe(onNext: {
+                            cell.girlButtonClicked()
+                        })
+                        .disposed(by: cell.disposeBag)
+                    
                 case 1:
                     cell = tableView.dequeueReusableCell(withIdentifier: StudyCell.identifider, for: indexPath) as? StudyCell ?? MyPageDetailViewCell()
                 case 2:
