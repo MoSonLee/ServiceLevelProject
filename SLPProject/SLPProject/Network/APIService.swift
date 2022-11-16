@@ -31,4 +31,10 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func withdrawUser(completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.withdraw) { result in
+            completion(result)
+        }
+    }
 }

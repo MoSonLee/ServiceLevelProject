@@ -8,10 +8,10 @@
 import Foundation
 
 enum SLPWithdrawError: Int, Error {
-    case registeredUser = 201
     case tokenError = 401
     case unRegisteredUser = 406
     case serverError = 500
+    case clientError = 501
     case unknown
     
     var description: String { self.errorDescription }
@@ -20,14 +20,14 @@ enum SLPWithdrawError: Int, Error {
 extension SLPWithdrawError {
     var errorDescription: String {
         switch self {
-        case .registeredUser:
-            return "201: registeredUser"
         case .tokenError:
             return "401: tokenError"
         case .unRegisteredUser:
             return "406: unRegisteredUser"
         case .serverError:
             return "500: serverError"
+        case .clientError:
+            return "501: clinetError"
         case .unknown:
             return "UnKnown Error"
         }

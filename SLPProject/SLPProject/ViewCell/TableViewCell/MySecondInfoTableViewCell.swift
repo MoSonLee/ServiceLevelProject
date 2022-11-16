@@ -44,6 +44,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()
         showInfoButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        showInfoButton.tintColor = .black
     }
     
     required init?(coder: NSCoder) {
@@ -92,7 +93,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         
         showInfoButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
-            make.height.width.equalTo(16)
+            make.height.width.equalTo(30)
             make.right.equalToSuperview().offset(-16)
         }
     }
@@ -149,7 +150,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
             reviewContent.snp.makeConstraints { make in
                 make.top.equalTo(reviewHeader.snp.bottom).offset(16)
                 make.left.equalToSuperview().offset(16)
-                make.width.equalTo(lineView).multipliedBy(0.5)
+                make.width.equalTo(lineView).multipliedBy(0.8)
                 make.bottom.equalToSuperview().offset(-16)
             }
             lineView.snp.updateConstraints { make in
@@ -387,6 +388,7 @@ final class StudyCell: MyPageDetailViewCell {
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.lessThanOrEqualTo(textField.snp.left).offset(-94)
+            make.width.equalToSuperview().multipliedBy(0.5)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
         }
@@ -429,6 +431,7 @@ final class NumberCell: MyPageDetailViewCell {
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.lessThanOrEqualTo(switchButton.snp.left).offset(-191)
+            make.width.equalToSuperview().multipliedBy(0.5)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
         }
@@ -437,7 +440,7 @@ final class NumberCell: MyPageDetailViewCell {
             make.centerY.equalToSuperview()
             make.width.equalTo(52)
             make.height.equalTo(28)
-            make.right.equalToSuperview()
+            make.right.equalToSuperview().offset(-2)
         }
     }
     
@@ -473,6 +476,7 @@ final class AgeCell: MyPageDetailViewCell {
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.lessThanOrEqualTo(ageLabel.snp.left).offset(-218)
+            make.width.equalToSuperview().multipliedBy(0.5)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
         }
@@ -493,7 +497,7 @@ final class AgeCell: MyPageDetailViewCell {
 
 final class DoubleSliderCell: MyPageDetailViewCell {
     
-    private let doubleSlider = UILabel()
+    private let doubleSlider = DoubleSlider()
     
     static var identifider: String {
         return "DoubleSliderCell"
@@ -517,15 +521,13 @@ final class DoubleSliderCell: MyPageDetailViewCell {
         }
     }
     
-    override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {
-        doubleSlider.backgroundColor = SLPAssets.CustomColor.gray2.color
-        doubleSlider.tintColor = SLPAssets.CustomColor.green.color
-    }
+    override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {}
 }
 
 final class WithdrawCell: MyPageDetailViewCell {
     
-    private let titleLabel = UILabel()
+    let withdrawButton = UIButton()
+    var disposeBag = DisposeBag()
     
     static var identifider: String {
         return "WithdrawCell"
@@ -534,7 +536,6 @@ final class WithdrawCell: MyPageDetailViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()
-        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -542,20 +543,16 @@ final class WithdrawCell: MyPageDetailViewCell {
     }
     
     override func setConstraints() {
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
+        contentView.addSubview(withdrawButton)
+        withdrawButton.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.right.lessThanOrEqualToSuperview().offset(-307)
             make.centerY.equalToSuperview()
             make.height.equalTo(22)
         }
     }
     
     override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {
-        titleLabel.text = item.title
-    }
-    
-    func bind() {
-        
+        withdrawButton.setTitle(item.title, for: .normal)
+        withdrawButton.setTitleColor(.black, for: .normal)
     }
 }

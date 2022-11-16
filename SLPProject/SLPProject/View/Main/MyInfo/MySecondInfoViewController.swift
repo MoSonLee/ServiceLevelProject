@@ -72,6 +72,8 @@ final class MySecondInfoViewController: UIViewController {
     
     private func bindTableView() {
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.showsHorizontalScrollIndicator = false
         let dataSource = RxTableViewSectionedAnimatedDataSource<MySecondInfoTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             var cell = MyPageDetailViewCell()
             guard let self = self else { return cell }
@@ -152,8 +154,16 @@ final class MySecondInfoViewController: UIViewController {
                     cell = tableView.dequeueReusableCell(withIdentifier: AgeCell.identifider, for: indexPath) as? AgeCell ?? MyPageDetailViewCell()
                 case 4:
                     cell = tableView.dequeueReusableCell(withIdentifier: DoubleSliderCell.identifider, for: indexPath) as? DoubleSliderCell ?? MyPageDetailViewCell()
+                    
                 case 5:
                     cell = tableView.dequeueReusableCell(withIdentifier: WithdrawCell.identifider, for: indexPath) as? WithdrawCell ?? MyPageDetailViewCell()
+                    guard let cell = cell as? WithdrawCell else { return MyPageDetailViewCell() }
+                    cell.withdrawButton.rx.tap
+                        .subscribe(onNext: {
+                            self.withdrawUser()
+                        })
+                        .disposed(by: cell.disposeBag)
+                    
                 default:
                     print("Error")
                 }
@@ -161,7 +171,6 @@ final class MySecondInfoViewController: UIViewController {
             default:
                 print("Error")
             }
-            
             
             cell.configure(indexPath: indexPath, item: item)
             cell.selectionStyle = .none
@@ -180,5 +189,41 @@ final class MySecondInfoViewController: UIViewController {
 extension MySecondInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         indexPath.section == 0  ? UITableView.automaticDimension : 48
+    }
+}
+
+extension MySecondInfoViewController {
+    
+    func withdrawUser() {
+        APIService().withdrawUser {[weak self] result in
+            switch result {
+            case .success(_):
+                if let appDomain = Bundle.main.bundleIdentifier {
+                    UserDefaults.standard.removePersistentDomain(forName: appDomain)
+                }
+                let nav = UINavigationController(rootViewController: OnBoardingPageViewController())
+                self?.changeRootViewController(nav)
+                self?.navigationController?.popToRootViewController(animated: true)
+                
+            case .failure(let error):
+                let error = SLPWithdrawError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .tokenError:
+                    print(SLPWithdrawError.tokenError)
+                    
+                case .unRegisteredUser:
+                    print(SLPWithdrawError.unRegisteredUser)
+                    
+                case .serverError:
+                    print(SLPWithdrawError.serverError)
+                    
+                case .clientError:
+                    print(SLPWithdrawError.clientError)
+                    
+                case .unknown:
+                    print(SLPWithdrawError.unknown)
+                }
+            }
+        }
     }
 }
