@@ -65,6 +65,7 @@ extension InitialViewModel {
             case .success(_):
                 print("success")
                 self?.showMainVCRelay.accept(())
+                
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {

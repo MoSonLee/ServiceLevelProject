@@ -42,4 +42,3 @@ extension MySecondInfoTableSectionModel: AnimatableSectionModelType {
         self.items = items
     }
 }
-

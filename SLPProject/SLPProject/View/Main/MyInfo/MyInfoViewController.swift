@@ -35,7 +35,7 @@ final class MyInfoViewController: UIViewController {
         ])
     ])
     
-    private lazy var input = MyInfoViewModel.Input(cellTapped: tableView.rx.itemSelected.asControlEvent())
+    private lazy var input = MyInfoViewModel.Input(cellTapped: tableView.rx.itemSelected.asSignal())
     
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()

@@ -13,7 +13,7 @@ import RxSwift
 final class MyInfoViewModel {
     
     struct Input {
-        let cellTapped: ControlEvent<IndexPath>
+        let cellTapped: Signal<IndexPath>
     }
     
     struct Output {
@@ -25,7 +25,7 @@ final class MyInfoViewModel {
     
     func transform(input: Input) -> Output {
         input.cellTapped
-            .subscribe { [weak self] indexPath in
+            .emit { [weak self] indexPath in
                 self?.showMySecondInfoVCRelay.accept(indexPath)
             }
             .disposed(by: disposeBag)
