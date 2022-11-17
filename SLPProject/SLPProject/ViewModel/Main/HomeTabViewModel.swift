@@ -24,6 +24,9 @@ final class HomeTabViewModel {
     struct Output {
         let showAlert: Signal<String>
         let changeButtonImage: Signal<String>
+        let changeAllButton: Signal<Void>
+        let changeBoyButton: Signal<Void>
+        let changeGirlButton: Signal<Void>
     }
     
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
@@ -31,14 +34,56 @@ final class HomeTabViewModel {
     
     private let showAlertRelay = PublishRelay<String>()
     private let changeButtonImageRelay = PublishRelay<String>()
+    private let changeAllButtonRelay = PublishRelay<Void>()
+    private let changeBoyButtonRelay = PublishRelay<Void>()
+    private let changeGirlButtonRelay = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
+        input.viewWillAppear
+            .subscribe(onNext: { [weak self] _ in
+                self?.checkMyQueueState()
+            })
+            .disposed(by: disposeBag)
+        
+        input.gpsButtonTapped
+            .emit(onNext: { [weak self] in
+                
+            })
+            .disposed(by: disposeBag)
+        
+        input.allButtonTapped
+            .emit(onNext: { [weak self] in
+                self?.changeAllButtonRelay.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        input.boyButtonTapped
+            .emit(onNext: { [weak self] in
+                self?.changeBoyButtonRelay.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        input.girlButtonTapped
+            .emit(onNext: { [weak self] in
+                self?.changeGirlButtonRelay.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        input.searchButtonTapped
+            .emit(onNext: { [weak self] in
+                self?.requestSearchSeSAC()
+            })
+            .disposed(by: disposeBag)
+        
         return Output(
             showAlert: showAlertRelay.asSignal(),
-            changeButtonImage: changeButtonImageRelay.asSignal()
+            changeButtonImage: changeButtonImageRelay.asSignal(),
+            changeAllButton: changeAllButtonRelay.asSignal(),
+            changeBoyButton: changeBoyButtonRelay.asSignal(),
+            changeGirlButton: changeGirlButtonRelay.asSignal()
         )
     }
 }
@@ -50,9 +95,30 @@ extension HomeTabViewModel {
             switch result {
             case .success(let response):
                 print(response)
+                print("AAAA")
                 
             case .failure(let error):
-                print(error)
+                let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
+                switch error {
+                case .notRequestYet:
+                    print(QueueStateError.notRequestYet)
+                    
+                case .tokenError:
+                    print(QueueStateError.notRequestYet)
+                    
+                case .unregisteredError:
+                    print(QueueStateError.unregisteredError)
+                    
+                case .serverError:
+                    print(QueueStateError.serverError)
+                    
+                case .clientError:
+                    print(QueueStateError.clientError)
+                    
+                case .unknown:
+                    print(QueueStateError.unknown)
+                    
+                }
             }
         }
     }
@@ -63,9 +129,11 @@ extension HomeTabViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
                 print(data)
+                print("AAAAAA")
                 
             case .failure(let error):
                 print(error)
+                print("BBBBB")
             }
         }
     }

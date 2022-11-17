@@ -31,6 +31,7 @@
 		77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A39292684E2000DC6CE /* HomeTabViewModel.swift */; };
 		77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3B29269761000DC6CE /* UserLocationModel.swift */; };
 		77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3D29269777000DC6CE /* UserSearchModel.swift */; };
+		77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3F2926AE95000DC6CE /* QueueStateError.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -97,6 +98,7 @@
 		77217A39292684E2000DC6CE /* HomeTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewModel.swift; sourceTree = "<group>"; };
 		77217A3B29269761000DC6CE /* UserLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationModel.swift; sourceTree = "<group>"; };
 		77217A3D29269777000DC6CE /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
+		77217A3F2926AE95000DC6CE /* QueueStateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueStateError.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				7744A354291FBD6600A065C8 /* SignUpError.swift */,
 				7744A356291FBD7300A065C8 /* WithdrawError.swift */,
 				7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */,
+				77217A3F2926AE95000DC6CE /* QueueStateError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
+				77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */,
 				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
 				77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */,
