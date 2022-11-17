@@ -144,19 +144,19 @@ final class HomeTabViewController: UIViewController {
     }
     
     private func bind() {
-        input.allButtonTapped
+        output.changeAllButton
             .emit { [weak self] _ in
                 self?.setAllButtonColor()
             }
             .disposed(by: disposeBag)
         
-        input.boyButtonTapped
+        output.changeBoyButton
             .emit { [weak self] _ in
                 self?.setBoyButtonColor()
             }
             .disposed(by: disposeBag)
         
-        input.girlButtonTapped
+        output.changeGirlButton
             .emit { [weak self] _ in
                 self?.setGirlButtonColor()
             }
