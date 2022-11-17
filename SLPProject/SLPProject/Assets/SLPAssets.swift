@@ -192,6 +192,7 @@ enum SLPAssets {
         case alaram
         case permit
         case faq
+        case matchingButtonString
         
         var text: String {
             switch self {
@@ -332,6 +333,9 @@ enum SLPAssets {
                 
             case .faq:
                 return "자주 묻는 질문"
+                
+            case .matchingButtonString:
+                return "matchingButton"
             }
         }
     }

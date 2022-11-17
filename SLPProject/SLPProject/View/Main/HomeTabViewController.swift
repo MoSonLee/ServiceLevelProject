@@ -33,7 +33,8 @@ final class HomeTabViewController: UIViewController {
         gpsButtonTapped: gpsButton.rx.tap.asSignal(),
         allButtonTapped: allButton.rx.tap.asSignal(),
         boyButtonTapped: boyButton.rx.tap.asSignal(),
-        girlButtonTapped: girlButton.rx.tap.asSignal()
+        girlButtonTapped: girlButton.rx.tap.asSignal(),
+        searchButtonTapped: button.rx.tap.asSignal()
     )
     
     private lazy var output = viewModel.transform(input: input)
@@ -133,7 +134,7 @@ final class HomeTabViewController: UIViewController {
         allButton.backgroundColor = SLPAssets.CustomColor.white.color
     }
     
-    private func girlButtonColor() {
+    private func setGirlButtonColor() {
         girlButton.setTitleColor(.white, for: .normal)
         girlButton.backgroundColor = SLPAssets.CustomColor.green.color
         boyButton.setTitleColor(.black, for: .normal)
@@ -143,6 +144,22 @@ final class HomeTabViewController: UIViewController {
     }
     
     private func bind() {
+        input.allButtonTapped
+            .emit { [weak self] _ in
+                self?.setAllButtonColor()
+            }
+            .disposed(by: disposeBag)
         
+        input.boyButtonTapped
+            .emit { [weak self] _ in
+                self?.setBoyButtonColor()
+            }
+            .disposed(by: disposeBag)
+        
+        input.girlButtonTapped
+            .emit { [weak self] _ in
+                self?.setGirlButtonColor()
+            }
+            .disposed(by: disposeBag)
     }
 }

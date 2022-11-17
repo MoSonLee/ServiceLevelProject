@@ -18,23 +18,27 @@ final class HomeTabViewModel {
         let allButtonTapped: Signal<Void>
         let boyButtonTapped: Signal<Void>
         let girlButtonTapped: Signal<Void>
+        let searchButtonTapped: Signal<Void>
     }
     
     struct Output {
         let showAlert: Signal<String>
+        let changeButtonImage: Signal<String>
     }
     
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
     var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
     private let showAlertRelay = PublishRelay<String>()
+    private let changeButtonImageRelay = PublishRelay<String>()
     
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
         return Output(
-            showAlert: showAlertRelay.asSignal()
+            showAlert: showAlertRelay.asSignal(),
+            changeButtonImage: changeButtonImageRelay.asSignal()
         )
     }
 }
