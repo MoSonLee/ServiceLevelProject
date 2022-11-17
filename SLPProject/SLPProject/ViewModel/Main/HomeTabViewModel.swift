@@ -48,8 +48,8 @@ extension HomeTabViewModel {
     private func checkMyQueueState() {
         APIService().checkMyQueueState { result in
             switch result {
-            case .success(let data):
-                print(data)
+            case .success(let response):
+                print(response)
                 
             case .failure(let error):
                 print(error)
@@ -60,7 +60,8 @@ extension HomeTabViewModel {
     private func requestSearchSeSAC() {
         APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { result in
             switch result {
-            case .success(let data):
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
                 print(data)
                 
             case .failure(let error):
@@ -72,7 +73,8 @@ extension HomeTabViewModel {
     private func searchSeSAC() {
         APIService().requestSearchSeSAC(dictionary: userLocation.toDictionary) { result in
             switch result {
-            case .success(let data):
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserLocationModel.self, from: response.data)
                 print(data)
                 
             case .failure(let error):
@@ -84,8 +86,8 @@ extension HomeTabViewModel {
     private func stopSearchSeSAC() {
         APIService().stopSearchSeSAC { result in
             switch result {
-            case .success(let data):
-                print(data)
+            case .success(let response):
+                print(response)
                 
             case .failure(let error):
                 print(error)
@@ -93,4 +95,3 @@ extension HomeTabViewModel {
         }
     }
 }
-
