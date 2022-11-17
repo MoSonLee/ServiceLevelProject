@@ -147,7 +147,6 @@ extension HomeTabViewModel {
                     
                 case .unknown:
                     print(QueueStateError.unknown)
-                    
                 }
             }
         }
@@ -159,11 +158,9 @@ extension HomeTabViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
                 print(data)
-                print("AAAAAA")
                 
             case .failure(let error):
                 print(error)
-                print("BBBBB")
             }
         }
     }
