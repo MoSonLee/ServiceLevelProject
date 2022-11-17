@@ -54,8 +54,6 @@ final class InitialViewModel {
 
 extension InitialViewModel {
     private func checkNetwork() {
-        print(UserDefaults.fcmToken)
-        print(UserDefaults.userToken)
         InternetConnectionManager.isConnectedToNetwork() ? checkUserSigned() : showToastRelay.accept(SLPAssets.RawString.checkNetwork.text)
     }
     
@@ -63,7 +61,6 @@ extension InitialViewModel {
         APIService().responseGetUser { [weak self] result in
             switch result {
             case .success(_):
-                print("success")
                 self?.showMainVCRelay.accept(())
                 
             case .failure(let error):
@@ -107,7 +104,6 @@ extension InitialViewModel {
             if token != nil {
                 guard let token = token else { return }
                 UserDefaults.userToken = token
-                print(token)
             }
         }
     }

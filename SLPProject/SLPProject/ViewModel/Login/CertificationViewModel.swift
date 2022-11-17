@@ -143,10 +143,8 @@ extension CertificationViewModel {
                 guard let token = token else { return }
                 UserDefaults.userToken = token
                 self?.requestUserSigned()
-                print(token)
             } else {
                 self?.showToastRelay.accept(SLPAssets.RawString.etcError.text)
-                print(error ?? "Error")
             }
         }
     }

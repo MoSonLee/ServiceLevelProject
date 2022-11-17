@@ -109,7 +109,6 @@ extension LoginViewModel {
                 self?.showCertificationVCRelay.accept(true)
                 UserDefaults.userVerificationID = id
                 UserDefaults.userNumber = phoneNumber
-                print(id)
             }
         }
     }

@@ -87,9 +87,6 @@ final class GenderViewModel {
         
         input.nextButtonTapped
             .emit(onNext: { [weak self] _ in
-                print(self?.User)
-                print(UserDefaults.fcmToken)
-                print(UserDefaults.userToken)
                 self?.genderValue == -1 ? self?.showToastRelay.accept(SLPAssets.RawString.selectGender.text) : self?.requestSignUpUser()
             })
             .disposed(by: disposeBag)
@@ -150,7 +147,6 @@ extension GenderViewModel {
             switch result {
             case .success(_):
                 self.requestSignUpUser()
-                print("token 갱신 완료")
                 
             case .failure(let error):
                 let error = SLPUpdateFcmTokenError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
