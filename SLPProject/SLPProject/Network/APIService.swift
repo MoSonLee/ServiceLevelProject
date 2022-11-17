@@ -37,4 +37,28 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func requestSearchSeSAC(dictionary: [String: Any], completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.requestSearchSeSAC(parameters: dictionary)) { result in
+            completion(result)
+        }
+    }
+    
+    func sesacSearch(dictionary: [String: Any], completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.searchSeSAC(parameters: dictionary)) { result in
+            completion(result)
+        }
+    }
+    
+    func stopSearchSeSAC(completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.stopSearchSeSAC) { result in
+            completion(result)
+        }
+    }
+    
+    func checkMyQueueState(completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.myQueueState) { result in
+            completion(result)
+        }
+    }
 }

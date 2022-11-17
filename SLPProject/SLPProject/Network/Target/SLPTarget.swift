@@ -16,6 +16,10 @@ enum SLPTarget {
     case signUp(parameters: DictionaryType)
     case withdraw
     case update_fcm_token(parmeters: DictionaryType)
+    case requestSearchSeSAC(parameters: DictionaryType)
+    case stopSearchSeSAC
+    case searchSeSAC(parameters: DictionaryType)
+    case myQueueState
 }
 
 extension SLPTarget: TargetType {
@@ -37,28 +41,40 @@ extension SLPTarget: TargetType {
             
         case .update_fcm_token:
             return "/user/update_fcm_token"
+            
+        case .requestSearchSeSAC, .stopSearchSeSAC:
+            return "/queue"
+            
+        case .searchSeSAC:
+            return "/queue/search"
+            
+        case .myQueueState:
+            return "/queue/myQueueState"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login:
+        case .login, .myQueueState:
             return .get
             
-        case .signUp, .withdraw:
+        case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC:
             return .post
             
         case .update_fcm_token:
             return .put
+            
+        case .stopSearchSeSAC:
+            return .delete
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .login, .withdraw:
+        case .login, .withdraw, .stopSearchSeSAC, .myQueueState:
             return .requestPlain
             
-        case .signUp(let parameters), .update_fcm_token(let parameters):
+        case .signUp(let parameters), .update_fcm_token(let parameters), .requestSearchSeSAC(let parameters), .searchSeSAC(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }

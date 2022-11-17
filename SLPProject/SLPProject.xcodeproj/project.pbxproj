@@ -28,6 +28,9 @@
 		77217A302922DFC3000DC6CE /* MySecondInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */; };
 		77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */; };
 		77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */; };
+		77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A39292684E2000DC6CE /* HomeTabViewModel.swift */; };
+		77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3B29269761000DC6CE /* UserLocationModel.swift */; };
+		77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3D29269777000DC6CE /* UserSearchModel.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -91,6 +94,9 @@
 		77217A2F2922DFC3000DC6CE /* MySecondInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoViewController.swift; sourceTree = "<group>"; };
 		77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoTableViewCell.swift; sourceTree = "<group>"; };
 		77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoTableModel.swift; sourceTree = "<group>"; };
+		77217A39292684E2000DC6CE /* HomeTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewModel.swift; sourceTree = "<group>"; };
+		77217A3B29269761000DC6CE /* UserLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationModel.swift; sourceTree = "<group>"; };
+		77217A3D29269777000DC6CE /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 		7737FD33291AC79D0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				77217A39292684E2000DC6CE /* HomeTabViewModel.swift */,
 				77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */,
 			);
 			path = Main;
@@ -365,6 +372,8 @@
 				7744A36629200B0800A065C8 /* UserLoginInfo.swift */,
 				77217A2B2922B0B0000DC6CE /* MyInfoTableModel.swift */,
 				77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */,
+				77217A3D29269777000DC6CE /* UserSearchModel.swift */,
+				77217A3B29269761000DC6CE /* UserLocationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -551,6 +560,7 @@
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
 				77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */,
+				77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */,
 				7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
 				77C0D99C2919754B008FDA83 /* MainTabViewController.swift in Sources */,
@@ -581,9 +591,11 @@
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
+				77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */,
 				7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */,
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
+				77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
 				7744A370292105CE00A065C8 /* NetworkReachability.swift in Sources */,
 			);
