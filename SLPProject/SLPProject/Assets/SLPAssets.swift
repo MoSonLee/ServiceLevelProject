@@ -24,6 +24,10 @@ enum SLPAssets {
         case infoIcon
         case rightButton
         case myInfoProfile
+        case searchButton
+        case matchingButton
+        case messageButton
+        case gpsButton
         
         var image: UIImage {
             switch self {
@@ -68,6 +72,18 @@ enum SLPAssets {
                 
             case .myInfoProfile:
                 return UIImage(named: "myInfoProfile")!
+                
+            case .searchButton:
+                return UIImage(named: "searchButton")!
+                
+            case .matchingButton:
+                return UIImage(named: "matchingButton")!
+                
+            case .messageButton:
+                return UIImage(named: "messageButton")!
+                
+            case .gpsButton:
+                return UIImage(named: "gpsButton")!
             }
         }
     }
