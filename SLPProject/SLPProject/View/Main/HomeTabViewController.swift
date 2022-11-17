@@ -26,10 +26,11 @@ final class HomeTabViewController: UIViewController {
     private let girlButton = UIButton()
     private let gpsButton = UIButton()
     
-    private let viewWillAppearEvent = PublishRelay<Void>()
+    private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewModel = HomeTabViewModel()
+    
     private lazy var input = HomeTabViewModel.Input(
-        viewWillAppear: viewWillAppearEvent.asObservable(),
+        viewDidLoad: viewDidLoadEvent.asObservable(),
         gpsButtonTapped: gpsButton.rx.tap.asSignal(),
         allButtonTapped: allButton.rx.tap.asSignal(),
         boyButtonTapped: boyButton.rx.tap.asSignal(),
@@ -40,18 +41,13 @@ final class HomeTabViewController: UIViewController {
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewWillAppearEvent.accept(())
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bind()
+        viewDidLoadEvent.accept(())
     }
-    
     private func setComponents() {
         [mapView, button, genderView, gpsButton].forEach {
             view.addSubview($0)
@@ -159,6 +155,12 @@ final class HomeTabViewController: UIViewController {
         output.changeGirlButton
             .emit { [weak self] _ in
                 self?.setGirlButtonColor()
+            }
+            .disposed(by: disposeBag)
+        
+        output.showRequestLocationALert
+            .emit { [weak self] text in
+                self?.showRequestLocationAlert(text0: text.0, text1: text.1, text2: text.2, text3: text.3)
             }
             .disposed(by: disposeBag)
     }

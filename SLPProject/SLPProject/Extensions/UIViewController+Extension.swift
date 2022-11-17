@@ -40,4 +40,17 @@ extension UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func showRequestLocationAlert(text0: String, text1: String, text2: String, text3: String) {
+        let requestLocationServiceAlert = UIAlertController(title: text0, message: text1, preferredStyle: .alert)
+        let goSetting = UIAlertAction(title: text2, style: .destructive) { _ in
+            if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSetting)
+            }
+        }
+        let cancel = UIAlertAction(title: text3, style: .default)
+        requestLocationServiceAlert.addAction(cancel)
+        requestLocationServiceAlert.addAction(goSetting)
+        present(requestLocationServiceAlert, animated: true, completion: nil)
+    }
+    
 }

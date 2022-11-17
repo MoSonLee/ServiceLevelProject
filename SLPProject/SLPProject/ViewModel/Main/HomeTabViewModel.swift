@@ -7,13 +7,15 @@
 
 import Foundation
 
+import MapKit
+import CoreLocation
 import RxCocoa
 import RxSwift
 
 final class HomeTabViewModel {
     
     struct Input {
-        let viewWillAppear: Observable<Void>
+        let viewDidLoad: Observable<Void>
         let gpsButtonTapped: Signal<Void>
         let allButtonTapped: Signal<Void>
         let boyButtonTapped: Signal<Void>
@@ -27,8 +29,10 @@ final class HomeTabViewModel {
         let changeAllButton: Signal<Void>
         let changeBoyButton: Signal<Void>
         let changeGirlButton: Signal<Void>
+        let showRequestLocationALert: Signal<(String, String, String, String)>
     }
     
+    private let locationManager = CLLocationManager()
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
     var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
@@ -37,19 +41,20 @@ final class HomeTabViewModel {
     private let changeAllButtonRelay = PublishRelay<Void>()
     private let changeBoyButtonRelay = PublishRelay<Void>()
     private let changeGirlButtonRelay = PublishRelay<Void>()
+    private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
     
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
-        input.viewWillAppear
+        input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
-                self?.checkMyQueueState()
+                self?.checkUserDeviceLocationServiceAuthorization()
             })
             .disposed(by: disposeBag)
         
         input.gpsButtonTapped
-            .emit(onNext: { [weak self] in
+            .emit(onNext: {
                 
             })
             .disposed(by: disposeBag)
@@ -83,19 +88,44 @@ final class HomeTabViewModel {
             changeButtonImage: changeButtonImageRelay.asSignal(),
             changeAllButton: changeAllButtonRelay.asSignal(),
             changeBoyButton: changeBoyButtonRelay.asSignal(),
-            changeGirlButton: changeGirlButtonRelay.asSignal()
+            changeGirlButton: changeGirlButtonRelay.asSignal(),
+            showRequestLocationALert: showRequestLocationALertRelay.asSignal()
         )
     }
 }
 
 extension HomeTabViewModel {
+    func checkUserDeviceLocationServiceAuthorization() {
+        let authorizationStatus: CLAuthorizationStatus
+        authorizationStatus = locationManager.authorizationStatus
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.checkUserCurrentLocationAuthorization(authorizationStatus)
+            } else {
+                self.showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
+            }
+        }
+    }
+    
+    func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+        switch authorizationStatus {
+        case .notDetermined:
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
+            
+        case .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        default: print("DEFAULT")
+        }
+    }
     
     private func checkMyQueueState() {
         APIService().checkMyQueueState { result in
             switch result {
             case .success(let response):
                 print(response)
-                print("AAAA")
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown

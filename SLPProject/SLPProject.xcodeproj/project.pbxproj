@@ -32,6 +32,7 @@
 		77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3B29269761000DC6CE /* UserLocationModel.swift */; };
 		77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3D29269777000DC6CE /* UserSearchModel.swift */; };
 		77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3F2926AE95000DC6CE /* QueueStateError.swift */; };
+		77217A432926CA9B000DC6CE /* RxMKMapView in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A422926CA9B000DC6CE /* RxMKMapView */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -156,6 +157,7 @@
 				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
 				77217A222922ADF7000DC6CE /* RxSwift in Frameworks */,
 				77217A252922AE21000DC6CE /* Differentiator in Frameworks */,
+				77217A432926CA9B000DC6CE /* RxMKMapView in Frameworks */,
 				77C0D985291927B1008FDA83 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +484,7 @@
 				77217A212922ADF7000DC6CE /* RxSwift */,
 				77217A242922AE21000DC6CE /* Differentiator */,
 				77217A262922AE21000DC6CE /* RxDataSources */,
+				77217A422926CA9B000DC6CE /* RxMKMapView */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -519,6 +522,7 @@
 				77217A0B2921DD8A000DC6CE /* XCRemoteSwiftPackageReference "DoubleSlider" */,
 				77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */,
 				77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -847,6 +851,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxMKMapView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -903,6 +915,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		77217A422926CA9B000DC6CE /* RxMKMapView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */;
+			productName = RxMKMapView;
 		};
 		7744A34C291FB8A500A065C8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
