@@ -420,6 +420,7 @@ final class AgeCell: MyPageDetailViewCell {
     override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {
         titleLabel.text = item.title
         ageLabel.text = item.age
+        ageLabel.textColor = SLPAssets.CustomColor.green.color
     }
 }
 
@@ -449,7 +450,9 @@ final class DoubleSliderCell: MyPageDetailViewCell {
         }
     }
     
-    override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {}
+    override func configure(indexPath: IndexPath, item: MySecondInfoTableSectionModel.Item) {
+        doubleSlider.backgroundColor = .green
+    }
 }
 
 final class WithdrawCell: MyPageDetailViewCell {

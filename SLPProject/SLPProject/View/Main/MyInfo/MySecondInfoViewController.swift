@@ -14,6 +14,8 @@ import SnapKit
 
 final class MySecondInfoViewController: UIViewController {
     
+    private var completeButton = UIBarButtonItem()
+    private var backButton = UIBarButtonItem()
     private var toggle: Bool = false
     private let tableView = UITableView(frame: .zero, style: .plain)
     
@@ -27,7 +29,7 @@ final class MySecondInfoViewController: UIViewController {
             MySecondInfoTableModel(title: "내 성별", gender: userInfo.gender, study: nil, switchType: nil, age: nil, slider: nil),
             MySecondInfoTableModel(title: "자주 하는 스터디", gender: nil, study: "", switchType: nil, age: nil, slider: nil),
             MySecondInfoTableModel(title: "내 번호 검색 허용", gender: nil, study: nil, switchType: false, age: nil, slider: nil),
-            MySecondInfoTableModel(title: "상대방 연령대", gender: nil, study: nil, switchType: nil, age: "18-35", slider: nil),
+            MySecondInfoTableModel(title: "상대방 연령대", gender: nil, study: nil, switchType: nil, age: "\(userInfo.ageMin) ~ \(userInfo.ageMax)", slider: nil),
             MySecondInfoTableModel(title: nil, gender: nil, study: nil, switchType: nil, age: nil, slider: ""),
             MySecondInfoTableModel(title: "회원탈퇴", gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
         ])
@@ -38,11 +40,28 @@ final class MySecondInfoViewController: UIViewController {
         super.viewDidLoad()
         getUserInfo()
         setComponents()
+        setNavigationItems()
         setConstraints()
     }
     
     private func setNavigationItems() {
+        backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
+        backButton.tintColor = SLPAssets.CustomColor.black.color
+        completeButton = UIBarButtonItem(title: "저장", style: .plain, target: navigationController, action: nil)
+        completeButton.tintColor = SLPAssets.CustomColor.black.color
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = completeButton
+        backButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
         
+        completeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setComponents() {
@@ -82,7 +101,7 @@ final class MySecondInfoViewController: UIViewController {
             guard let self = self else { return cell }
             switch indexPath.section {
             case 0:
-               cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell ?? MyPageDetailViewCell()
+                cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell ?? MyPageDetailViewCell()
                 guard let cell = cell as? ProfileImageButtonCell else { return MyPageDetailViewCell() }
                 cell.showInfoButton.rx.tap
                     .subscribe(onNext: {
@@ -133,7 +152,7 @@ final class MySecondInfoViewController: UIViewController {
                             self.withdrawUser()
                         })
                         .disposed(by: cell.disposeBag)
-    
+                    
                 default:
                     print("Error")
                 }

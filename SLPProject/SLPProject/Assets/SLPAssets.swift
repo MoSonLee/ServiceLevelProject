@@ -94,7 +94,7 @@ enum SLPAssets {
             case .white:
                 return UIColor().hexStringToUIColor(hex: "#FFFFFF")
             case .black:
-                return UIColor().hexStringToUIColor(hex: "#33333")
+                return UIColor().hexStringToUIColor(hex: "#333333")
             case .green:
                 return UIColor().hexStringToUIColor(hex: "#49DC92")
             case .whiteGreen:
