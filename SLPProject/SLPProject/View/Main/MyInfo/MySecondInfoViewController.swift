@@ -16,12 +16,15 @@ final class MySecondInfoViewController: UIViewController {
     
     private var toggle: Bool = false
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let sections = BehaviorRelay(value: [
+    
+    private var userInfo = UserLoginInfo(id: "", v: 0, uid: "", phoneNumber: "", email: "", fcMtoken: "", nick: "", birth: "", gender: 0, study: "", comment: [""], reputation: [0], sesac: 0, sesacCollection: [0], background: 0, backgroundCollection: [0], purchaseToken: [""], transactionID: [""], reviewedBefore: [""], reportedNum: 0, reportedUser: [""], dodgepenalty: 0, dodgeNum: 0, ageMin: 0, ageMax: 0, searchable: 0, createdAt: "")
+    
+    private lazy var sections = BehaviorRelay(value: [
         MySecondInfoTableSectionModel(header: "", items: [
-            MySecondInfoTableModel(title: "김새싹", gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
+            MySecondInfoTableModel(title: userInfo.nick, gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
         ]),
         MySecondInfoTableSectionModel(header: "", items: [
-            MySecondInfoTableModel(title: "내 성별", gender: 0, study: nil, switchType: nil, age: nil, slider: nil),
+            MySecondInfoTableModel(title: "내 성별", gender: userInfo.gender, study: nil, switchType: nil, age: nil, slider: nil),
             MySecondInfoTableModel(title: "자주 하는 스터디", gender: nil, study: "", switchType: nil, age: nil, slider: nil),
             MySecondInfoTableModel(title: "내 번호 검색 허용", gender: nil, study: nil, switchType: false, age: nil, slider: nil),
             MySecondInfoTableModel(title: "상대방 연령대", gender: nil, study: nil, switchType: nil, age: "18-35", slider: nil),
@@ -33,9 +36,9 @@ final class MySecondInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getUserInfo()
         setComponents()
         setConstraints()
-        bindTableView()
     }
     
     private func setNavigationItems() {
@@ -93,56 +96,23 @@ final class MySecondInfoViewController: UIViewController {
                     })
                     .disposed(by: cell.disposeBag)
                 
-                cell.mannerButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.mannerButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
-                cell.timeButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.timeButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
-                cell.responseButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.responseButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
-                cell.kindButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.kindButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
-                cell.niceSkillButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.skilButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
-                cell.niceTimeButton.rx.tap
-                    .subscribe(onNext: {
-                        cell.niceTimeButtonClicked()
-                    })
-                    .disposed(by: cell.disposeBag)
-                
             case 1:
                 switch indexPath.row {
                 case 0:
                     cell = tableView.dequeueReusableCell(withIdentifier: GenderCell.identifider, for: indexPath) as? GenderCell ?? MyPageDetailViewCell()
                     guard let cell = cell as? GenderCell else { return MyPageDetailViewCell() }
+                    self.userInfo.gender == 0 ? cell.girlButtonClicked() : cell.boyButtonClicked()
                     cell.boyButton.rx.tap
                         .subscribe(onNext: {
                             cell.boyButtonClicked()
+                            self.userInfo.gender = 1
                         })
                         .disposed(by: cell.disposeBag)
                     
                     cell.girlButton.rx.tap
                         .subscribe(onNext: {
                             cell.girlButtonClicked()
+                            self.userInfo.gender = 1
                         })
                         .disposed(by: cell.disposeBag)
                     
@@ -163,7 +133,7 @@ final class MySecondInfoViewController: UIViewController {
                             self.withdrawUser()
                         })
                         .disposed(by: cell.disposeBag)
-                    
+    
                 default:
                     print("Error")
                 }
@@ -193,35 +163,66 @@ extension MySecondInfoViewController: UITableViewDelegate {
 }
 
 extension MySecondInfoViewController {
-    
-    func withdrawUser() {
-        APIService().withdrawUser {[weak self] result in
-            switch result {
-            case .success(_):
-                if let appDomain = Bundle.main.bundleIdentifier {
-                    UserDefaults.standard.removePersistentDomain(forName: appDomain)
+    private func withdrawUser() {
+        showAlertWithCancel(title: "정말 탈퇴하시겠습니까?", okTitle: "확인", completion: {
+            APIService().withdrawUser {[weak self] result in
+                switch result {
+                case .success(_):
+                    if let appDomain = Bundle.main.bundleIdentifier {
+                        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+                    }
+                    let nav = UINavigationController(rootViewController: OnBoardingPageViewController())
+                    self?.changeRootViewController(nav)
+                    self?.navigationController?.popToRootViewController(animated: true)
+                    
+                case .failure(let error):
+                    let error = SLPWithdrawError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                    switch error {
+                    case .tokenError:
+                        print(SLPWithdrawError.tokenError)
+                        
+                    case .unRegisteredUser:
+                        print(SLPWithdrawError.unRegisteredUser)
+                        
+                    case .serverError:
+                        print(SLPWithdrawError.serverError)
+                        
+                    case .clientError:
+                        print(SLPWithdrawError.clientError)
+                        
+                    case .unknown:
+                        print(SLPWithdrawError.unknown)
+                    }
                 }
-                let nav = UINavigationController(rootViewController: OnBoardingPageViewController())
-                self?.changeRootViewController(nav)
-                self?.navigationController?.popToRootViewController(animated: true)
+            }
+        })
+    }
+    
+    private func getUserInfo() {
+        APIService().responseGetUser { [weak self] result in
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
+                self?.userInfo = data
+                self?.bindTableView()
                 
             case .failure(let error):
-                let error = SLPWithdrawError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
                 case .tokenError:
-                    print(SLPWithdrawError.tokenError)
+                    print(SLPLoginError.tokenError)
                     
                 case .unRegisteredUser:
-                    print(SLPWithdrawError.unRegisteredUser)
+                    print(SLPLoginError.unRegisteredUser)
                     
                 case .serverError:
-                    print(SLPWithdrawError.serverError)
+                    print(SLPLoginError.serverError)
                     
                 case .clientError:
-                    print(SLPWithdrawError.clientError)
+                    print(SLPLoginError.clientError)
                     
                 case .unknown:
-                    print(SLPWithdrawError.unknown)
+                    print(SLPLoginError.unknown)
                 }
             }
         }

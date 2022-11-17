@@ -17,9 +17,11 @@ final class MyInfoViewController: UIViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private let viewModel = MyInfoViewModel()
     
-    private let sections = BehaviorRelay(value: [
+    private var userInfo = UserLoginInfo(id: "", v: 0, uid: "", phoneNumber: "", email: "", fcMtoken: "", nick: "", birth: "", gender: 0, study: "", comment: [""], reputation: [0], sesac: 0, sesacCollection: [0], background: 0, backgroundCollection: [0], purchaseToken: [""], transactionID: [""], reviewedBefore: [""], reportedNum: 0, reportedUser: [""], dodgepenalty: 0, dodgeNum: 0, ageMin: 0, ageMax: 0, searchable: 0, createdAt: "")
+    
+    private lazy var sections = BehaviorRelay(value: [
         MyInfoTableSectionModel(header: "", items: [
-            MyInfoTableModel(buttonImageString: SLPAssets.RawString.profileImageString.text, title: "이승후")
+            MyInfoTableModel(buttonImageString: SLPAssets.RawString.profileImageString.text, title: userInfo.nick)
         ]),
         MyInfoTableSectionModel(header: "", items: [
             MyInfoTableModel(buttonImageString: SLPAssets.RawString.noticeImageString.text,
@@ -44,13 +46,13 @@ final class MyInfoViewController: UIViewController {
         super.viewDidLoad()
         setComponents()
         setConstraints()
+        getUserInfo()
         bind()
     }
     
     private func setComponents() {
         view.addSubview(tableView)
         setComponentsValue()
-        bindTableView()
     }
     
     private func setConstraints() {
@@ -70,6 +72,7 @@ final class MyInfoViewController: UIViewController {
     private func bindTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<MyInfoTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MyInfoTableViewCell.identifider, for: indexPath) as? MyInfoTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
             cell.configure(indexPath: indexPath, item: item)
             return cell
         }
@@ -95,5 +98,37 @@ final class MyInfoViewController: UIViewController {
 extension MyInfoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         indexPath.section == 0 ? 96 : 76
+    }
+}
+
+extension MyInfoViewController {
+    private func getUserInfo() {
+        APIService().responseGetUser { [weak self] result in
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
+                self?.userInfo = data
+                self?.bindTableView()
+                
+            case .failure(let error):
+                let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .tokenError:
+                    print(SLPLoginError.tokenError)
+                    
+                case .unRegisteredUser:
+                    print(SLPLoginError.unRegisteredUser)
+                    
+                case .serverError:
+                    print(SLPLoginError.serverError)
+                    
+                case .clientError:
+                    print(SLPLoginError.clientError)
+                    
+                case .unknown:
+                    print(SLPLoginError.unknown)
+                }
+            }
+        }
     }
 }

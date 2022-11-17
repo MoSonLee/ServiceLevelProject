@@ -12,7 +12,7 @@ struct UserLoginInfo: Codable {
     let v: Int
     let uid, phoneNumber, email, fcMtoken: String
     let nick, birth: String
-    let gender: Int
+    var gender: Int
     let study: String
     let comment: [String]
     let reputation: [Int]

@@ -21,11 +21,23 @@ extension UIViewController {
     }
     
     func showAlert(title: String, okTitle: String,completion: @escaping () -> Void) {
-        let alert =  UIAlertController(title: "부적합한 닉네임입니다.", message: "", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style:.destructive, handler: { _ in
+        let alert =  UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let ok = UIAlertAction(title: okTitle, style:.destructive, handler: { _ in
             completion()
         })
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
     }
+    
+    func showAlertWithCancel(title: String, okTitle: String,completion: @escaping () -> Void) {
+        let alert =  UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let ok = UIAlertAction(title: okTitle, style:.destructive, handler: { _ in
+            completion()
+        })
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
