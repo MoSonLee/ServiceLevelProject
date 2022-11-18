@@ -76,6 +76,7 @@
 		77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D99F29198326008FDA83 /* CertificationViewController.swift */; };
 		77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A129198AE7008FDA83 /* CertificationViewModel.swift */; };
 		77C0D9A429199970008FDA83 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9A329199970008FDA83 /* String.swift */; };
+		77FC639D2927F0B4002E183E /* RxCoreLocation in Frameworks */ = {isa = PBXBuildFile; productRef = 77FC639C2927F0B4002E183E /* RxCoreLocation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -150,6 +151,7 @@
 			files = (
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
+				77FC639D2927F0B4002E183E /* RxCoreLocation in Frameworks */,
 				77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */,
 				77217A272922AE21000DC6CE /* RxDataSources in Frameworks */,
 				77217A202922ADF7000DC6CE /* RxCocoa in Frameworks */,
@@ -485,6 +487,7 @@
 				77217A242922AE21000DC6CE /* Differentiator */,
 				77217A262922AE21000DC6CE /* RxDataSources */,
 				77217A422926CA9B000DC6CE /* RxMKMapView */,
+				77FC639C2927F0B4002E183E /* RxCoreLocation */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -523,6 +526,7 @@
 				77217A1E2922ADF7000DC6CE /* XCRemoteSwiftPackageReference "RxSwift" */,
 				77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */,
+				77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -883,6 +887,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxCoreLocation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -940,6 +952,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		77FC639C2927F0B4002E183E /* RxCoreLocation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */;
+			productName = RxCoreLocation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

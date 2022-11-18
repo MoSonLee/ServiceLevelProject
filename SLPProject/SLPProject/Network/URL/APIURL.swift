@@ -8,5 +8,5 @@
 import Foundation
 
 struct APIURL {
-    static let url = "http://api.sesac.co.kr:1207/v1"
+    static let url = "http://api.sesac.co.kr:1210/v1"
 }
