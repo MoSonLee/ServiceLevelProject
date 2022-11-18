@@ -11,6 +11,7 @@ import MapKit
 import CoreLocation
 import RxCocoa
 import RxSwift
+import RxCoreLocation
 
 final class HomeTabViewModel {
     
@@ -21,6 +22,7 @@ final class HomeTabViewModel {
         let boyButtonTapped: Signal<Void>
         let girlButtonTapped: Signal<Void>
         let searchButtonTapped: Signal<Void>
+        let locationChanged: ControlEvent<CLLocationsEvent>
     }
     
     struct Output {
@@ -30,8 +32,10 @@ final class HomeTabViewModel {
         let changeBoyButton: Signal<Void>
         let changeGirlButton: Signal<Void>
         let showRequestLocationALert: Signal<(String, String, String, String)>
+        let setNewRegion: Signal<CLLocationCoordinate2D>
     }
     
+    private var currentLocation = CLLocation()
     private let locationManager = CLLocationManager()
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
     var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
@@ -42,6 +46,7 @@ final class HomeTabViewModel {
     private let changeBoyButtonRelay = PublishRelay<Void>()
     private let changeGirlButtonRelay = PublishRelay<Void>()
     private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
+    private let setNewRegionRelay = PublishRelay<CLLocationCoordinate2D>()
     
     private let disposeBag = DisposeBag()
     
@@ -54,8 +59,9 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.gpsButtonTapped
-            .emit(onNext: {
-                
+            .emit(onNext: { [weak self] _ in
+                guard let currentLocation = self?.currentLocation.coordinate else { return }
+                self?.setNewRegionRelay.accept(currentLocation)
             })
             .disposed(by: disposeBag)
         
@@ -83,13 +89,23 @@ final class HomeTabViewModel {
             })
             .disposed(by: disposeBag)
         
+        input.locationChanged
+            .subscribe(onNext: {[weak self] _, locations in
+                guard !locations.isEmpty,
+                    let currentLocation = locations.last else { return }
+                self?.setNewRegionRelay.accept(currentLocation.coordinate)
+                self?.currentLocation = currentLocation
+            })
+            .disposed(by: disposeBag)
+        
         return Output(
             showAlert: showAlertRelay.asSignal(),
             changeButtonImage: changeButtonImageRelay.asSignal(),
             changeAllButton: changeAllButtonRelay.asSignal(),
             changeBoyButton: changeBoyButtonRelay.asSignal(),
             changeGirlButton: changeGirlButtonRelay.asSignal(),
-            showRequestLocationALert: showRequestLocationALertRelay.asSignal()
+            showRequestLocationALert: showRequestLocationALertRelay.asSignal(),
+            setNewRegion: setNewRegionRelay.asSignal()
         )
     }
 }

@@ -14,6 +14,9 @@ import RxSwift
 import SnapKit
 import Toast
 
+import RxMKMapView
+import RxCoreLocation
+
 final class HomeTabViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
@@ -25,6 +28,7 @@ final class HomeTabViewController: UIViewController {
     private let boyButton = UIButton()
     private let girlButton = UIButton()
     private let gpsButton = UIButton()
+    private let annotationButton = UIButton()
     
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewModel = HomeTabViewModel()
@@ -35,7 +39,8 @@ final class HomeTabViewController: UIViewController {
         allButtonTapped: allButton.rx.tap.asSignal(),
         boyButtonTapped: boyButton.rx.tap.asSignal(),
         girlButtonTapped: girlButton.rx.tap.asSignal(),
-        searchButtonTapped: button.rx.tap.asSignal()
+        searchButtonTapped: button.rx.tap.asSignal(),
+        locationChanged: locationManager.rx.didUpdateLocations.asControlEvent()
     )
     
     private lazy var output = viewModel.transform(input: input)
@@ -47,9 +52,11 @@ final class HomeTabViewController: UIViewController {
         setConstraints()
         bind()
         viewDidLoadEvent.accept(())
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
     }
     private func setComponents() {
-        [mapView, button, genderView, gpsButton].forEach {
+        [mapView, button, genderView, gpsButton, annotationButton].forEach {
             view.addSubview($0)
         }
         [allButton, boyButton, girlButton].forEach {
@@ -61,6 +68,11 @@ final class HomeTabViewController: UIViewController {
     private func setConstraints() {
         mapView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        annotationButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(48)
         }
         button.snp.makeConstraints { make in
             make.width.height.equalTo(64)
@@ -110,6 +122,8 @@ final class HomeTabViewController: UIViewController {
         allButton.setTitle("전체", for: .normal)
         boyButton.setTitle("남자", for: .normal)
         girlButton.setTitle("여자", for: .normal)
+        
+        annotationButton.setImage(SLPAssets.CustomImage.mapMarker.image, for: .normal)
     }
     
     private func setAllButtonColor() {
@@ -139,6 +153,12 @@ final class HomeTabViewController: UIViewController {
         allButton.backgroundColor = SLPAssets.CustomColor.white.color
     }
     
+    private func setRegionAndAnnotation(center: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    
     private func bind() {
         output.changeAllButton
             .emit { [weak self] _ in
@@ -162,6 +182,12 @@ final class HomeTabViewController: UIViewController {
             .emit { [weak self] text in
                 self?.showRequestLocationAlert(text0: text.0, text1: text.1, text2: text.2, text3: text.3)
             }
+            .disposed(by: disposeBag)
+        
+        output.setNewRegion
+            .emit(onNext: {[weak self] center in
+                self?.setRegionAndAnnotation(center: center)
+            })
             .disposed(by: disposeBag)
     }
 }

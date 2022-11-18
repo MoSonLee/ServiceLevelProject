@@ -28,6 +28,7 @@ enum SLPAssets {
         case matchingButton
         case messageButton
         case gpsButton
+        case mapMarker
         
         var image: UIImage {
             switch self {
@@ -84,6 +85,9 @@ enum SLPAssets {
                 
             case .gpsButton:
                 return UIImage(named: "gpsButton")!
+                
+            case .mapMarker:
+                return UIImage(named: "mapMarker")!
             }
         }
     }
