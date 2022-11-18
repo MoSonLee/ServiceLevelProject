@@ -196,6 +196,8 @@ enum SLPAssets {
         case alaram
         case permit
         case faq
+        case searchButtonString
+        case messageButtonString
         case matchingButtonString
         
         var text: String {
@@ -340,6 +342,12 @@ enum SLPAssets {
                 
             case .matchingButtonString:
                 return "matchingButton"
+                
+            case .searchButtonString:
+                return "searchButton"
+                
+            case .messageButtonString:
+                return "messageButton"
             }
         }
     }

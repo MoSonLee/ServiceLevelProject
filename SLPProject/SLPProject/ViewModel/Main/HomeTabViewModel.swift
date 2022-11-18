@@ -6,12 +6,12 @@
 //
 
 import Foundation
-
 import MapKit
 import CoreLocation
+
 import RxCocoa
-import RxSwift
 import RxCoreLocation
+import RxSwift
 
 final class HomeTabViewModel {
     
@@ -51,10 +51,10 @@ final class HomeTabViewModel {
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
-        
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
+                self?.checkMyQueueState()
             })
             .disposed(by: disposeBag)
         
@@ -138,19 +138,21 @@ extension HomeTabViewModel {
     }
     
     private func checkMyQueueState() {
-        APIService().checkMyQueueState { result in
+        APIService().checkMyQueueState { [weak self] result in
             switch result {
             case .success(let response):
                 print(response)
+                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
                 switch error {
                 case .notRequestYet:
                     print(QueueStateError.notRequestYet)
+                    self?.changeButtonImageRelay.accept(SLPAssets.RawString.searchButtonString.text)
                     
                 case .tokenError:
-                    print(QueueStateError.notRequestYet)
+                    print(QueueStateError.tokenError)
                     
                 case .unregisteredError:
                     print(QueueStateError.unregisteredError)
@@ -169,10 +171,11 @@ extension HomeTabViewModel {
     }
     
     private func requestSearchSeSAC() {
-        APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { result in
+        APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
+                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
                 print(data)
                 
             case .failure(let error):

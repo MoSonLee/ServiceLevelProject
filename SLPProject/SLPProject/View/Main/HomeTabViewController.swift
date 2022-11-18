@@ -10,12 +10,10 @@ import CoreLocation
 import MapKit
 
 import RxCocoa
+import RxCoreLocation
 import RxSwift
 import SnapKit
 import Toast
-
-import RxMKMapView
-import RxCoreLocation
 
 final class HomeTabViewController: UIViewController {
     
@@ -153,13 +151,19 @@ final class HomeTabViewController: UIViewController {
         allButton.backgroundColor = SLPAssets.CustomColor.white.color
     }
     
-    private func setRegionAndAnnotation(center: CLLocationCoordinate2D) {
+    private func setRegion(center: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
         mapView.setRegion(region, animated: true)
     }
     
-    
     private func bind() {
+        
+        output.changeButtonImage
+            .emit { [weak self] imgStr in
+                self?.button.setImage(UIImage(named: imgStr), for: .normal)
+        }
+        .disposed(by: disposeBag)
+        
         output.changeAllButton
             .emit { [weak self] _ in
                 self?.setAllButtonColor()
@@ -186,7 +190,7 @@ final class HomeTabViewController: UIViewController {
         
         output.setNewRegion
             .emit(onNext: {[weak self] center in
-                self?.setRegionAndAnnotation(center: center)
+                self?.setRegion(center: center)
             })
             .disposed(by: disposeBag)
     }
