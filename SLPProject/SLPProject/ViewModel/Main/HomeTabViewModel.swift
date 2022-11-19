@@ -60,8 +60,7 @@ final class HomeTabViewModel {
         
         input.gpsButtonTapped
             .emit(onNext: { [weak self] _ in
-                guard let currentLocation = self?.currentLocation.coordinate else { return }
-                self?.setNewRegionRelay.accept(currentLocation)
+                self?.checkUserDeviceLocationServiceAuthorization()
             })
             .disposed(by: disposeBag)
         
@@ -114,11 +113,13 @@ extension HomeTabViewModel {
     func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         authorizationStatus = locationManager.authorizationStatus
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [weak self] in
             if CLLocationManager.locationServicesEnabled() {
-                self.checkUserCurrentLocationAuthorization(authorizationStatus)
+                self?.checkUserCurrentLocationAuthorization(authorizationStatus)
+                guard let currentLocation = self?.currentLocation.coordinate else { return }
+                self?.setNewRegionRelay.accept(currentLocation)
             } else {
-                self.showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
+                self?.showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
             }
         }
     }
@@ -150,6 +151,7 @@ extension HomeTabViewModel {
                 case .notRequestYet:
                     print(QueueStateError.notRequestYet)
                     self?.changeButtonImageRelay.accept(SLPAssets.RawString.searchButtonString.text)
+                    self?.requestSearchSeSAC()
                     
                 case .tokenError:
                     print(QueueStateError.tokenError)
