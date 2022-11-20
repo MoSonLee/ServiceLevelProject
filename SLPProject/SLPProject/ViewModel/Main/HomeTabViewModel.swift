@@ -23,7 +23,7 @@ final class HomeTabViewModel {
         let boyButtonTapped: Signal<Void>
         let girlButtonTapped: Signal<Void>
         let searchButtonTapped: Signal<Void>
-        let locationChanged: ControlEvent<CLLocationsEvent>
+        let locationChanged: Observable<CLLocationsEvent>
         let checkLocation: Observable<MKCoordinateRegion>
     }
     
@@ -61,7 +61,6 @@ final class HomeTabViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
                 self?.checkMyQueueState()
-                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
@@ -99,15 +98,18 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.locationChanged
-            .subscribe(onNext: { [weak self] _, locations in
-                guard !locations.isEmpty,
-                    let currentLocation = locations.last else { return }
-                self?.setNewRegionRelay.accept(currentLocation.coordinate)
+            .distinctUntilChanged({ cl in
+                cl.manager.location?.coordinate.latitude != self.currentLocation.coordinate.latitude
+            })
+            .subscribe(onNext: { [weak self] location in
+                guard let location = location.manager.location else { return }
+                self?.currentLocation = location
+                self?.setNewRegionRelay.accept(location.coordinate)
             })
             .disposed(by: disposeBag)
         
         input.checkLocation
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.seconds(3), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] location in
                 self?.userLocation = UserLocationModel(lat: location.center.latitude, long: location.center.longitude)
                 self?.searchSeSAC()
@@ -195,9 +197,9 @@ extension HomeTabViewModel {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                print(response)
-                print(self?.userLocation)
-
+                let data = try? JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
+                print(data)
+                
             case .failure(let error):
                 print(error)
             }
@@ -208,7 +210,7 @@ extension HomeTabViewModel {
         APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
+                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
                 print(data)
                 
