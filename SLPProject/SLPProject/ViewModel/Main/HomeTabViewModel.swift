@@ -23,7 +23,7 @@ final class HomeTabViewModel {
         let boyButtonTapped: Signal<Void>
         let girlButtonTapped: Signal<Void>
         let searchButtonTapped: Signal<Void>
-        let locationChanged: Observable<CLLocationsEvent>
+        let locationChanged: ControlEvent<CLLocationsEvent>
         let checkLocation: Observable<MKCoordinateRegion>
     }
     
@@ -98,9 +98,6 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.locationChanged
-            .distinctUntilChanged({ cl in
-                cl.manager.location?.coordinate.latitude != self.currentLocation.coordinate.latitude
-            })
             .subscribe(onNext: { [weak self] location in
                 guard let location = location.manager.location else { return }
                 self?.currentLocation = location

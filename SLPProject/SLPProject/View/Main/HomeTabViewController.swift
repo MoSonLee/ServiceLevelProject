@@ -39,7 +39,7 @@ final class HomeTabViewController: UIViewController {
         boyButtonTapped: boyButton.rx.tap.asSignal(),
         girlButtonTapped: girlButton.rx.tap.asSignal(),
         searchButtonTapped: button.rx.tap.asSignal(),
-        locationChanged: locationManager.rx.didUpdateLocations.asObservable(),
+        locationChanged: locationManager.rx.didUpdateLocations.asControlEvent(),
         checkLocation: mapView.rx.region.asObservable()
     )
     
