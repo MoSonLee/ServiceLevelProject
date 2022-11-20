@@ -23,7 +23,7 @@ final class HomeTabViewModel {
         let boyButtonTapped: Signal<Void>
         let girlButtonTapped: Signal<Void>
         let searchButtonTapped: Signal<Void>
-        let locationChanged: ControlEvent<CLLocationsEvent>
+        let locationChanged: Observable<CLLocation?>
         let checkLocation: Observable<MKCoordinateRegion>
     }
     
@@ -38,7 +38,7 @@ final class HomeTabViewModel {
         let moveToSearchView: Signal<Void>
     }
     
-    private var currentLocation = CLLocation()
+    private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
@@ -52,6 +52,7 @@ final class HomeTabViewModel {
     private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
     private let setNewRegionRelay = PublishRelay<CLLocationCoordinate2D>()
     private let moveToSearchViewRelay = PublishRelay<Void>()
+    private var checked = true
     
     private let disposeBag = DisposeBag()
     
@@ -98,10 +99,11 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.locationChanged
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] location in
-                guard let location = location.manager.location else { return }
+                guard let location = location?.coordinate else { return }
                 self?.currentLocation = location
-                self?.setNewRegionRelay.accept(location.coordinate)
+                self?.setNewRegionRelay.accept(location)
             })
             .disposed(by: disposeBag)
         
@@ -133,7 +135,7 @@ extension HomeTabViewModel {
         DispatchQueue.global().async { [weak self] in
             if CLLocationManager.locationServicesEnabled() {
                 self?.checkUserCurrentLocationAuthorization(authorizationStatus)
-                guard let currentLocation = self?.currentLocation.coordinate else { return }
+                guard let currentLocation = self?.currentLocation else { return }
                 self?.setNewRegionRelay.accept(currentLocation)
                 self?.searchSeSAC()
             } else {
@@ -191,7 +193,7 @@ extension HomeTabViewModel {
     }
     
     private func searchSeSAC() {
-        APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
+        APIService().sesacSearch(dictionary: userLocation.toDictionary) { result in
             switch result {
             case .success(let response):
                 let data = try? JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
