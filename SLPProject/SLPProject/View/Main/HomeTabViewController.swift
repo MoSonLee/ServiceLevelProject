@@ -191,9 +191,6 @@ final class HomeTabViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.setNewRegion
-            .filter({ cl in
-                cl.latitude != self.mapView.userLocation.coordinate.latitude && cl.longitude != self.mapView.userLocation.coordinate.longitude
-            })
             .emit(onNext: {[weak self] center in
                 self?.setRegion(center: center)
             })
