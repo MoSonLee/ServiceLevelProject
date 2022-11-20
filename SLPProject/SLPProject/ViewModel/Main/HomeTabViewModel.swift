@@ -131,7 +131,6 @@ extension HomeTabViewModel {
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
             showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
-            
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
         default: print("DEFAULT")
