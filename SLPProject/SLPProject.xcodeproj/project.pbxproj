@@ -16,7 +16,7 @@
 		77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A0C2921DD8B000DC6CE /* DoubleSlider */; };
 		77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A0E29229525000DC6CE /* HomeTabViewController.swift */; };
 		77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1029229537000DC6CE /* SeSACShopViewController.swift */; };
-		77217A1329229545000DC6CE /* SeSACFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1229229545000DC6CE /* SeSACFriendViewController.swift */; };
+		77217A1329229545000DC6CE /* SeSACSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1229229545000DC6CE /* SeSACSearchViewController.swift */; };
 		77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1429229550000DC6CE /* MyInfoViewController.swift */; };
 		77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */; };
 		77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */; };
@@ -33,6 +33,7 @@
 		77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3D29269777000DC6CE /* UserSearchModel.swift */; };
 		77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3F2926AE95000DC6CE /* QueueStateError.swift */; };
 		77217A432926CA9B000DC6CE /* RxMKMapView in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A422926CA9B000DC6CE /* RxMKMapView */; };
+		772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -89,7 +90,7 @@
 		77145A772919244A0052B2FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77217A0E29229525000DC6CE /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		77217A1029229537000DC6CE /* SeSACShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewController.swift; sourceTree = "<group>"; };
-		77217A1229229545000DC6CE /* SeSACFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACFriendViewController.swift; sourceTree = "<group>"; };
+		77217A1229229545000DC6CE /* SeSACSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACSearchViewController.swift; sourceTree = "<group>"; };
 		77217A1429229550000DC6CE /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoTableViewCell.swift; sourceTree = "<group>"; };
 		77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewModel.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		77217A3B29269761000DC6CE /* UserLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationModel.swift; sourceTree = "<group>"; };
 		77217A3D29269777000DC6CE /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
 		77217A3F2926AE95000DC6CE /* QueueStateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueStateError.swift; sourceTree = "<group>"; };
+		772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACSearchResultModel.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -246,7 +248,7 @@
 				77C0D99B2919754B008FDA83 /* MainTabViewController.swift */,
 				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
-				77217A1229229545000DC6CE /* SeSACFriendViewController.swift */,
+				77217A1229229545000DC6CE /* SeSACSearchViewController.swift */,
 				77217A312922E3CF000DC6CE /* MyInfo */,
 			);
 			path = Main;
@@ -381,6 +383,7 @@
 				77217A352923EAA1000DC6CE /* MySecondInfoTableModel.swift */,
 				77217A3D29269777000DC6CE /* UserSearchModel.swift */,
 				77217A3B29269761000DC6CE /* UserLocationModel.swift */,
+				772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -564,7 +567,7 @@
 				7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */,
 				77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */,
 				77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */,
-				77217A1329229545000DC6CE /* SeSACFriendViewController.swift in Sources */,
+				77217A1329229545000DC6CE /* SeSACSearchViewController.swift in Sources */,
 				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
@@ -599,6 +602,7 @@
 				77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */,
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
+				772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */,
 				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,

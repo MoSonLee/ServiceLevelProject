@@ -12,6 +12,7 @@ import MapKit
 import RxCocoa
 import RxCoreLocation
 import RxSwift
+import RxMKMapView
 import SnapKit
 import Toast
 
@@ -38,7 +39,8 @@ final class HomeTabViewController: UIViewController {
         boyButtonTapped: boyButton.rx.tap.asSignal(),
         girlButtonTapped: girlButton.rx.tap.asSignal(),
         searchButtonTapped: button.rx.tap.asSignal(),
-        locationChanged: locationManager.rx.didUpdateLocations.asControlEvent()
+        locationChanged: locationManager.rx.didUpdateLocations.asControlEvent(),
+        checkLocation: mapView.rx.region.asObservable()
     )
     
     private lazy var output = viewModel.transform(input: input)
@@ -191,6 +193,13 @@ final class HomeTabViewController: UIViewController {
         output.setNewRegion
             .emit(onNext: {[weak self] center in
                 self?.setRegion(center: center)
+            })
+            .disposed(by: disposeBag)
+        
+        output.moveToSearchView
+            .emit(onNext: {[weak self] _ in
+                let vc = SeSACSearchViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

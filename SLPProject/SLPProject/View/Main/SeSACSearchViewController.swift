@@ -1,5 +1,5 @@
 //
-//  SeSACFriendViewController.swift
+//  SeSACSearchViewController.swift
 //  SLPProject
 //
 //  Created by 이승후 on 2022/11/15.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SeSACFriendViewController: UIViewController {
+final class SeSACSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

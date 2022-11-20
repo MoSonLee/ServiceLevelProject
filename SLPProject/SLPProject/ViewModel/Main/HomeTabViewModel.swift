@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 import CoreLocation
 
+import RxMKMapView
 import RxCocoa
 import RxCoreLocation
 import RxSwift
@@ -23,6 +24,7 @@ final class HomeTabViewModel {
         let girlButtonTapped: Signal<Void>
         let searchButtonTapped: Signal<Void>
         let locationChanged: ControlEvent<CLLocationsEvent>
+        let checkLocation: Observable<MKCoordinateRegion>
     }
     
     struct Output {
@@ -33,10 +35,12 @@ final class HomeTabViewModel {
         let changeGirlButton: Signal<Void>
         let showRequestLocationALert: Signal<(String, String, String, String)>
         let setNewRegion: Signal<CLLocationCoordinate2D>
+        let moveToSearchView: Signal<Void>
     }
     
     private var currentLocation = CLLocation()
     private let locationManager = CLLocationManager()
+    
     var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
     var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
@@ -47,14 +51,17 @@ final class HomeTabViewModel {
     private let changeGirlButtonRelay = PublishRelay<Void>()
     private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
     private let setNewRegionRelay = PublishRelay<CLLocationCoordinate2D>()
+    private let moveToSearchViewRelay = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
+        
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
                 self?.checkMyQueueState()
+                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
@@ -67,33 +74,43 @@ final class HomeTabViewModel {
         input.allButtonTapped
             .emit(onNext: { [weak self] in
                 self?.changeAllButtonRelay.accept(())
+                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
         input.boyButtonTapped
             .emit(onNext: { [weak self] in
                 self?.changeBoyButtonRelay.accept(())
+                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
         input.girlButtonTapped
             .emit(onNext: { [weak self] in
                 self?.changeGirlButtonRelay.accept(())
+                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
         input.searchButtonTapped
-            .emit(onNext: { [weak self] in
-                self?.requestSearchSeSAC()
+            .emit(onNext: { [weak self] _ in
+                self?.moveToSearchViewRelay.accept(())
             })
             .disposed(by: disposeBag)
         
         input.locationChanged
-            .subscribe(onNext: {[weak self] _, locations in
+            .subscribe(onNext: { [weak self] _, locations in
                 guard !locations.isEmpty,
                     let currentLocation = locations.last else { return }
                 self?.setNewRegionRelay.accept(currentLocation.coordinate)
-                self?.currentLocation = currentLocation
+            })
+            .disposed(by: disposeBag)
+        
+        input.checkLocation
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] location in
+                self?.userLocation = UserLocationModel(lat: location.center.latitude, long: location.center.longitude)
+                self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
         
@@ -104,13 +121,14 @@ final class HomeTabViewModel {
             changeBoyButton: changeBoyButtonRelay.asSignal(),
             changeGirlButton: changeGirlButtonRelay.asSignal(),
             showRequestLocationALert: showRequestLocationALertRelay.asSignal(),
-            setNewRegion: setNewRegionRelay.asSignal()
+            setNewRegion: setNewRegionRelay.asSignal(),
+            moveToSearchView: moveToSearchViewRelay.asSignal()
         )
     }
 }
 
 extension HomeTabViewModel {
-    func checkUserDeviceLocationServiceAuthorization() {
+    private func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         authorizationStatus = locationManager.authorizationStatus
         DispatchQueue.global().async { [weak self] in
@@ -118,21 +136,25 @@ extension HomeTabViewModel {
                 self?.checkUserCurrentLocationAuthorization(authorizationStatus)
                 guard let currentLocation = self?.currentLocation.coordinate else { return }
                 self?.setNewRegionRelay.accept(currentLocation)
+                self?.searchSeSAC()
             } else {
                 self?.showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
             }
         }
     }
     
-    func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
+    private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined:
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
+            
         case .restricted, .denied:
             showRequestLocationALertRelay.accept(("위치정보 이용", "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", "설정으로 이동", "취소"))
+            
         case .authorizedWhenInUse:
             locationManager.startUpdatingLocation()
+            
         default: print("DEFAULT")
         }
     }
@@ -149,8 +171,6 @@ extension HomeTabViewModel {
                 switch error {
                 case .notRequestYet:
                     print(QueueStateError.notRequestYet)
-                    self?.changeButtonImageRelay.accept(SLPAssets.RawString.searchButtonString.text)
-                    self?.requestSearchSeSAC()
                     
                 case .tokenError:
                     print(QueueStateError.tokenError)
@@ -171,25 +191,25 @@ extension HomeTabViewModel {
         }
     }
     
-    private func requestSearchSeSAC() {
-        APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { [weak self] result in
+    private func searchSeSAC() {
+        APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
-                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
-                print(data)
-                
+                print(response)
+                print(self?.userLocation)
+
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    private func searchSeSAC() {
-        APIService().requestSearchSeSAC(dictionary: userLocation.toDictionary) { result in
+    private func requestSearchSeSAC() {
+        APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                let data = try! JSONDecoder().decode(UserLocationModel.self, from: response.data)
+                let data = try! JSONDecoder().decode(UserSearchModel.self, from: response.data)
+                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
                 print(data)
                 
             case .failure(let error):
