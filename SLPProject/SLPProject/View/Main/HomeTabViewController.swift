@@ -54,6 +54,7 @@ final class HomeTabViewController: UIViewController {
         viewDidLoadEvent.accept(())
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
     }
     private func setComponents() {
         [mapView, button, genderView, gpsButton, annotationButton].forEach {
@@ -158,13 +159,18 @@ final class HomeTabViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
+    private func addCustomPin(sesac_image: Int, coordinate: CLLocationCoordinate2D) {
+        let pin = CustomAnnotation(sesac_image: sesac_image, coordinate: coordinate)
+        mapView.delegate = self
+        mapView.addAnnotation(pin)
+    }
+    
     private func bind() {
-        
         output.changeButtonImage
             .emit { [weak self] imgStr in
                 self?.button.setImage(UIImage(named: imgStr), for: .normal)
-        }
-        .disposed(by: disposeBag)
+            }
+            .disposed(by: disposeBag)
         
         output.changeAllButton
             .emit { [weak self] _ in
@@ -202,5 +208,57 @@ final class HomeTabViewController: UIViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        output.setCustomPin
+            .emit(onNext: {[weak self] mapInfo in
+                self?.addCustomPin(sesac_image: mapInfo.2, coordinate: CLLocationCoordinate2D(latitude: mapInfo.0, longitude: mapInfo.1))
+            })
+            .disposed(by: disposeBag)
+    }
+}
+
+extension HomeTabViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? CustomAnnotation else {
+            return nil
+        }
+        
+        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: CustomAnnotationView.identifier)
+            annotationView?.canShowCallout = false
+            annotationView?.contentMode = .scaleAspectFit
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        let sesacImage: UIImage!
+        let size = CGSize(width: 85, height: 85)
+        UIGraphicsBeginImageContext(size)
+        switch annotation.sesac_image {
+        case 1:
+            sesacImage = SLPAssets.CustomImage.sesac_face_1.image
+            
+        case 2:
+            sesacImage = SLPAssets.CustomImage.sesac_face_2.image
+            
+        case 3:
+            sesacImage = SLPAssets.CustomImage.sesac_face_3.image
+            
+        case 4:
+            sesacImage = SLPAssets.CustomImage.sesac_face_4.image
+            
+        case 5:
+            sesacImage = SLPAssets.CustomImage.sesac_face_5.image
+            
+        default:
+            sesacImage = SLPAssets.CustomImage.sesac_face_1.image
+        }
+        
+        sesacImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        annotationView?.image = resizedImage
+        return annotationView
     }
 }

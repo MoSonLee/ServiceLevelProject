@@ -16,6 +16,8 @@ import RxSwift
 
 final class HomeTabViewModel {
     
+    typealias mapSetting = (Double, Double, Int)
+    
     struct Input {
         let viewDidLoad: Observable<Void>
         let gpsButtonTapped: Signal<Void>
@@ -36,6 +38,7 @@ final class HomeTabViewModel {
         let showRequestLocationALert: Signal<(String, String, String, String)>
         let setNewRegion: Signal<CLLocationCoordinate2D>
         let moveToSearchView: Signal<Void>
+        let setCustomPin: Signal<(Double, Double, Int)>
     }
     
     private var currentLocation = CLLocationCoordinate2D()
@@ -52,7 +55,7 @@ final class HomeTabViewModel {
     private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
     private let setNewRegionRelay = PublishRelay<CLLocationCoordinate2D>()
     private let moveToSearchViewRelay = PublishRelay<Void>()
-    private var checked = true
+    private let setCustomPinRelay = PublishRelay<(Double, Double, Int)>()
     
     private let disposeBag = DisposeBag()
     
@@ -122,7 +125,8 @@ final class HomeTabViewModel {
             changeGirlButton: changeGirlButtonRelay.asSignal(),
             showRequestLocationALert: showRequestLocationALertRelay.asSignal(),
             setNewRegion: setNewRegionRelay.asSignal(),
-            moveToSearchView: moveToSearchViewRelay.asSignal()
+            moveToSearchView: moveToSearchViewRelay.asSignal(),
+            setCustomPin: setCustomPinRelay.asSignal()
         )
     }
 }
@@ -192,11 +196,11 @@ extension HomeTabViewModel {
     }
     
     private func searchSeSAC() {
-        APIService().sesacSearch(dictionary: userLocation.toDictionary) { result in
+        APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                print(data)
+                self?.setAnnotation(data: data)
                 
             case .failure(let error):
                 print(error)
@@ -226,6 +230,17 @@ extension HomeTabViewModel {
                 
             case .failure(let error):
                 print(error)
+            }
+        }
+    }
+    
+    private func setAnnotation(data: SeSACSearchResultModel) {
+        for i in 0..<data.fromQueueDB.count  {
+            switch data.fromQueueDB[i].sesac {
+            case i:
+                setCustomPinRelay.accept(mapSetting(data.fromQueueDB[i].lat, data.fromQueueDB[i].long, i+1))
+            default:
+                print("ERROR")
             }
         }
     }

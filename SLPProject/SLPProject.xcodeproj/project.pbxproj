@@ -41,6 +41,7 @@
 		7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */; };
 		7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */; };
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
+		77414325292BC5C300220087 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414324292BC5C300220087 /* CustomAnnotationView.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -111,6 +112,7 @@
 		7737FD3C291ACB690029DEA2 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
+		77414324292BC5C300220087 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
 				77577018291D3A2700DA331B /* CustomTextField.swift */,
 				7757701F291EC19E00DA331B /* CustomButton.swift */,
+				77414324292BC5C300220087 /* CustomAnnotationView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				77C0D9A029198326008FDA83 /* CertificationViewController.swift in Sources */,
 				7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */,
 				77577019291D3A2700DA331B /* CustomTextField.swift in Sources */,
+				77414325292BC5C300220087 /* CustomAnnotationView.swift in Sources */,
 				7744A37429210F0B00A065C8 /* APIService.swift in Sources */,
 				77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,

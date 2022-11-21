@@ -29,6 +29,11 @@ enum SLPAssets {
         case messageButton
         case gpsButton
         case mapMarker
+        case sesac_face_1
+        case sesac_face_2
+        case sesac_face_3
+        case sesac_face_4
+        case sesac_face_5
         
         var image: UIImage {
             switch self {
@@ -88,6 +93,21 @@ enum SLPAssets {
                 
             case .mapMarker:
                 return UIImage(named: "mapMarker")!
+                
+            case .sesac_face_1:
+                return UIImage(named: "sesac_face_1")!
+                
+            case .sesac_face_2:
+                return UIImage(named: "sesac_face_2")!
+                
+            case .sesac_face_3:
+                return UIImage(named: "sesac_face_3")!
+                
+            case .sesac_face_4:
+                return UIImage(named: "sesac_face_4")!
+                
+            case .sesac_face_5:
+                return UIImage(named: "sesac_face_5")!
             }
         }
     }
@@ -199,6 +219,12 @@ enum SLPAssets {
         case searchButtonString
         case messageButtonString
         case matchingButtonString
+        case base_sesac_face
+        case sesac_face_1_String
+        case sesac_face_2_String
+        case sesac_face_3_String
+        case sesac_face_4_String
+        case sesac_face_5_String
         
         var text: String {
             switch self {
@@ -348,6 +374,24 @@ enum SLPAssets {
                 
             case .messageButtonString:
                 return "messageButton"
+                
+            case .sesac_face_1_String:
+                return "sesac_face_1"
+                
+            case .sesac_face_2_String:
+                return "sesac_face_2"
+                
+            case .sesac_face_3_String:
+                return "sesac_face_3"
+                
+            case .sesac_face_4_String:
+                return "sesac_face_4"
+                
+            case .sesac_face_5_String:
+                return "sesac_face_5"
+                
+            case .base_sesac_face:
+                return "sesac_face_"
             }
         }
     }
