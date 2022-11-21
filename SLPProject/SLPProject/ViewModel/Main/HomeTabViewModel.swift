@@ -16,7 +16,7 @@ import RxSwift
 
 final class HomeTabViewModel {
     
-    typealias mapSetting = (Double, Double, Int)
+    typealias mapInfo = (Double, Double, Int)
     
     struct Input {
         let viewDidLoad: Observable<Void>
@@ -38,9 +38,12 @@ final class HomeTabViewModel {
         let showRequestLocationALert: Signal<(String, String, String, String)>
         let setNewRegion: Signal<CLLocationCoordinate2D>
         let moveToSearchView: Signal<Void>
-        let setCustomPin: Signal<(Double, Double, Int)>
+        let setCustomPin: Signal<mapInfo>
+        let removeCustomPin: Signal<Void>
     }
-    
+
+    private var girlFilterData = SeSACSearchResultModel(fromQueueDB: [], fromQueueDBRequested: [], fromRecommend: [])
+    private var boyFilterData = SeSACSearchResultModel(fromQueueDB: [], fromQueueDBRequested: [], fromRecommend: [])
     private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
@@ -55,7 +58,8 @@ final class HomeTabViewModel {
     private let showRequestLocationALertRelay = PublishRelay<(String, String, String, String)>()
     private let setNewRegionRelay = PublishRelay<CLLocationCoordinate2D>()
     private let moveToSearchViewRelay = PublishRelay<Void>()
-    private let setCustomPinRelay = PublishRelay<(Double, Double, Int)>()
+    private let setCustomPinRelay = PublishRelay<mapInfo>()
+    private let removeCustomPinRelay = PublishRelay<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -84,6 +88,7 @@ final class HomeTabViewModel {
         input.boyButtonTapped
             .emit(onNext: { [weak self] in
                 self?.changeBoyButtonRelay.accept(())
+                self?.removeCustomPinRelay.accept(())
                 self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
@@ -91,6 +96,7 @@ final class HomeTabViewModel {
         input.girlButtonTapped
             .emit(onNext: { [weak self] in
                 self?.changeGirlButtonRelay.accept(())
+                self?.removeCustomPinRelay.accept(())
                 self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
@@ -126,12 +132,20 @@ final class HomeTabViewModel {
             showRequestLocationALert: showRequestLocationALertRelay.asSignal(),
             setNewRegion: setNewRegionRelay.asSignal(),
             moveToSearchView: moveToSearchViewRelay.asSignal(),
-            setCustomPin: setCustomPinRelay.asSignal()
+            setCustomPin: setCustomPinRelay.asSignal(),
+            removeCustomPin: removeCustomPinRelay.asSignal()
         )
     }
 }
 
 extension HomeTabViewModel {
+    
+    private func setAnnotation(data: SeSACSearchResultModel) {
+        for i in 0..<data.fromQueueDB.count  {
+            setCustomPinRelay.accept(mapInfo(data.fromQueueDB[i].lat, data.fromQueueDB[i].long, data.fromQueueDB[i].sesac))
+        }
+    }
+    
     private func checkUserDeviceLocationServiceAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
         authorizationStatus = locationManager.authorizationStatus
@@ -201,7 +215,7 @@ extension HomeTabViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.setAnnotation(data: data)
-                
+
             case .failure(let error):
                 print(error)
             }
@@ -230,17 +244,6 @@ extension HomeTabViewModel {
                 
             case .failure(let error):
                 print(error)
-            }
-        }
-    }
-    
-    private func setAnnotation(data: SeSACSearchResultModel) {
-        for i in 0..<data.fromQueueDB.count  {
-            switch data.fromQueueDB[i].sesac {
-            case i:
-                setCustomPinRelay.accept(mapSetting(data.fromQueueDB[i].lat, data.fromQueueDB[i].long, i+1))
-            default:
-                print("ERROR")
             }
         }
     }
