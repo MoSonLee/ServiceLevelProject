@@ -52,10 +52,18 @@ final class HomeTabViewController: UIViewController {
         setConstraints()
         bind()
         viewDidLoadEvent.accept(())
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+    }
+    
+    private func setMapViewDelegate() {
+        mapView.delegate = self
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: CustomAnnotationView.identifier)
     }
+    
+    private func setLocatinManagerAuth() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
     private func setComponents() {
         [mapView, button, genderView, gpsButton, annotationButton].forEach {
             view.addSubview($0)
@@ -64,6 +72,8 @@ final class HomeTabViewController: UIViewController {
             genderView.addSubview($0)
         }
         setComponentsValue()
+        setMapViewDelegate()
+        setLocatinManagerAuth()
     }
     
     private func setConstraints() {
@@ -161,8 +171,12 @@ final class HomeTabViewController: UIViewController {
     
     private func addCustomPin(sesac_image: Int, coordinate: CLLocationCoordinate2D) {
         let pin = CustomAnnotation(sesac_image: sesac_image, coordinate: coordinate)
-        mapView.delegate = self
         mapView.addAnnotation(pin)
+    }
+    
+    private func removeCustomPin() {
+        let annotations = mapView.annotations.filter({ !($0 is MKUserLocation) })
+        mapView.removeAnnotations(annotations)
     }
     
     private func bind() {
@@ -214,6 +228,12 @@ final class HomeTabViewController: UIViewController {
                 self?.addCustomPin(sesac_image: mapInfo.2, coordinate: CLLocationCoordinate2D(latitude: mapInfo.0, longitude: mapInfo.1))
             })
             .disposed(by: disposeBag)
+        
+        output.removeCustomPin
+            .emit(onNext: {[weak self] _ in
+                self?.removeCustomPin()
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -237,19 +257,19 @@ extension HomeTabViewController: MKMapViewDelegate {
         let size = CGSize(width: 85, height: 85)
         UIGraphicsBeginImageContext(size)
         switch annotation.sesac_image {
-        case 1:
+        case 0:
             sesacImage = SLPAssets.CustomImage.sesac_face_1.image
             
-        case 2:
+        case 1:
             sesacImage = SLPAssets.CustomImage.sesac_face_2.image
             
-        case 3:
+        case 2:
             sesacImage = SLPAssets.CustomImage.sesac_face_3.image
             
-        case 4:
+        case 3:
             sesacImage = SLPAssets.CustomImage.sesac_face_4.image
             
-        case 5:
+        case 4:
             sesacImage = SLPAssets.CustomImage.sesac_face_5.image
             
         default:
