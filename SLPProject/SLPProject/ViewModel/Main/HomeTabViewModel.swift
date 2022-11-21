@@ -101,9 +101,8 @@ final class HomeTabViewModel {
         input.locationChanged
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] location in
-                guard let location = location?.coordinate else { return }
-                self?.currentLocation = location
-                self?.setNewRegionRelay.accept(location)
+                guard let currentLocation = location?.coordinate else { return }
+                self?.currentLocation = currentLocation
             })
             .disposed(by: disposeBag)
         
@@ -196,7 +195,7 @@ extension HomeTabViewModel {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { result in
             switch result {
             case .success(let response):
-                let data = try? JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
+                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 print(data)
                 
             case .failure(let error):

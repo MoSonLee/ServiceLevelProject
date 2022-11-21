@@ -19,9 +19,7 @@ final class SeSACShopViewController: UIViewController {
         setComponentsValue()
     }
     
-    private func setConstraints() {
-        
-    }
+    private func setConstraints() { }
     
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
