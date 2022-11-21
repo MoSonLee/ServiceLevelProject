@@ -45,8 +45,8 @@ final class HomeTabViewModel {
     private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
-    var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
-    var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
+    private var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
+    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
     private let showAlertRelay = PublishRelay<String>()
     private let changeButtonImageRelay = PublishRelay<String>()
@@ -137,9 +137,7 @@ final class HomeTabViewModel {
 extension HomeTabViewModel {
     
     private func setAnnotation(data: SeSACSearchResultModel) {
-        data.fromQueueDB.forEach({
-            setCustomPinRelay.accept(mapInfo($0.lat, $0.long, $0.sesac))
-        })
+        data.fromQueueDB.forEach({ setCustomPinRelay.accept(mapInfo($0.lat, $0.long, $0.sesac)) })
     }
     
     private func checkUserDeviceLocationServiceAuthorization() {
