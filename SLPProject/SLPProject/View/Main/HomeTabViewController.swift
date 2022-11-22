@@ -133,7 +133,6 @@ final class HomeTabViewController: UIViewController {
         allButton.setTitle("전체", for: .normal)
         boyButton.setTitle("남자", for: .normal)
         girlButton.setTitle("여자", for: .normal)
-        
         annotationButton.setImage(SLPAssets.CustomImage.mapMarker.image, for: .normal)
     }
     

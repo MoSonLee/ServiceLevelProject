@@ -41,12 +41,13 @@ final class HomeTabViewModel {
         let setCustomPin: Signal<mapInfo>
         let removeCustomPin: Signal<Void>
     }
-
+    
     private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
     private var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
     private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
+    private var num = -1
     
     private let showAlertRelay = PublishRelay<String>()
     private let changeButtonImageRelay = PublishRelay<String>()
@@ -78,6 +79,7 @@ final class HomeTabViewModel {
         
         input.allButtonTapped
             .emit(onNext: { [weak self] in
+                self?.num = -1
                 self?.changeAllButtonRelay.accept(())
                 self?.searchSeSAC()
             })
@@ -85,6 +87,7 @@ final class HomeTabViewModel {
         
         input.boyButtonTapped
             .emit(onNext: { [weak self] in
+                self?.num = 1
                 self?.changeBoyButtonRelay.accept(())
                 self?.searchSeSAC()
             })
@@ -92,6 +95,7 @@ final class HomeTabViewModel {
         
         input.girlButtonTapped
             .emit(onNext: { [weak self] in
+                self?.num = 0
                 self?.changeGirlButtonRelay.accept(())
                 self?.searchSeSAC()
             })
@@ -136,8 +140,13 @@ final class HomeTabViewModel {
 
 extension HomeTabViewModel {
     
-    private func setAnnotation(data: SeSACSearchResultModel) {
-        data.fromQueueDB.forEach({ setCustomPinRelay.accept(mapInfo($0.lat, $0.long, $0.sesac)) })
+    private func setAnnotation(data: QueueDB) {
+        setCustomPinRelay.accept(mapInfo(data.lat, data.long, data.sesac))
+    }
+    
+    private func filterGender(genderValue: Int, data: SeSACSearchResultModel) {
+        let data = data.fromQueueDB.filter { $0.gender == genderValue }
+        data.forEach { [weak self] data in  self?.setAnnotation(data: data)}
     }
     
     private func checkUserDeviceLocationServiceAuthorization() {
@@ -208,8 +217,23 @@ extension HomeTabViewModel {
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                self?.setAnnotation(data: data)
-
+                switch self?.num {
+                case -1:
+                    data.fromQueueDB.forEach {
+                        self?.setAnnotation(data: $0)
+                    }
+                case 0:
+                    self?.removeCustomPinRelay.accept(())
+                    self?.filterGender(genderValue: 0, data: data)
+                   
+                case 1:
+                    self?.removeCustomPinRelay.accept(())
+                    self?.filterGender(genderValue: 1, data: data)
+                    
+                default:
+                    print("Error")
+                }
+                
             case .failure(let error):
                 print(error)
             }
