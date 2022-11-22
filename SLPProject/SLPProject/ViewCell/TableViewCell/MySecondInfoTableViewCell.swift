@@ -57,7 +57,6 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     }
     
     override func setConstraints() {
-        
         [profileImage, backView].forEach {
             contentView.addSubview($0)
         }
@@ -78,19 +77,16 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
             make.right.equalTo(profileImage.snp.right)
             make.bottom.equalToSuperview().offset(-24).priority(.low)
         }
-        
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.right.lessThanOrEqualTo(showInfoButton.snp.left).offset(-10)
             make.top.equalToSuperview().offset(16)
         }
-        
         lineView.snp.makeConstraints { make in
             make.height.equalTo(0).priority(.low)
             make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.left.bottom.right.equalToSuperview()
         }
-        
         showInfoButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.height.width.equalTo(30)
