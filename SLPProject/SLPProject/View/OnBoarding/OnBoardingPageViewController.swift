@@ -56,7 +56,6 @@ final class OnBoardingPageViewController: UIViewController {
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
         pageViewController.view.backgroundColor = SLPAssets.CustomColor.white.color
-        startButton.backgroundColor = .green
         startButton.setTitle(SLPAssets.RawString.stratButtonTitle.text, for: .normal)
         startButton.setTitleColor(SLPAssets.CustomColor.white.color, for: .normal)
         startButton.layer.cornerRadius = 8

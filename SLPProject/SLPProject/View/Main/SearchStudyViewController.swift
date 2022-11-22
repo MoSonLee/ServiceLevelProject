@@ -8,12 +8,16 @@
 import UIKit
 
 import RxCocoa
+import RxDataSources
 import RxSwift
+import SnapKit
 
 final class SearchStudyViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
-    private var searchBar = UISearchBar()
+    private let searchBar = UISearchBar()
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private let searchButton = UIButton()
     
     private let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
@@ -31,6 +35,9 @@ final class SearchStudyViewController: UIViewController {
     }
     
     private func setComponents() {
+        [collectionView, searchButton].forEach {
+            view.addSubview($0)
+        }
         setComponentsValue()
         setNavigation()
     }
@@ -43,7 +50,11 @@ final class SearchStudyViewController: UIViewController {
     }
     
     private func setConstraints() {
-        
+        searchButton.snp.makeConstraints { make in
+            make.bottom.right.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.left.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.height.equalTo(48)
+        }
     }
     
     private func setComponentsValue() {
@@ -51,6 +62,11 @@ final class SearchStudyViewController: UIViewController {
         searchBar.delegate = self
         searchBar.placeholder = "띄어쓰기로 복수 입력이 가능해요"
         searchBar.becomeFirstResponder()
+        
+        searchButton.setTitle("새싹 찾기", for: .normal)
+        searchButton.setTitleColor(SLPAssets.CustomColor.white.color, for: .normal)
+        searchButton.layer.cornerRadius = 8
+        searchButton.backgroundColor = SLPAssets.CustomColor.green.color
     }
     
     private func bind() {
