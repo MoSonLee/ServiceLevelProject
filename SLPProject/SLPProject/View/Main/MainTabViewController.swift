@@ -19,7 +19,7 @@ final class MainTabViewController: UITabBarController, UITabBarControllerDelegat
         
         let vc1 = HomeTabViewController()
         let vc2 = SeSACShopViewController()
-        let vc3 = SeSACSearchViewController()
+        let vc3 = SearchStudyViewController()
         let vc4 = MyInfoViewController()
         
         let firstTabBarItem = UITabBarItem(title: "홈", image: SLPAssets.CustomImage.homeIcon.image, tag: 0)

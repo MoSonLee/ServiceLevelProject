@@ -26,7 +26,6 @@ final class LoginViewModel{
         let ableMessageButton: Signal<Bool>
         let showCertificationVC: Signal<Bool>
         let showToast: Signal<String>
-        
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()

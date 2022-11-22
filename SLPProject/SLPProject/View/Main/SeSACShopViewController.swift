@@ -7,7 +7,19 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
+
 final class SeSACShopViewController: UIViewController {
+    
+    private var backButton = UIBarButtonItem()
+    
+    private let viewModel = SearchStudyViewModel()
+    private let disposeBag = DisposeBag()
+    
+    private lazy var input = SearchStudyViewModel.Input(
+        backButtonTapped: backButton.rx.tap.asSignal()
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +29,13 @@ final class SeSACShopViewController: UIViewController {
     
     private func setComponents() {
         setComponentsValue()
+        setNavigation()
+    }
+    
+    private func setNavigation() {
+        backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
+        backButton.tintColor = SLPAssets.CustomColor.black.color
+        navigationItem.leftBarButtonItem = backButton
     }
     
     private func setConstraints() { }

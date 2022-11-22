@@ -217,7 +217,7 @@ final class HomeTabViewController: UIViewController {
         
         output.moveToSearchView
             .emit(onNext: {[weak self] _ in
-                let vc = SeSACSearchViewController()
+                let vc = SearchStudyViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
