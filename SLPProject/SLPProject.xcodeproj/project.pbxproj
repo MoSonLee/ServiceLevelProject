@@ -43,6 +43,7 @@
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
 		77414325292BC5C300220087 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414324292BC5C300220087 /* CustomAnnotationView.swift */; };
 		77414327292D194C00220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
+		77414329292D30E400220087 /* SearchCollecionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414328292D30E400220087 /* SearchCollecionModel.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -115,6 +116,7 @@
 		7737FD40291ACB970029DEA2 /* GenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewModel.swift; sourceTree = "<group>"; };
 		77414324292BC5C300220087 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		77414326292D194C00220087 /* SearchStudyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyViewModel.swift; sourceTree = "<group>"; };
+		77414328292D30E400220087 /* SearchCollecionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollecionModel.swift; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				77217A3D29269777000DC6CE /* UserSearchModel.swift */,
 				77217A3B29269761000DC6CE /* UserLocationModel.swift */,
 				772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */,
+				77414328292D30E400220087 /* SearchCollecionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
 				77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */,
 				7757701E291DE2DB00DA331B /* FirebaseAuthorization.swift in Sources */,
+				77414329292D30E400220087 /* SearchCollecionModel.swift in Sources */,
 				77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */,
 				7744A35C291FC32600A065C8 /* UserInfo.swift in Sources */,
 				77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */,
