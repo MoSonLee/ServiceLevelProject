@@ -5,15 +5,16 @@
 //  Created by 이승후 on 2022/11/24.
 //
 
-import Foundation
 import UIKit
 
-class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
+final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
+    
     let cellSpacing: CGFloat = 10
  
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         self.minimumLineSpacing = 10.0
         self.sectionInset = UIEdgeInsets(top: 12.0, left: 16.0, bottom: 0.0, right: 16.0)
+        self.sectionHeadersPinToVisibleBounds = false
         let attributes = super.layoutAttributesForElements(in: rect)
  
         var leftMargin = sectionInset.left
@@ -29,3 +30,4 @@ class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
         return attributes
     }
 }
+

@@ -16,7 +16,7 @@ final class SearchHeader: UICollectionReusableView {
     var headerLabel = UILabel()
     
     override init(frame: CGRect) {
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setConfigure()
         setConstraints()
     }

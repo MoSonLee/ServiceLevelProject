@@ -225,6 +225,8 @@ enum SLPAssets {
         case sesac_face_3_String
         case sesac_face_4_String
         case sesac_face_5_String
+        case validateSearchText
+        case studyCountLimit
         
         var text: String {
             switch self {
@@ -392,6 +394,12 @@ enum SLPAssets {
                 
             case .base_sesac_face:
                 return "sesac_face_"
+                
+            case .validateSearchText:
+                return "1글자 이상 8글자 이하로 입력해주세요."
+                
+            case .studyCountLimit:
+                return "스터디를 더 이상 추가할 수 없습니다."
             }
         }
     }

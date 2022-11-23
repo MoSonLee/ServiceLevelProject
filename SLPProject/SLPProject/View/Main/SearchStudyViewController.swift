@@ -23,32 +23,21 @@ final class SearchStudyViewController: UIViewController {
     private let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
     
-//sendMessageButtonTapped: sendMessageButton.rx.tap
-//    .withLatestFrom(
-//        phoneNumberTextField.rx.text.orEmpty
-//    )
-//    .asSignal(onErrorJustReturn: ""),
-    
     private lazy var input = SearchStudyViewModel.Input(
         backButtonTapped: backButton.rx.tap.asSignal(),
         searchButtonTapped: searchBar.rx.searchButtonClicked
             .withLatestFrom(
                 searchBar.rx.text.orEmpty
             )
-            .asSignal(onErrorJustReturn: "")
+            .asSignal(onErrorJustReturn: ""),
+        cellTapped: collectionView.rx.itemSelected.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
     
-    private lazy var sections = BehaviorRelay(value: [
+    private var sections = BehaviorRelay(value: [
         SearchCollecionSectionModel(header: "지금 주변에는", items: [
-            SearchCollecionModel(title: "aaaaaaaadsaasdaaa"),
-            SearchCollecionModel(title: "aaaa"),
-            SearchCollecionModel(title: "aaaa")
         ]),
         SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
-            SearchCollecionModel(title: "bbbb"),
-            SearchCollecionModel(title: "cccc")
-            ,SearchCollecionModel(title: "addd")
         ])
     ])
     
@@ -84,6 +73,11 @@ final class SearchStudyViewController: UIViewController {
         collectionView.collectionViewLayout = CollectionViewLeftAlignFlowLayout()
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.headerReferenceSize = .init(width: 100, height: 30)
+            layout.sectionHeadersPinToVisibleBounds = true
+            
         }
     }
     
@@ -125,6 +119,22 @@ final class SearchStudyViewController: UIViewController {
                 self?.view.makeToast(text)
             })
             .disposed(by: disposeBag)
+        
+        output.addCollectionModel
+            .emit(onNext: { [weak self] model in
+                var array = self?.sections.value
+                array?[1].items.append(model)
+                self?.sections.accept(array!)
+            })
+            .disposed(by: disposeBag)
+        
+        output.deleteStudy
+            .emit(onNext: { [weak self] indexPath in
+                var array = self?.sections.value
+                array?[1].items.remove(at: indexPath.item)
+                self?.sections.accept(array!)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func bindCollectionView() {
@@ -132,6 +142,7 @@ final class SearchStudyViewController: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifider, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
             cell.setConstraints()
             cell.configure(indexPath: indexPath, item: item)
+            cell.searchButton.isEnabled = false
             return cell
         }, configureSupplementaryView: { (dataSource, collectionView, kind, indexPath) in
             switch kind {
@@ -139,7 +150,7 @@ final class SearchStudyViewController: UIViewController {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchHeader.identifier, for: indexPath) as? SearchHeader else {
                     return UICollectionReusableView()
                 }
-                header.configure(indexPath: indexPath, item: dataSource[indexPath.item])
+                header.configure(indexPath: indexPath, item: dataSource[indexPath.section])
                 header.headerLabel.textColor = .black
                 return header
                 
@@ -147,7 +158,6 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
-        
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -157,12 +167,7 @@ final class SearchStudyViewController: UIViewController {
     }
 }
 
-extension SearchStudyViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header: SearchHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchHeader.identifier, for: indexPath) as! SearchHeader
-        return header
-    }
-}
+extension SearchStudyViewController: UICollectionViewDelegate { }
 
 extension SearchStudyViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {

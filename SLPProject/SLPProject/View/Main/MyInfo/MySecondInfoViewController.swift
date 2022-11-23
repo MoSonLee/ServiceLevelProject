@@ -159,7 +159,6 @@ final class MySecondInfoViewController: UIViewController {
             default:
                 print("Error")
             }
-            
             cell.configure(indexPath: indexPath, item: item)
             cell.selectionStyle = .none
             return cell

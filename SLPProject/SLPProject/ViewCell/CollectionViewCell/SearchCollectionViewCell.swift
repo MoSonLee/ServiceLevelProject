@@ -15,7 +15,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         return "SearchCollectionViewCell"
     }
     
-    private var searchButton = UIButton()
+    var searchButton = UIButton()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -46,10 +46,15 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     
     func configure(indexPath: IndexPath, item: SearchCollecionSectionModel.Item) {
         searchButton.setTitle(item.title, for: .normal)
-        searchButton.layer.borderColor = SLPAssets.CustomColor.gray4.color.cgColor
         searchButton.layer.borderWidth = 1
         searchButton.layer.cornerRadius = 8
-        searchButton.setTitleColor(SLPAssets.CustomColor.black.color, for: .normal)
-        searchButton.titleLabel?.font = .systemFont(ofSize: 14)
+        if indexPath.section == 0 {
+            searchButton.layer.borderColor = SLPAssets.CustomColor.gray4.color.cgColor
+            searchButton.titleLabel?.font = .systemFont(ofSize: 14)
+            searchButton.setTitleColor(SLPAssets.CustomColor.black.color, for: .normal)
+        } else {
+            searchButton.layer.borderColor = SLPAssets.CustomColor.green.color.cgColor
+            searchButton.setTitleColor(SLPAssets.CustomColor.green.color, for: .normal)
+        }
     }
 }
