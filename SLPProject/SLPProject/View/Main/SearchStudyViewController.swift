@@ -71,10 +71,9 @@ final class SearchStudyViewController: UIViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SearchHeader.identifier)
         collectionView.collectionViewLayout = CollectionViewLeftAlignFlowLayout()
+        
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            flowLayout.headerReferenceSize = .init(width: 100, height: 30)
-            flowLayout.sectionHeadersPinToVisibleBounds = true
         }
     }
     
@@ -156,6 +155,7 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
+    
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -165,7 +165,9 @@ final class SearchStudyViewController: UIViewController {
     }
 }
 
-extension SearchStudyViewController: UICollectionViewDelegate { }
+extension SearchStudyViewController: UICollectionViewDelegate {
+    
+}
 
 extension SearchStudyViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {
