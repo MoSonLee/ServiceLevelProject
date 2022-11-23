@@ -87,9 +87,9 @@ final class MyInfoViewController: UIViewController {
     
     private func bind() {
         output.showMySecondInfoVC
-            .emit { [weak self] index in
+            .emit { [weak self] indexPath in
                 let vc = MySecondInfoViewController()
-                index == [0,0] ? self?.navigationController?.pushViewController(vc, animated: true) : nil
+                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

@@ -73,11 +73,8 @@ final class SearchStudyViewController: UIViewController {
         collectionView.collectionViewLayout = CollectionViewLeftAlignFlowLayout()
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        }
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.headerReferenceSize = .init(width: 100, height: 30)
-            layout.sectionHeadersPinToVisibleBounds = true
-            
+            flowLayout.headerReferenceSize = .init(width: 100, height: 30)
+            flowLayout.sectionHeadersPinToVisibleBounds = true
         }
     }
     
@@ -124,7 +121,8 @@ final class SearchStudyViewController: UIViewController {
             .emit(onNext: { [weak self] model in
                 var array = self?.sections.value
                 array?[1].items.append(model)
-                self?.sections.accept(array!)
+                guard let array = array else { return }
+                self?.sections.accept(array)
             })
             .disposed(by: disposeBag)
         
@@ -132,7 +130,8 @@ final class SearchStudyViewController: UIViewController {
             .emit(onNext: { [weak self] indexPath in
                 var array = self?.sections.value
                 array?[1].items.remove(at: indexPath.item)
-                self?.sections.accept(array!)
+                guard let array = array else { return }
+                self?.sections.accept(array)
             })
             .disposed(by: disposeBag)
     }
@@ -142,7 +141,6 @@ final class SearchStudyViewController: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifider, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
             cell.setConstraints()
             cell.configure(indexPath: indexPath, item: item)
-            cell.searchButton.isEnabled = false
             return cell
         }, configureSupplementaryView: { (dataSource, collectionView, kind, indexPath) in
             switch kind {

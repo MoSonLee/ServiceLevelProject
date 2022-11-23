@@ -26,7 +26,7 @@ final class MyInfoViewModel {
     func transform(input: Input) -> Output {
         input.cellTapped
             .emit { [weak self] indexPath in
-                self?.showMySecondInfoVCRelay.accept(indexPath)
+                indexPath == [0,0] ?  self?.showMySecondInfoVCRelay.accept(indexPath) : nil
             }
             .disposed(by: disposeBag)
         return Output(showMySecondInfoVC: showMySecondInfoVCRelay.asSignal())

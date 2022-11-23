@@ -32,6 +32,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         searchButton.titleLabel?.textAlignment = .center
         searchButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 16)
         searchButton.sizeToFit()
+        searchButton.isEnabled = false
     }
     
     func setConstraints() {
