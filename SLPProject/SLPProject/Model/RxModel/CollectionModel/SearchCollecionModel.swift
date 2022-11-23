@@ -12,7 +12,6 @@ import RxDataSources
 
 struct SearchCollecionModel {
     var title: String
-    var buttonImageString: String
 }
 
 struct SearchCollecionSectionModel {

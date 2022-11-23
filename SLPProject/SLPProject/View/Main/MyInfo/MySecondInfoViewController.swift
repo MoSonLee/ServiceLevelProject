@@ -19,7 +19,7 @@ final class MySecondInfoViewController: UIViewController {
     private var toggle: Bool = false
     private let tableView = UITableView(frame: .zero, style: .plain)
     
-    private var userInfo = UserLoginInfo(id: "", v: 0, uid: "", phoneNumber: "", email: "", fcMtoken: "", nick: "", birth: "", gender: 0, study: "", comment: [""], reputation: [0], sesac: 0, sesacCollection: [0], background: 0, backgroundCollection: [0], purchaseToken: [""], transactionID: [""], reviewedBefore: [""], reportedNum: 0, reportedUser: [""], dodgepenalty: 0, dodgeNum: 0, ageMin: 0, ageMax: 0, searchable: 0, createdAt: "")
+    private var userInfo = UserLoginInfo(id: "", v: 0, uid: "", phoneNumber: "", email: "", fcMtoken: "", nick: "", birth: "", gender: 0, study: "", comment: [""], reputation: [], sesac: 0, sesacCollection: [], background: 0, backgroundCollection: [], purchaseToken: [""], transactionID: [""], reviewedBefore: [""], reportedNum: 0, reportedUser: [""], dodgepenalty: 0, dodgeNum: 0, ageMin: 0, ageMax: 0, searchable: 0, createdAt: "")
     
     private lazy var sections = BehaviorRelay(value: [
         MySecondInfoTableSectionModel(header: "", items: [
@@ -83,7 +83,6 @@ final class MySecondInfoViewController: UIViewController {
         [tableView].forEach {
             view.addSubview($0)
         }
-        
         tableView.snp.makeConstraints { make in
             make.left.equalTo(16)
             make.right.equalTo(-16)

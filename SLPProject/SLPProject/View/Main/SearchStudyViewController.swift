@@ -27,17 +27,32 @@ final class SearchStudyViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
+    private lazy var sections = BehaviorRelay(value: [
+        SearchCollecionSectionModel(header: "지금 주변에는", items: [
+            SearchCollecionModel(title: "aaaa"),
+            SearchCollecionModel(title: "aaaa"),
+            SearchCollecionModel(title: "aaaa")
+        ]),
+        SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
+            SearchCollecionModel(title: "aaaa"),
+            SearchCollecionModel(title: "aaaa")
+            ,SearchCollecionModel(title: "aaaa")
+        ])
+    ])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bind()
+        bindCollectionView()
     }
     
     private func setComponents() {
         [collectionView, searchButton].forEach {
             view.addSubview($0)
         }
+        registerCollectionView()
         setComponentsValue()
         setNavigation()
     }
@@ -49,11 +64,24 @@ final class SearchStudyViewController: UIViewController {
         navigationItem.titleView = searchBar
     }
     
+    private func registerCollectionView() {
+        collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifider)
+        collectionView.register(SearchHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: SearchHeader.identifier)
+    }
+    
     private func setConstraints() {
         searchButton.snp.makeConstraints { make in
             make.bottom.right.equalTo(view.safeAreaLayoutGuide).offset(-16)
             make.left.equalTo(view.safeAreaLayoutGuide).offset(16)
             make.height.equalTo(48)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.height.equalTo(200)
         }
     }
     
@@ -76,14 +104,44 @@ final class SearchStudyViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func bindCollectionView() {
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SearchCollecionSectionModel>(configureCell: { (datasource, collectionView, indexPath, item) in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifider, for: indexPath) as? SearchCollectionViewCell else { return UICollectionViewCell() }
+            cell.setConstraints()
+            cell.configure(indexPath: indexPath, item: item)
+            return cell
+        }, configureSupplementaryView: { (dataSource, collectionView, kind, indexPath) in
+            switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchHeader.identifier, for: indexPath) as? SearchHeader else {
+                    return UICollectionReusableView()
+                }
+                header.headerLabel.text = dataSource[indexPath.section].header
+                header.backgroundColor = .black
+                return header
+            default:
+                fatalError()
+            }
+        })
+        sections
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
 }
 
+extension SearchStudyViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+}
+
+
 extension SearchStudyViewController: UISearchBarDelegate {
-    
     private func dissmissKeyboard() {
         searchBar.resignFirstResponder()
     }
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
         guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
