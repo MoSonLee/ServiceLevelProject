@@ -17,9 +17,9 @@ final class SeSACShopViewController: UIViewController {
     private let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
     
-    private lazy var input = SearchStudyViewModel.Input(
-        backButtonTapped: backButton.rx.tap.asSignal()
-    )
+//    private lazy var input = SearchStudyViewModel.Input(
+////        backButtonTapped: backButton.rx.tap.asSignal()
+//    )
 
     override func viewDidLoad() {
         super.viewDidLoad()

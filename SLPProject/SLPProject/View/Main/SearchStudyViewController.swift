@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 import SnapKit
+import Toast
 
 final class SearchStudyViewController: UIViewController {
     
@@ -22,8 +23,19 @@ final class SearchStudyViewController: UIViewController {
     private let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
     
+//sendMessageButtonTapped: sendMessageButton.rx.tap
+//    .withLatestFrom(
+//        phoneNumberTextField.rx.text.orEmpty
+//    )
+//    .asSignal(onErrorJustReturn: ""),
+    
     private lazy var input = SearchStudyViewModel.Input(
-        backButtonTapped: backButton.rx.tap.asSignal()
+        backButtonTapped: backButton.rx.tap.asSignal(),
+        searchButtonTapped: searchBar.rx.searchButtonClicked
+            .withLatestFrom(
+                searchBar.rx.text.orEmpty
+            )
+            .asSignal(onErrorJustReturn: "")
     )
     private lazy var output = viewModel.transform(input: input)
     
@@ -105,6 +117,12 @@ final class SearchStudyViewController: UIViewController {
         output.popVC
             .emit(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
             })
             .disposed(by: disposeBag)
     }
