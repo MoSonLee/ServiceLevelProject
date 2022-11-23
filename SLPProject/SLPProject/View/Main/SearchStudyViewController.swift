@@ -29,14 +29,14 @@ final class SearchStudyViewController: UIViewController {
     
     private lazy var sections = BehaviorRelay(value: [
         SearchCollecionSectionModel(header: "지금 주변에는", items: [
-            SearchCollecionModel(title: "aaaa"),
+            SearchCollecionModel(title: "aaaaaaaadsaasdaaa"),
             SearchCollecionModel(title: "aaaa"),
             SearchCollecionModel(title: "aaaa")
         ]),
         SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
-            SearchCollecionModel(title: "aaaa"),
-            SearchCollecionModel(title: "aaaa")
-            ,SearchCollecionModel(title: "aaaa")
+            SearchCollecionModel(title: "bbbb"),
+            SearchCollecionModel(title: "cccc")
+            ,SearchCollecionModel(title: "addd")
         ])
     ])
     
@@ -69,6 +69,10 @@ final class SearchStudyViewController: UIViewController {
         collectionView.register(SearchHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: SearchHeader.identifier)
+        collectionView.collectionViewLayout = CollectionViewLeftAlignFlowLayout()
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
     }
     
     private func setConstraints() {
@@ -81,7 +85,7 @@ final class SearchStudyViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.height.equalTo(200)
+            make.height.greaterThanOrEqualTo(400)
         }
     }
     
@@ -117,13 +121,15 @@ final class SearchStudyViewController: UIViewController {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchHeader.identifier, for: indexPath) as? SearchHeader else {
                     return UICollectionReusableView()
                 }
-                header.headerLabel.text = dataSource[indexPath.section].header
-                header.backgroundColor = .black
+                header.configure(indexPath: indexPath, item: dataSource[indexPath.item])
+                header.headerLabel.textColor = .black
                 return header
+                
             default:
                 fatalError()
             }
         })
+        
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -133,9 +139,12 @@ final class SearchStudyViewController: UIViewController {
     }
 }
 
-extension SearchStudyViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension SearchStudyViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header: SearchHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SearchHeader.identifier, for: indexPath) as! SearchHeader
+        return header
+    }
 }
-
 
 extension SearchStudyViewController: UISearchBarDelegate {
     private func dissmissKeyboard() {

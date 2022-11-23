@@ -38,5 +38,6 @@ final class SearchHeader: UICollectionReusableView {
     
     func configure(indexPath: IndexPath, item: SearchCollecionSectionModel) {
         headerLabel.text = item.header
+        headerLabel.textColor = .white
     }
 }
