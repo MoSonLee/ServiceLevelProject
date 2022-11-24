@@ -27,6 +27,7 @@ final class SearchStudyViewModel {
     }
     
     private var count = 0
+    private var study: [String] = []
     private let popVCRealy = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let addCollectionModelRelay = PublishRelay<SearchCollecionModel>()
@@ -44,8 +45,7 @@ final class SearchStudyViewModel {
         
         input.searchButtonTapped
             .emit(onNext: { [weak self] text in
-                guard let count = self?.count else { return }
-                count == 8 ? self?.showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text) : self?.checkTextCount(text: text)
+                self?.checkTextCount(text: text)
             })
             .disposed(by: disposeBag)
         
@@ -67,11 +67,14 @@ final class SearchStudyViewModel {
 
 extension SearchStudyViewModel {
     private func checkTextCount(text: String) {
-        if text.count < 1 || text.count > 8 {
-            showToastRelay.accept(SLPAssets.RawString.validateSearchText.text)
-        } else {
-            addCollectionModelRelay.accept(SearchCollecionModel(title: "\(text) X"))
-            count += 1
+        study = text.components(separatedBy: " ")
+        study.forEach {
+            if $0.count < 1 || $0.count > 8 {
+                showToastRelay.accept(SLPAssets.RawString.validateSearchText.text)
+            } else {
+                count < 8 ? addCollectionModelRelay.accept(SearchCollecionModel(title: "\($0) X")) : showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
+                count += 1
+            }
         }
     }
 }
