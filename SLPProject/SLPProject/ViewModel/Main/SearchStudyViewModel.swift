@@ -51,6 +51,7 @@ final class SearchStudyViewModel {
         
         input.cellTapped
             .emit { [weak self] indexPath in
+                self?.count -= 1
                 indexPath.section == 1 ? self?.deleteStudyRelay.accept(indexPath) : nil
             }
             .disposed(by: disposeBag)
