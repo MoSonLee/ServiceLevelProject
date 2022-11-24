@@ -69,19 +69,15 @@ extension SearchStudyViewModel {
     private func checkTextCount(text: String) {
         let study = text.components(separatedBy: " ")
         study.forEach {
-            if !(1...8).contains($0.count) {
+            if studyList.contains($0) {
+                showToastRelay.accept(SLPAssets.RawString.duplicateStudy.text)
+            } else if !(1...8).contains($0.count) {
                 showToastRelay.accept(SLPAssets.RawString.validateSearchText.text)
+            } else if studyList.count == 8 {
+                showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
             } else {
-                if studyList.count < 8 {
-                    if !studyList.contains($0) {
-                        studyList.append($0)
-                        addCollectionModelRelay.accept(SearchCollecionModel(title: $0))
-                    } else {
-                        showToastRelay.accept(SLPAssets.RawString.duplicateStudy.text)
-                    }
-                } else {
-                    showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
-                }
+                studyList.append($0)
+                addCollectionModelRelay.accept(SearchCollecionModel(title: $0))
             }
         }
     }
