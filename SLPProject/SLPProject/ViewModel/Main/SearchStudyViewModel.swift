@@ -26,8 +26,7 @@ final class SearchStudyViewModel {
         let deleteStudy: Signal<IndexPath>
     }
     
-    private var count = 0
-    private var study: [String] = []
+    private var studyList: [String] = []
     private let popVCRealy = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let addCollectionModelRelay = PublishRelay<SearchCollecionModel>()
@@ -51,7 +50,7 @@ final class SearchStudyViewModel {
         
         input.cellTapped
             .emit { [weak self] indexPath in
-                self?.count -= 1
+                self?.studyList.remove(at: indexPath.item)
                 indexPath.section == 1 ? self?.deleteStudyRelay.accept(indexPath) : nil
             }
             .disposed(by: disposeBag)
@@ -68,14 +67,18 @@ final class SearchStudyViewModel {
 
 extension SearchStudyViewModel {
     private func checkTextCount(text: String) {
-        study = text.components(separatedBy: " ")
+        let study = text.components(separatedBy: " ")
         study.forEach {
-            if $0.count < 1 || $0.count > 8 {
+            if !(1...8).contains($0.count) {
                 showToastRelay.accept(SLPAssets.RawString.validateSearchText.text)
             } else {
-                if count < 8 {
-                    addCollectionModelRelay.accept(SearchCollecionModel(title: "\($0) X"))
-                    count += 1
+                if studyList.count < 8 {
+                    if !studyList.contains($0) {
+                        studyList.append($0)
+                        addCollectionModelRelay.accept(SearchCollecionModel(title: $0))
+                    } else {
+                        showToastRelay.accept(SLPAssets.RawString.duplicateStudy.text)
+                    }
                 } else {
                     showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
                 }

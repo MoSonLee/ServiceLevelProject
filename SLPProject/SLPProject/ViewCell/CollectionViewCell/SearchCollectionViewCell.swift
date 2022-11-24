@@ -41,12 +41,11 @@ final class SearchCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.height.equalTo(32)
-            
         }
     }
     
     func configure(indexPath: IndexPath, item: SearchCollecionSectionModel.Item) {
-        searchButton.setTitle(item.title, for: .normal)
+        searchButton.setTitle("\(item.title) X", for: .normal)
         searchButton.layer.borderWidth = 1
         searchButton.layer.cornerRadius = 8
         if indexPath.section == 0 {

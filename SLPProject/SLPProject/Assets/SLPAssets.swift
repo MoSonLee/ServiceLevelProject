@@ -227,6 +227,7 @@ enum SLPAssets {
         case sesac_face_5_String
         case validateSearchText
         case studyCountLimit
+        case duplicateStudy
         
         var text: String {
             switch self {
@@ -400,6 +401,9 @@ enum SLPAssets {
                 
             case .studyCountLimit:
                 return "스터디를 더 이상 추가할 수 없습니다."
+                
+            case .duplicateStudy:
+                return "중복된 스터디입니다."
             }
         }
     }
