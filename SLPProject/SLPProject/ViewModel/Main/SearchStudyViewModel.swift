@@ -73,8 +73,12 @@ extension SearchStudyViewModel {
             if $0.count < 1 || $0.count > 8 {
                 showToastRelay.accept(SLPAssets.RawString.validateSearchText.text)
             } else {
-                count < 8 ? addCollectionModelRelay.accept(SearchCollecionModel(title: "\($0) X")) : showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
-                count += 1
+                if count < 8 {
+                    addCollectionModelRelay.accept(SearchCollecionModel(title: "\($0) X"))
+                    count += 1
+                } else {
+                    showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
+                }
             }
         }
     }
