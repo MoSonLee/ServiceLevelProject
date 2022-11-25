@@ -217,8 +217,11 @@ final class HomeTabViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.getQueueDB
-            .emit(onNext: { [weak self] db in
-                self?.vc.dbData = db
+            .emit(onNext: { [weak self] queueDBTitle in
+                let uniquedDBTitle = queueDBTitle.uniqued()
+                uniquedDBTitle.forEach {
+                    self?.vc.dbData.append(SearchCollecionModel(title: $0))
+                }
             })
             .disposed(by: disposeBag)
         

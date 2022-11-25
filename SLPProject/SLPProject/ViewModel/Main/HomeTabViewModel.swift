@@ -40,11 +40,11 @@ final class HomeTabViewModel {
         let moveToSearchView: Signal<Void>
         let setCustomPin: Signal<mapInfo>
         let removeCustomPin: Signal<Void>
-        let getQueueDB: Signal<[SearchCollecionModel]>
+        let getQueueDB: Signal<[String]>
         let getCenter: Signal<CLLocationCoordinate2D>
     }
     
-    private var queueDB: [SearchCollecionModel] = []
+    private var queueDB: [String] = []
     private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
@@ -62,7 +62,7 @@ final class HomeTabViewModel {
     private let moveToSearchViewRelay = PublishRelay<Void>()
     private let setCustomPinRelay = PublishRelay<mapInfo>()
     private let removeCustomPinRelay = PublishRelay<Void>()
-    private let getQueueDBRelay = PublishRelay<[SearchCollecionModel]>()
+    private let getQueueDBRelay = PublishRelay<[String]>()
     private let getCenterRelay = PublishRelay<CLLocationCoordinate2D>()
     
     private let disposeBag = DisposeBag()
@@ -232,7 +232,7 @@ extension HomeTabViewModel {
                 let dbData = data.fromQueueDB
                 for i in 0..<dbData.count {
                     for j in 0..<dbData[i].studylist.count {
-                        self?.queueDB.append(SearchCollecionModel(title: dbData[i].studylist[j]))
+                        self?.queueDB.append(dbData[i].studylist[j])
                     }
                 }
                
