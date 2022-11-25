@@ -8,7 +8,7 @@
 import Foundation
 
 enum UserSearchErrorModel: Int, Error {
-    case Declaration3 = 201
+    case reported3 = 201
     case cancelOnce = 203
     case cancelTwo = 204
     case cancelThree = 205
@@ -24,7 +24,7 @@ enum UserSearchErrorModel: Int, Error {
 extension UserSearchErrorModel {
     var errorDescription: String {
         switch self {
-        case .Declaration3:
+        case .reported3:
             return "201: notRequestYet"
         case .cancelOnce:
             return  "203: cancelOnce"

@@ -36,7 +36,7 @@ final class CertificationViewModel {
     }
     
     private let becomeFirstResponderRelay = PublishRelay<Void>()
-    private let popVCRealy = PublishRelay<Void>()
+    private let popVCRelay = PublishRelay<Void>()
     private let ableStartButtonRelay = PublishRelay<Bool>()
     private let showSingUpVCRelay = PublishRelay<Void>()
     private let showMainVCRelay = PublishRelay<Void>()
@@ -59,7 +59,7 @@ final class CertificationViewModel {
         
         input.backButtonTapped
             .emit(onNext: { [weak self] _ in
-                self?.popVCRealy.accept(())
+                self?.popVCRelay.accept(())
             })
             .disposed(by: disposeBag)
         
@@ -102,7 +102,7 @@ final class CertificationViewModel {
         
         return Output(
             becomeFirstResponder: becomeFirstResponderRelay.asSignal(),
-            popVC: popVCRealy.asSignal(),
+            popVC: popVCRelay.asSignal(),
             ableStartButton: ableStartButtonRelay.asSignal(),
             showSingUpVC: showSingUpVCRelay.asSignal(),
             showMainVC: showMainVCRelay.asSignal(),

@@ -34,7 +34,7 @@ final class SearchStudyViewModel {
     private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: "anything")
     
     private var studyList: [String] = []
-    private let popVCRealy = PublishRelay<Void>()
+    private let popVCRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let addCollectionModelRelay = PublishRelay<SearchCollecionModel>()
     private let checkCountRelay = PublishRelay<SearchCollecionSectionModel>()
@@ -46,7 +46,7 @@ final class SearchStudyViewModel {
         
         input.backButtonTapped
             .emit(onNext: { [weak self] _ in
-                self?.popVCRealy.accept(())
+                self?.popVCRelay.accept(())
             })
             .disposed(by: disposeBag)
         
@@ -71,7 +71,7 @@ final class SearchStudyViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            popVC: popVCRealy.asSignal(),
+            popVC: popVCRelay.asSignal(),
             showToast: showToastRelay.asSignal(),
             addCollectionModel: addCollectionModelRelay.asSignal(),
             checkCount: checkCountRelay.asSignal(),
@@ -130,14 +130,14 @@ extension SearchStudyViewModel {
             case .failure(let error):
                 let error = UserSearchErrorModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
-                case .Declaration3:
-                    self?.showToastRelay.accept("신고가 누적되어 이용하실 수 없습니다")
+                case .reported3:
+                    self?.showToastRelay.accept(SLPAssets.RawString.reported.text)
                 case .cancelOnce:
-                    self?.showToastRelay.accept("스터디 취소 패널티로, 1분동안 이용하실 수 없습니다")
+                    self?.showToastRelay.accept(SLPAssets.RawString.penalty1.text)
                 case .cancelTwo:
-                    self?.showToastRelay.accept("스터디 취소 패널티로, 2분동안 이용하실 수 없습니다")
+                    self?.showToastRelay.accept(SLPAssets.RawString.penalty2.text)
                 case .cancelThree:
-                    self?.showToastRelay.accept("스터디 취소 패널티로, 3분동안 이용하실 수 없습니다")
+                    self?.showToastRelay.accept(SLPAssets.RawString.penalty3.text)
                 case .tokenError:
                     print(UserSearchErrorModel.tokenError)
                 case .unregistered:

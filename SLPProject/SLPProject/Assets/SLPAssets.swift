@@ -228,6 +228,10 @@ enum SLPAssets {
         case validateSearchText
         case studyCountLimit
         case duplicateStudy
+        case reported
+        case penalty1
+        case penalty2
+        case penalty3
         
         var text: String {
             switch self {
@@ -404,6 +408,18 @@ enum SLPAssets {
                 
             case .duplicateStudy:
                 return "중복된 스터디입니다."
+                
+            case .reported:
+                return "신고가 누적되어 이용하실 수 없습니다"
+                
+            case .penalty1:
+                return "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다"
+                
+            case .penalty2:
+                return "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다"
+                
+            case .penalty3:
+                return "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다"
             }
         }
     }
