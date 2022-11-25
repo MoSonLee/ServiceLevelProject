@@ -45,14 +45,16 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(indexPath: IndexPath, item: SearchCollecionSectionModel.Item) {
-        searchButton.setTitle("\(item.title) X", for: .normal)
         searchButton.layer.borderWidth = 1
         searchButton.layer.cornerRadius = 8
         if indexPath.section == 0 {
+            searchButton.setTitle("\(item.title)", for: .normal)
+            print(item.title)
             searchButton.layer.borderColor = SLPAssets.CustomColor.gray4.color.cgColor
             searchButton.titleLabel?.font = .systemFont(ofSize: 14)
             searchButton.setTitleColor(SLPAssets.CustomColor.black.color, for: .normal)
         } else {
+            searchButton.setTitle("\(item.title) X", for: .normal)
             searchButton.layer.borderColor = SLPAssets.CustomColor.green.color.cgColor
             searchButton.setTitleColor(SLPAssets.CustomColor.green.color, for: .normal)
         }

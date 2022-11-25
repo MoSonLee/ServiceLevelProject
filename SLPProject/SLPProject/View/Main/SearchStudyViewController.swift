@@ -8,6 +8,7 @@
 import UIKit
 
 import RxCocoa
+import CoreLocation
 import RxDataSources
 import RxSwift
 import SnapKit
@@ -19,6 +20,9 @@ final class SearchStudyViewController: UIViewController {
     private let searchBar = UISearchBar()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private let searchButton = UIButton()
+    
+    var dbData: [SearchCollecionModel] = []
+    var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     private let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
@@ -34,7 +38,7 @@ final class SearchStudyViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
-    private var sections = BehaviorRelay(value: [
+    var sections = BehaviorRelay(value: [
         SearchCollecionSectionModel(header: "지금 주변에는", items: [
         ]),
         SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
@@ -104,6 +108,14 @@ final class SearchStudyViewController: UIViewController {
         searchButton.backgroundColor = SLPAssets.CustomColor.green.color
     }
     
+    private func setRecommended() {
+        var array = sections.value
+        for index in 0..<dbData.count {
+            array[0].items.append(dbData[index])
+        }
+        sections.accept(array)
+    }
+    
     private func bind() {
         output.popVC
             .emit(onNext: { [weak self] _ in
@@ -134,6 +146,7 @@ final class SearchStudyViewController: UIViewController {
                 self?.sections.accept(array)
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func bindCollectionView() {
@@ -156,6 +169,7 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
+        setRecommended()
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -175,5 +189,12 @@ extension SearchStudyViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
         guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
+    }
+}
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
     }
 }

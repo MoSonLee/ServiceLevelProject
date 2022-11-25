@@ -29,6 +29,7 @@ final class HomeTabViewController: UIViewController {
     private let gpsButton = UIButton()
     private let annotationButton = UIButton()
     
+    private let vc = SearchStudyViewController()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewModel = HomeTabViewModel()
     
@@ -215,9 +216,22 @@ final class HomeTabViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.getQueueDB
+            .emit(onNext: { [weak self] db in
+                self?.vc.dbData = db
+            })
+            .disposed(by: disposeBag)
+        
+        output.getCenter
+            .emit(onNext: { [weak self] location in
+                self?.vc.location = location
+                print(location)
+            })
+            .disposed(by: disposeBag)
+        
         output.moveToSearchView
             .emit(onNext: {[weak self] _ in
-                let vc = SearchStudyViewController()
+                guard let vc = self?.vc else { return }
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

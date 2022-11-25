@@ -40,8 +40,11 @@ final class HomeTabViewModel {
         let moveToSearchView: Signal<Void>
         let setCustomPin: Signal<mapInfo>
         let removeCustomPin: Signal<Void>
+        let getQueueDB: Signal<[SearchCollecionModel]>
+        let getCenter: Signal<CLLocationCoordinate2D>
     }
     
+    private var queueDB: [SearchCollecionModel] = []
     private var currentLocation = CLLocationCoordinate2D()
     private let locationManager = CLLocationManager()
     
@@ -59,6 +62,8 @@ final class HomeTabViewModel {
     private let moveToSearchViewRelay = PublishRelay<Void>()
     private let setCustomPinRelay = PublishRelay<mapInfo>()
     private let removeCustomPinRelay = PublishRelay<Void>()
+    private let getQueueDBRelay = PublishRelay<[SearchCollecionModel]>()
+    private let getCenterRelay = PublishRelay<CLLocationCoordinate2D>()
     
     private let disposeBag = DisposeBag()
     
@@ -103,6 +108,11 @@ final class HomeTabViewModel {
         
         input.searchButtonTapped
             .emit(onNext: { [weak self] _ in
+                self?.searchSeSAC()
+                guard let db = self?.queueDB else { return }
+                guard let location = self?.currentLocation else { return }
+                self?.getQueueDBRelay.accept(db)
+                self?.getCenterRelay.accept(location)
                 self?.moveToSearchViewRelay.accept(())
             })
             .disposed(by: disposeBag)
@@ -133,7 +143,9 @@ final class HomeTabViewModel {
             setNewRegion: setNewRegionRelay.asSignal(),
             moveToSearchView: moveToSearchViewRelay.asSignal(),
             setCustomPin: setCustomPinRelay.asSignal(),
-            removeCustomPin: removeCustomPinRelay.asSignal()
+            removeCustomPin: removeCustomPinRelay.asSignal(),
+            getQueueDB: getQueueDBRelay.asSignal(),
+            getCenter: getCenterRelay.asSignal()
         )
     }
 }
@@ -217,6 +229,13 @@ extension HomeTabViewModel {
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
+                let dbData = data.fromQueueDB
+                for i in 0..<dbData.count {
+                    for j in 0..<dbData[i].studylist.count {
+                        self?.queueDB.append(SearchCollecionModel(title: dbData[i].studylist[j]))
+                    }
+                }
+               
                 switch self?.num {
                 case -1:
                     data.fromQueueDB.forEach {
