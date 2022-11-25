@@ -21,10 +21,7 @@ final class SearchStudyViewController: UIViewController {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private let searchButton = UIButton()
     
-    var dbData: [SearchCollecionModel] = []
-    var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    
-    private let viewModel = SearchStudyViewModel()
+    let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
     
     private lazy var input = SearchStudyViewModel.Input(
@@ -92,7 +89,7 @@ final class SearchStudyViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.height.greaterThanOrEqualTo(400)
+            make.height.greaterThanOrEqualTo(view.bounds.height / 3 * 2 )
         }
     }
     
@@ -106,14 +103,12 @@ final class SearchStudyViewController: UIViewController {
         searchButton.setTitleColor(SLPAssets.CustomColor.white.color, for: .normal)
         searchButton.layer.cornerRadius = 8
         searchButton.backgroundColor = SLPAssets.CustomColor.green.color
+        setRecommended()
     }
     
     private func setRecommended() {
-        var array = sections.value
-        for index in 0..<dbData.count {
-            array[0].items.append(dbData[index])
-        }
-        sections.accept(array)
+        let array = sections.value
+        sections.accept( viewModel.checkDbCount(array: array))
     }
     
     private func bind() {
@@ -126,6 +121,7 @@ final class SearchStudyViewController: UIViewController {
         output.showToast
             .emit(onNext: { [weak self] text in
                 self?.view.makeToast(text)
+                self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -135,6 +131,7 @@ final class SearchStudyViewController: UIViewController {
                 array?[1].items.append(model)
                 guard let array = array else { return }
                 self?.sections.accept(array)
+                self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -144,6 +141,7 @@ final class SearchStudyViewController: UIViewController {
                 array?[1].items.remove(at: indexPath.item)
                 guard let array = array else { return }
                 self?.sections.accept(array)
+                self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
@@ -169,7 +167,7 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
-        setRecommended()
+
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -189,12 +187,5 @@ extension SearchStudyViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dissmissKeyboard()
         guard let searchTerm = searchBar.text, searchTerm.isEmpty == false else { return }
-    }
-}
-
-extension Sequence where Element: Hashable {
-    func uniqued() -> [Element] {
-        var set = Set<Element>()
-        return filter { set.insert($0).inserted }
     }
 }

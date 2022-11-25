@@ -47,6 +47,7 @@
 		77414332292E5DB500220087 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414331292E5DB500220087 /* SearchCollectionViewCell.swift */; };
 		77414334292E678200220087 /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414333292E678200220087 /* SearchHeader.swift */; };
 		77414336292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */; };
+		774143382930A8DB00220087 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774143372930A8DB00220087 /* Array+Extensions.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -123,6 +124,7 @@
 		77414331292E5DB500220087 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		77414333292E678200220087 /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
+		774143372930A8DB00220087 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				7744A3622920013D00A065C8 /* UIViewController+Extension.swift */,
 				7744A3642920048000A065C8 /* UINavigationViewController+Extensions.swift */,
 				77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */,
+				774143372930A8DB00220087 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */,
 				77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */,
 				77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */,
+				774143382930A8DB00220087 /* Array+Extensions.swift in Sources */,
 				77217A1329229545000DC6CE /* SearchStudyViewController.swift in Sources */,
 				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,

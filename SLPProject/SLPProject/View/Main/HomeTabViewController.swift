@@ -29,9 +29,11 @@ final class HomeTabViewController: UIViewController {
     private let gpsButton = UIButton()
     private let annotationButton = UIButton()
     
-    private let vc = SearchStudyViewController()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewModel = HomeTabViewModel()
+    
+    private var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    private var searchCollectionModel: [SearchCollecionModel] = []
     
     private lazy var input = HomeTabViewModel.Input(
         viewDidLoad: viewDidLoadEvent.asObservable(),
@@ -220,21 +222,24 @@ final class HomeTabViewController: UIViewController {
             .emit(onNext: { [weak self] queueDBTitle in
                 let uniquedDBTitle = queueDBTitle.uniqued()
                 uniquedDBTitle.forEach {
-                    self?.vc.dbData.append(SearchCollecionModel(title: $0))
+                    self?.searchCollectionModel.append(SearchCollecionModel(title: $0))
                 }
             })
             .disposed(by: disposeBag)
         
         output.getCenter
             .emit(onNext: { [weak self] location in
-                self?.vc.location = location
-                print(location)
+                self?.location = location
             })
             .disposed(by: disposeBag)
         
         output.moveToSearchView
             .emit(onNext: {[weak self] _ in
-                guard let vc = self?.vc else { return }
+                guard let location = self?.location else { return }
+                guard let db = self?.searchCollectionModel else { return }
+                let vc = SearchStudyViewController()
+                vc.viewModel.location = location
+                vc.viewModel.dbData = db
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

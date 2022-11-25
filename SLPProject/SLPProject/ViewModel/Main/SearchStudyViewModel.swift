@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 import RxCocoa
 import RxSwift
@@ -25,6 +26,9 @@ final class SearchStudyViewModel {
         let checkCount: Signal<SearchCollecionSectionModel>
         let deleteStudy: Signal<IndexPath>
     }
+    
+    var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    var dbData: [SearchCollecionModel] = []
     
     private var studyList: [String] = []
     private let popVCRealy = PublishRelay<Void>()
@@ -50,10 +54,7 @@ final class SearchStudyViewModel {
         
         input.cellTapped
             .emit { [weak self] indexPath in
-                if indexPath.section == 1 {
-                    self?.studyList.remove(at: indexPath.item)
-                    self?.deleteStudyRelay.accept(indexPath)
-                }
+                self?.cellTapEvent(indexPath: indexPath)
             }
             .disposed(by: disposeBag)
         
@@ -82,5 +83,29 @@ extension SearchStudyViewModel {
                 addCollectionModelRelay.accept(SearchCollecionModel(title: $0))
             }
         }
+    }
+    
+    private func cellTapEvent(indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            studyList.remove(at: indexPath.item)
+            deleteStudyRelay.accept(indexPath)
+        } else {
+            if studyList.count < 8 {
+                if studyList.contains(dbData[indexPath.item].title) {
+                    showToastRelay.accept(SLPAssets.RawString.duplicateStudy.text)
+                } else {
+                    studyList.append(dbData[indexPath.item].title)
+                    addCollectionModelRelay.accept(SearchCollecionModel(title: studyList.last ?? ""))
+                }
+            } else {
+                showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
+            }
+        }
+    }
+    
+    func checkDbCount(array: [SearchCollecionSectionModel]) -> [SearchCollecionSectionModel] {
+        var array = array
+        dbData.forEach { array[0].items.append($0) }
+        return array
     }
 }
