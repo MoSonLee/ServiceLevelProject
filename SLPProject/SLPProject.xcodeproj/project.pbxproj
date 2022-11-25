@@ -73,7 +73,6 @@
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
 		7757701E291DE2DB00DA331B /* FirebaseAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7757701D291DE2DB00DA331B /* FirebaseAuthorization.swift */; };
-		77577020291EC19E00DA331B /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7757701F291EC19E00DA331B /* CustomButton.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -151,7 +150,6 @@
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
 		77577018291D3A2700DA331B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7757701D291DE2DB00DA331B /* FirebaseAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthorization.swift; sourceTree = "<group>"; };
-		7757701F291EC19E00DA331B /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -443,7 +441,6 @@
 			children = (
 				77C0D98F291942E4008FDA83 /* CustomColor.swift */,
 				77577018291D3A2700DA331B /* CustomTextField.swift */,
-				7757701F291EC19E00DA331B /* CustomButton.swift */,
 				77414324292BC5C300220087 /* CustomAnnotationView.swift */,
 			);
 			path = Custom;
@@ -652,7 +649,6 @@
 				77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */,
 				774143382930A8DB00220087 /* Array+Extensions.swift in Sources */,
 				77217A1329229545000DC6CE /* SearchStudyViewController.swift in Sources */,
-				77577020291EC19E00DA331B /* CustomButton.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,

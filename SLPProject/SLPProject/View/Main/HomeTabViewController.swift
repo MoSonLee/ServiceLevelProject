@@ -181,6 +181,18 @@ final class HomeTabViewController: UIViewController {
         mapView.removeAnnotations(annotations)
     }
     
+    private func checkButtonTypeAndPushVC() {
+        if button.currentImage == SLPAssets.CustomImage.searchButton.image {
+            let vc = SearchStudyViewController()
+            vc.viewModel.location = location
+            vc.viewModel.dbData = searchCollectionModel
+            navigationController?.pushViewController(vc, animated: true)
+        } else if button.currentImage == SLPAssets.CustomImage.matchingButton.image {
+            let vc = NearUserViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     private func bind() {
         output.changeButtonImage
             .emit { [weak self] imgStr in
@@ -235,12 +247,7 @@ final class HomeTabViewController: UIViewController {
         
         output.moveToSearchView
             .emit(onNext: {[weak self] _ in
-                guard let location = self?.location else { return }
-                guard let db = self?.searchCollectionModel else { return }
-                let vc = SearchStudyViewController()
-                vc.viewModel.location = location
-                vc.viewModel.dbData = db
-                self?.navigationController?.pushViewController(vc, animated: true)
+                self?.checkButtonTypeAndPushVC()
             })
             .disposed(by: disposeBag)
         
