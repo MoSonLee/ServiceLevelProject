@@ -74,6 +74,7 @@ final class SearchStudyViewController: UIViewController {
         
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            flowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width, height: 30)
         }
     }
     
