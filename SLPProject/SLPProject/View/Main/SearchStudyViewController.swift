@@ -26,12 +26,13 @@ final class SearchStudyViewController: UIViewController {
     
     private lazy var input = SearchStudyViewModel.Input(
         backButtonTapped: backButton.rx.tap.asSignal(),
-        searchButtonTapped: searchBar.rx.searchButtonClicked
+        searchBarButtonTapped: searchBar.rx.searchButtonClicked
             .withLatestFrom(
                 searchBar.rx.text.orEmpty
             )
             .asSignal(onErrorJustReturn: ""),
-        cellTapped: collectionView.rx.itemSelected.asSignal()
+        cellTapped: collectionView.rx.itemSelected.asSignal(),
+        searchButtonTapped: searchButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
     
@@ -145,6 +146,12 @@ final class SearchStudyViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        output.moveToNearUserVC
+            .emit(onNext: { [weak self] _ in
+               let vc = NearUserViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func bindCollectionView() {

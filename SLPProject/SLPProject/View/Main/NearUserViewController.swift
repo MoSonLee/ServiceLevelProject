@@ -1,8 +1,8 @@
 //
-//  SeSACShopViewController.swift
+//  NearUserViewController.swift
 //  SLPProject
 //
-//  Created by 이승후 on 2022/11/15.
+//  Created by 이승후 on 2022/11/25.
 //
 
 import UIKit
@@ -10,10 +10,9 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class SeSACShopViewController: UIViewController {
+final class NearUserViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
-    
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {

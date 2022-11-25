@@ -42,12 +42,14 @@
 		7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD3E291ACB8E0029DEA2 /* GenderViewController.swift */; };
 		7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD40291ACB970029DEA2 /* GenderViewModel.swift */; };
 		77414325292BC5C300220087 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414324292BC5C300220087 /* CustomAnnotationView.swift */; };
-		77414327292D194C00220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
 		77414329292D30E400220087 /* SearchCollecionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414328292D30E400220087 /* SearchCollecionModel.swift */; };
 		77414332292E5DB500220087 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414331292E5DB500220087 /* SearchCollectionViewCell.swift */; };
 		77414334292E678200220087 /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414333292E678200220087 /* SearchHeader.swift */; };
 		77414336292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */; };
 		774143382930A8DB00220087 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774143372930A8DB00220087 /* Array+Extensions.swift */; };
+		7741433B2930BA5D00220087 /* UserSearchErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */; };
+		7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433C2930BC3E00220087 /* NearUserViewController.swift */; };
+		7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -125,6 +127,8 @@
 		77414333292E678200220087 /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		774143372930A8DB00220087 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchErrorModel.swift; sourceTree = "<group>"; };
+		7741433C2930BC3E00220087 /* NearUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewController.swift; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 				77C0D99B2919754B008FDA83 /* MainTabViewController.swift */,
 				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
 				77217A1229229545000DC6CE /* SearchStudyViewController.swift */,
+				7741433C2930BC3E00220087 /* NearUserViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
 				77217A312922E3CF000DC6CE /* MyInfo */,
 			);
@@ -300,8 +305,9 @@
 		7737FD33291AC79D0029DEA2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				77217A39292684E2000DC6CE /* HomeTabViewModel.swift */,
+				7737FD32291AC7770029DEA2 /* SignUp */,
 				77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */,
+				77217A39292684E2000DC6CE /* HomeTabViewModel.swift */,
 				77414326292D194C00220087 /* SearchStudyViewModel.swift */,
 			);
 			path = Main;
@@ -354,20 +360,27 @@
 			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
+		774143392930BA2E00220087 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				7744A37329210F0B00A065C8 /* APIService.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
 		7744A348291FB81500A065C8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				774143392930BA2E00220087 /* APIService */,
 				7744A36E292105B900A065C8 /* NetworkReachability */,
 				77577021291EC8B400DA331B /* Firebase */,
 				7744A35A291FC24700A065C8 /* Target */,
 				7744A351291FBD4700A065C8 /* URL */,
-				7744A350291FBD2400A065C8 /* Error */,
-				7744A37329210F0B00A065C8 /* APIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		7744A350291FBD2400A065C8 /* Error */ = {
+		7744A350291FBD2400A065C8 /* ErrorModel */ = {
 			isa = PBXGroup;
 			children = (
 				7744A352291FBD5A00A065C8 /* LoginError.swift */,
@@ -375,8 +388,9 @@
 				7744A356291FBD7300A065C8 /* WithdrawError.swift */,
 				7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */,
 				77217A3F2926AE95000DC6CE /* QueueStateError.swift */,
+				7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */,
 			);
-			path = Error;
+			path = ErrorModel;
 			sourceTree = "<group>";
 		};
 		7744A351291FBD4700A065C8 /* URL */ = {
@@ -443,6 +457,7 @@
 			children = (
 				7741432A292D318A00220087 /* RxModel */,
 				7741432D292D31D000220087 /* NetworkModel */,
+				7744A350291FBD2400A065C8 /* ErrorModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -453,7 +468,6 @@
 				7744A36B2920F76F00A065C8 /* Initial */,
 				7737FD30291AC74B0029DEA2 /* OnBoarding */,
 				7737FD31291AC7580029DEA2 /* Login */,
-				7737FD32291AC7770029DEA2 /* SignUp */,
 				7737FD33291AC79D0029DEA2 /* Main */,
 			);
 			path = ViewModel;
@@ -656,6 +670,7 @@
 				77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
+				7741433B2930BA5D00220087 /* UserSearchErrorModel.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
 				77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */,
 				7757701E291DE2DB00DA331B /* FirebaseAuthorization.swift in Sources */,
@@ -663,6 +678,7 @@
 				77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */,
 				7744A35C291FC32600A065C8 /* UserInfo.swift in Sources */,
 				77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */,
+				7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */,
 				7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */,
 				7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */,
 				7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */,
@@ -670,7 +686,6 @@
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */,
-				77414327292D194C00220087 /* SearchStudyViewModel.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */,
 				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,
@@ -681,6 +696,7 @@
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 				77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
+				7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */,
 				7744A370292105CE00A065C8 /* NetworkReachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -49,7 +49,6 @@ final class HomeTabViewModel {
     private let locationManager = CLLocationManager()
     
     private var userLocation = UserLocationModel(lat: 0.0, long: 0.0)
-    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     private var num = -1
     
     private let showAlertRelay = PublishRelay<String>()
@@ -235,7 +234,7 @@ extension HomeTabViewModel {
                         self?.queueDB.append(dbData[i].studylist[j])
                     }
                 }
-               
+                
                 switch self?.num {
                 case -1:
                     data.fromQueueDB.forEach {
@@ -244,7 +243,7 @@ extension HomeTabViewModel {
                 case 0:
                     self?.removeCustomPinRelay.accept(())
                     self?.filterGender(genderValue: 0, data: data)
-                   
+                    
                 case 1:
                     self?.removeCustomPinRelay.accept(())
                     self?.filterGender(genderValue: 1, data: data)
@@ -252,32 +251,6 @@ extension HomeTabViewModel {
                 default:
                     print("Error")
                 }
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func requestSearchSeSAC() {
-        APIService().requestSearchSeSAC(dictionary: userSearch.toDictionary) { [weak self] result in
-            switch result {
-            case .success(let response):
-                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
-                print(data)
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func stopSearchSeSAC() {
-        APIService().stopSearchSeSAC { result in
-            switch result {
-            case .success(let response):
-                print(response)
                 
             case .failure(let error):
                 print(error)
