@@ -271,7 +271,6 @@
 				77217A1229229545000DC6CE /* SearchStudyViewController.swift */,
 				7741433C2930BC3E00220087 /* NearUserViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
-				77217A312922E3CF000DC6CE /* MyInfo */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -389,6 +388,7 @@
 				7744A352291FBD5A00A065C8 /* LoginError.swift */,
 				7744A354291FBD6600A065C8 /* SignUpError.swift */,
 				7744A356291FBD7300A065C8 /* WithdrawError.swift */,
+				77217A312922E3CF000DC6CE /* MyInfo */,
 				7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */,
 				77217A3F2926AE95000DC6CE /* QueueStateError.swift */,
 				7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */,

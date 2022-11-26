@@ -31,7 +31,7 @@ final class SearchStudyViewModel {
     
     var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var dbData: [SearchCollecionModel] = []
-    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: "anything")
+    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
     private var studyList: [String] = []
     private let popVCRelay = PublishRelay<Void>()
@@ -65,7 +65,7 @@ final class SearchStudyViewModel {
         input.searchButtonTapped
             .emit { [weak self] _ in
                 guard let location = self?.location else { return }
-                self?.userSearch = UserSearchModel(lat: location.latitude, long: location.longitude, studylist: "\(String(describing: self?.studyList))")
+                self?.userSearch = UserSearchModel(lat: location.latitude, long: location.longitude, studylist: self?.studyList ?? ["anything"])
                 self?.requestSearchSeSAC()
             }
             .disposed(by: disposeBag)

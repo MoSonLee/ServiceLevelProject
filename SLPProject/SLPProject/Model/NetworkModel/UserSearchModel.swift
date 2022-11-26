@@ -19,5 +19,5 @@ struct UserSearchModel: Codable {
     
     let lat: Double
     let long: Double
-    let studylist: String
+    let studylist: [String]
 }

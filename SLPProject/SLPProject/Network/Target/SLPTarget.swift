@@ -74,8 +74,11 @@ extension SLPTarget: TargetType {
         case .login, .withdraw, .stopSearchSeSAC, .myQueueState:
             return .requestPlain
             
-        case .signUp(let parameters), .update_fcm_token(let parameters), .requestSearchSeSAC(let parameters), .searchSeSAC(let parameters):
+        case .signUp(let parameters), .update_fcm_token(let parameters), .searchSeSAC(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+            
+        case .requestSearchSeSAC(let parameters):
+            return .requestParameters(parameters: parameters, encoding: URLEncoding(arrayEncoding: .noBrackets))
         }
     }
     

@@ -182,7 +182,7 @@ final class HomeTabViewController: UIViewController {
     }
     
     private func checkButtonTypeAndPushVC() {
-        if button.currentImage == SLPAssets.CustomImage.searchButton.image {
+        if button.currentImage != SLPAssets.CustomImage.searchButton.image {
             let vc = SearchStudyViewController()
             vc.viewModel.location = location
             vc.viewModel.dbData = searchCollectionModel
