@@ -109,7 +109,7 @@ final class SearchStudyViewController: UIViewController {
     
     private func setRecommended() {
         let array = sections.value
-        sections.accept( viewModel.checkDbCount(array: array))
+        sections.accept( viewModel.acceptDB(array: array))
     }
     
     private func bind() {

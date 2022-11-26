@@ -30,7 +30,7 @@ final class HomeTabViewModel {
     
     struct Output {
         let showAlert: Signal<String>
-        let changeButtonImage: Signal<String>
+        let homeTabMode: Signal<HomeTabMode>
         let changeAllButton: Signal<Void>
         let changeBoyButton: Signal<Void>
         let changeGirlButton: Signal<Void>
@@ -51,7 +51,7 @@ final class HomeTabViewModel {
     private var num = -1
     
     private let showAlertRelay = PublishRelay<String>()
-    private let changeButtonImageRelay = PublishRelay<String>()
+    private let homeTabModeRelay = PublishRelay<HomeTabMode>()
     private let changeAllButtonRelay = PublishRelay<Void>()
     private let changeBoyButtonRelay = PublishRelay<Void>()
     private let changeGirlButtonRelay = PublishRelay<Void>()
@@ -116,7 +116,6 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.locationChanged
-            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] location in
                 guard let currentLocation = location?.coordinate else { return }
                 self?.currentLocation = currentLocation
@@ -124,7 +123,10 @@ final class HomeTabViewModel {
             .disposed(by: disposeBag)
         
         input.checkLocation
-            .throttle(.seconds(3), scheduler: MainScheduler.instance)
+            .skip(2)
+            .distinctUntilChanged({
+                ($0.center.longitude == $1.center.longitude && $0.center.latitude == $1.center.latitude)
+            })
             .subscribe(onNext: { [weak self] location in
                 self?.userLocation = UserLocationModel(lat: location.center.latitude, long: location.center.longitude)
                 self?.searchSeSAC()
@@ -133,7 +135,7 @@ final class HomeTabViewModel {
         
         return Output(
             showAlert: showAlertRelay.asSignal(),
-            changeButtonImage: changeButtonImageRelay.asSignal(),
+            homeTabMode: homeTabModeRelay.asSignal(),
             changeAllButton: changeAllButtonRelay.asSignal(),
             changeBoyButton: changeBoyButtonRelay.asSignal(),
             changeGirlButton: changeGirlButtonRelay.asSignal(),
@@ -195,7 +197,7 @@ extension HomeTabViewModel {
             switch result {
             case .success(let response):
                 print(response)
-                self?.changeButtonImageRelay.accept(SLPAssets.RawString.matchingButtonString.text)
+                self?.homeTabModeRelay.accept(.matching)
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
@@ -226,6 +228,7 @@ extension HomeTabViewModel {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
+                self?.queueDB.removeAll()
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 let dbData = data.fromQueueDB
                 for i in 0..<dbData.count {

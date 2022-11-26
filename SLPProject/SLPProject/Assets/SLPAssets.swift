@@ -34,6 +34,7 @@ enum SLPAssets {
         case sesac_face_3
         case sesac_face_4
         case sesac_face_5
+        case sprout
         
         var image: UIImage {
             switch self {
@@ -108,6 +109,9 @@ enum SLPAssets {
                 
             case .sesac_face_5:
                 return UIImage(named: "sesac_face_5")!
+                
+            case .sprout:
+                return UIImage(named: "sprout")!
             }
         }
     }

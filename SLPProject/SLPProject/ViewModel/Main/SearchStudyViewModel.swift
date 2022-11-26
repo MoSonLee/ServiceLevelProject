@@ -64,9 +64,10 @@ final class SearchStudyViewModel {
         
         input.searchButtonTapped
             .emit { [weak self] _ in
-                guard let location = self?.location else { return }
-                self?.userSearch = UserSearchModel(lat: location.latitude, long: location.longitude, studylist: self?.studyList ?? ["anything"])
-                self?.requestSearchSeSAC()
+                guard let self = self else { return }
+                self.studyList.isEmpty ? self.studyList.append("anything") : nil
+                self.userSearch = UserSearchModel(lat: self.location.latitude, long: self.location.longitude, studylist: self.studyList)
+                self.requestSearchSeSAC()
             }
             .disposed(by: disposeBag)
         
@@ -82,9 +83,10 @@ final class SearchStudyViewModel {
 }
 
 extension SearchStudyViewModel {
-    func checkDbCount(array: [SearchCollecionSectionModel]) -> [SearchCollecionSectionModel] {
+    func acceptDB(array: [SearchCollecionSectionModel]) -> [SearchCollecionSectionModel] {
         var array = array
         dbData.forEach { array[0].items.append($0) }
+        print(array)
         return array
     }
     private func checkTextCount(text: String) {
@@ -126,6 +128,7 @@ extension SearchStudyViewModel {
             switch result {
             case .success(_):
                 self?.moveToNearUserVCRelay.accept(())
+                UserDefaults.homeTabMode = .matching
                 
             case .failure(let error):
                 let error = UserSearchErrorModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
@@ -149,18 +152,6 @@ extension SearchStudyViewModel {
                 case .unknown:
                     print(UserSearchErrorModel.unknown)
                 }
-            }
-        }
-    }
-    
-    private func stopSearchSeSAC() {
-        APIService().stopSearchSeSAC { result in
-            switch result {
-            case .success(let response):
-                print(response)
-                
-            case .failure(let error):
-                print(error)
             }
         }
     }

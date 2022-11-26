@@ -8,17 +8,26 @@
 import Foundation
 
 @propertyWrapper
-struct UserDefault<Value> {
+struct UserDefault<Value: Codable> {
     let key: String
     let defaultValue: Value
     var container: UserDefaults = .standard
     
     var wrappedValue: Value {
         get {
-            return container.object(forKey: key) as? Value ?? defaultValue
+            if let savedData = UserDefaults.standard.object(forKey: key) as? Data {
+                let decoder = JSONDecoder()
+                if let lodedObejct = try? decoder.decode(Value.self, from: savedData) {
+                    return lodedObejct
+                }
+            }
+            return defaultValue
         }
         set {
-            container.set(newValue, forKey: key)
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(newValue) {
+                UserDefaults.standard.setValue(encoded, forKey: key)
+            }
         }
     }
 }
@@ -54,4 +63,7 @@ extension UserDefaults {
     
     @UserDefault(key: "verfied", defaultValue: false)
     static var verified: Bool
+    
+    @UserDefault(key: "homeTabMode", defaultValue: HomeTabMode.search)
+    static var homeTabMode: HomeTabMode
 }

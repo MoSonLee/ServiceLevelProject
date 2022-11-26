@@ -17,17 +17,19 @@ final class NearUserViewModel {
         let backButtonTapped: Signal<Void>
         let nearButtonTapped: Signal<Void>
         let receivedButtonTapped: Signal<Void>
+        let stopButtonTapped: Signal<Void>
     }
     
     struct Output {
         let popVC: Signal<Void>
         let selectedTab: Driver<SeSACTabModel>
+        let checkDataCount: Signal<Bool>
     }
     
     var userLocation = UserLocationModel(lat: 0, long: 0)
-    
     private let popVCRelay = PublishRelay<Void>()
     private let selectedTabRelay = BehaviorRelay<SeSACTabModel>(value: .near)
+    let checkDataCountRelay = PublishRelay<Bool>()
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -35,6 +37,12 @@ final class NearUserViewModel {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.searchSeSAC()
+            })
+            .disposed(by: disposeBag)
+        
+        input.stopButtonTapped
+            .emit(onNext: { [weak self] _ in
+                self?.stopSearchSeSAC()
             })
             .disposed(by: disposeBag)
         
@@ -58,7 +66,8 @@ final class NearUserViewModel {
         
         return Output(
             popVC: popVCRelay.asSignal(),
-            selectedTab: selectedTabRelay.asDriver()
+            selectedTab: selectedTabRelay.asDriver(),
+            checkDataCount: checkDataCountRelay.asSignal()
         )
     }
 }
@@ -69,10 +78,32 @@ extension NearUserViewModel {
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                print(data.fromQueueDB)
+                self?.hasData(data: data)
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    private func stopSearchSeSAC() {
+        APIService().stopSearchSeSAC { [weak self] result in
+            switch result {
+            case .success(let response):
+                print(response)
+                UserDefaults.homeTabMode = .search
+                self?.popVCRelay.accept(())
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func hasData(data: SeSACSearchResultModel) {
+        if data.fromQueueDB.count != 0 {
+            checkDataCountRelay.accept(true)
+        } else {
+            checkDataCountRelay.accept(false)
         }
     }
 }

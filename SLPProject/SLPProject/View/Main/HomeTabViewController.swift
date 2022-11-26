@@ -16,7 +16,23 @@ import RxMKMapView
 import SnapKit
 import Toast
 
+enum HomeTabMode: Codable {
+    case search
+    case matching
+    case message
+    
+    var image: UIImage {
+        switch self {
+        case .search: return SLPAssets.CustomImage.searchButton.image
+        case .matching: return SLPAssets.CustomImage.matchingButton.image
+        case .message: return SLPAssets.CustomImage.messageButton.image
+        }
+    }
+}
+
 final class HomeTabViewController: UIViewController {
+    
+    var homeTabMode: HomeTabMode = .search
     
     private let locationManager = CLLocationManager()
     private let annotation = MKPointAnnotation()
@@ -48,6 +64,12 @@ final class HomeTabViewController: UIViewController {
     
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeTabMode = UserDefaults.homeTabMode
+        button.setImage(homeTabMode.image, for: .normal)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +146,6 @@ final class HomeTabViewController: UIViewController {
         view.backgroundColor = SLPAssets.CustomColor.white.color
         genderView.backgroundColor = SLPAssets.CustomColor.white.color
         allButton.backgroundColor = SLPAssets.CustomColor.green.color
-        button.setImage(SLPAssets.CustomImage.searchButton.image, for: .normal)
         gpsButton.setImage(SLPAssets.CustomImage.gpsButton.image, for: .normal)
         [genderView, allButton, boyButton, girlButton, gpsButton].forEach {
             $0.layer.cornerRadius = 8
@@ -182,22 +203,26 @@ final class HomeTabViewController: UIViewController {
     }
     
     private func checkButtonTypeAndPushVC() {
-        if button.currentImage == SLPAssets.CustomImage.searchButton.image {
+        switch homeTabMode {
+        case .search:
             let vc = SearchStudyViewController()
             vc.viewModel.location = location
             vc.viewModel.dbData = searchCollectionModel
             navigationController?.pushViewController(vc, animated: true)
-        } else if button.currentImage == SLPAssets.CustomImage.matchingButton.image {
+        case .matching:
             let vc = NearUserViewController()
             vc.viewModel.userLocation = UserLocationModel(lat: location.latitude, long: location.longitude)
             navigationController?.pushViewController(vc, animated: true)
+        case .message:
+            break
         }
     }
     
     private func bind() {
-        output.changeButtonImage
-            .emit { [weak self] imgStr in
-                self?.button.setImage(UIImage(named: imgStr), for: .normal)
+        output.homeTabMode
+            .emit { [weak self] mode in
+                self?.homeTabMode = mode
+                self?.button.setImage(mode.image, for: .normal)
             }
             .disposed(by: disposeBag)
         
@@ -233,6 +258,7 @@ final class HomeTabViewController: UIViewController {
         
         output.getQueueDB
             .emit(onNext: { [weak self] queueDBTitle in
+                self?.searchCollectionModel.removeAll()
                 let uniquedDBTitle = queueDBTitle.uniqued()
                 uniquedDBTitle.forEach {
                     self?.searchCollectionModel.append(SearchCollecionModel(title: $0))
