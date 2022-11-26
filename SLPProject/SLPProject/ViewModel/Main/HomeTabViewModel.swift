@@ -9,7 +9,6 @@ import Foundation
 import MapKit
 import CoreLocation
 
-import RxMKMapView
 import RxCocoa
 import RxCoreLocation
 import RxSwift

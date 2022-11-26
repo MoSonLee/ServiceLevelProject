@@ -51,6 +51,7 @@
 		7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433C2930BC3E00220087 /* NearUserViewController.swift */; };
 		7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
 		774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433F2930D1EA00220087 /* NearUserViewModel.swift */; };
+		7741434629320AB300220087 /* SeSACTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741434529320AB300220087 /* SeSACTabModel.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -130,6 +131,7 @@
 		7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchErrorModel.swift; sourceTree = "<group>"; };
 		7741433C2930BC3E00220087 /* NearUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewController.swift; sourceTree = "<group>"; };
 		7741433F2930D1EA00220087 /* NearUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewModel.swift; sourceTree = "<group>"; };
+		7741434529320AB300220087 /* SeSACTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACTabModel.swift; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -368,6 +370,14 @@
 			path = APIService;
 			sourceTree = "<group>";
 		};
+		7741434429320A9D00220087 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				7741434529320AB300220087 /* SeSACTabModel.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		7744A348291FB81500A065C8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +465,7 @@
 		77C0D97C2919255E008FDA83 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7741434429320A9D00220087 /* Enum */,
 				7741432A292D318A00220087 /* RxModel */,
 				7741432D292D31D000220087 /* NetworkModel */,
 				7744A350291FBD2400A065C8 /* ErrorModel */,
@@ -652,6 +663,7 @@
 				77414332292E5DB500220087 /* SearchCollectionViewCell.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
 				77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */,
+				7741434629320AB300220087 /* SeSACTabModel.swift in Sources */,
 				77217A3E29269777000DC6CE /* UserSearchModel.swift in Sources */,
 				7744A36D2920F77E00A065C8 /* InitialViewModel.swift in Sources */,
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
