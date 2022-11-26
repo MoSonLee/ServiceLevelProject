@@ -189,6 +189,7 @@ final class HomeTabViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         } else if button.currentImage == SLPAssets.CustomImage.matchingButton.image {
             let vc = NearUserViewController()
+            vc.viewModel.userLocation = UserLocationModel(lat: location.latitude, long: location.longitude)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

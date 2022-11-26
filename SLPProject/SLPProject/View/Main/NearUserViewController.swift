@@ -24,10 +24,12 @@ final class NearUserViewController: UIViewController {
     
     private var currentStatus:SeSACTabModel = .near
     
-    private let viewModel = NearUserViewModel()
+    let viewModel = NearUserViewModel()
+    private let viewDidLoadEvent = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     private lazy var input = NearUserViewModel.Input(
+        viewDidLoad: viewDidLoadEvent.asObservable(),
         backButtonTapped: backButton.rx.tap.asSignal(),
         nearButtonTapped: nearButton.rx.tap.asSignal(),
         receivedButtonTapped: receivedButton.rx.tap.asSignal()
@@ -39,6 +41,7 @@ final class NearUserViewController: UIViewController {
         setComponents()
         setConstraints()
         bind()
+        viewDidLoadEvent.accept(())
     }
     
     private func setComponents() {
@@ -105,13 +108,11 @@ final class NearUserViewController: UIViewController {
     }
     
     private func bind() {
-        
         output.popVC
             .emit(onNext: { [weak self] _ in
                 self?.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
-
         
         output.selectedTab
             .drive(onNext: { [weak self] selectedtab in
@@ -129,6 +130,5 @@ final class NearUserViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
     }
 }

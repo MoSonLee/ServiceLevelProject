@@ -148,7 +148,10 @@ final class SearchStudyViewController: UIViewController {
         
         output.moveToNearUserVC
             .emit(onNext: { [weak self] _ in
-               let vc = NearUserViewController()
+                guard let longtitude = self?.viewModel.location.longitude else { return }
+                guard let latitude = self?.viewModel.location.latitude else { return }
+                let vc = NearUserViewController()
+                vc.viewModel.userLocation = UserLocationModel(lat: longtitude, long: latitude)
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -174,7 +177,7 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
-
+        
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
