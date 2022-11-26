@@ -51,7 +51,6 @@
 		7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433C2930BC3E00220087 /* NearUserViewController.swift */; };
 		7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
 		774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433F2930D1EA00220087 /* NearUserViewModel.swift */; };
-		774143432930D3E500220087 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 774143422930D3E500220087 /* Tabman */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -170,7 +169,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				774143432930D3E500220087 /* Tabman in Frameworks */,
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
 				77FC639D2927F0B4002E183E /* RxCoreLocation in Frameworks */,
@@ -568,7 +566,6 @@
 				77217A262922AE21000DC6CE /* RxDataSources */,
 				77217A422926CA9B000DC6CE /* RxMKMapView */,
 				77FC639C2927F0B4002E183E /* RxCoreLocation */,
-				774143422930D3E500220087 /* Tabman */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -608,7 +605,6 @@
 				77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */,
 				77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */,
-				774143412930D3E400220087 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -955,14 +951,6 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		774143412930D3E400220087 /* XCRemoteSwiftPackageReference "Tabman" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/uias/Tabman.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		7744A34B291FB8A500A065C8 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -1032,11 +1020,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */;
 			productName = RxMKMapView;
-		};
-		774143422930D3E500220087 /* Tabman */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 774143412930D3E400220087 /* XCRemoteSwiftPackageReference "Tabman" */;
-			productName = Tabman;
 		};
 		7744A34C291FB8A500A065C8 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
