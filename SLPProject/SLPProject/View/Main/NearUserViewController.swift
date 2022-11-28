@@ -27,7 +27,7 @@ final class NearUserViewController: UIViewController {
     private let backgroundLabel = UILabel()
     private let backgroundSubLabel = UILabel()
     
-    private var currentStatus:SeSACTabModel = .near
+    private var currentStatus: SeSACTabModel = .near
     
     let viewModel = NearUserViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -46,8 +46,8 @@ final class NearUserViewController: UIViewController {
         super.viewDidLoad()
         setComponents()
         setConstraints()
-        viewDidLoadEvent.accept(())
         bind()
+        viewDidLoadEvent.accept(())
     }
     
     private func setComponents() {
@@ -141,13 +141,19 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setTableViewBackground(check: Bool) {
-        check ? tableView.backgroundView = backgroundView : nil
+        !check ? tableView.backgroundView = backgroundView : nil
     }
     
     private func bind() {
         output.popVC
             .emit(onNext: { [weak self] _ in
                 self?.navigationController?.popToRootViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.checkDataCount
+            .emit(onNext: { [weak self] check in
+                self?.setTableViewBackground(check: check)
             })
             .disposed(by: disposeBag)
         
@@ -165,13 +171,6 @@ final class NearUserViewController: UIViewController {
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
                 }
-            })
-            .disposed(by: disposeBag)
-        
-        output.checkDataCount
-            .emit(onNext: { [weak self] check in
-                print(check)
-                self?.setTableViewBackground(check: check)
             })
             .disposed(by: disposeBag)
     }
