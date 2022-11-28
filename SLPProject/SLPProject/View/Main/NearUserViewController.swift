@@ -28,6 +28,7 @@ final class NearUserViewController: UIViewController {
     private let backgroundSubLabel = UILabel()
     
     private var currentStatus: SeSACTabModel = .near
+    private var toggle: Bool = false
     
     let viewModel = NearUserViewModel()
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -157,11 +158,27 @@ final class NearUserViewController: UIViewController {
     }
     
     private func bindTableView() {
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.showsHorizontalScrollIndicator = false
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
-            cell.selectionStyle = .none
+            
+            cell.showInfoButton.rx.tap
+                .subscribe(onNext: { [weak self] _ in
+                    self?.toggle = !(self?.toggle ?? false)
+                    cell.setExpand(toggle: self?.toggle ?? false)
+                    let index = IndexPath(row: indexPath.row, section: 0)
+                    UIView.transition(
+                        with: tableView,
+                        duration: 0.5,
+                        options: .transitionCrossDissolve,
+                        animations: { self?.tableView.reloadRows(at:[index], with: .fade)})
+                })
+                .disposed(by: cell.disposeBag)
+            
             cell.configureToNear(indexPath: indexPath, item: item)
-             
+            cell.selectionStyle = .none
             return cell
         }
         

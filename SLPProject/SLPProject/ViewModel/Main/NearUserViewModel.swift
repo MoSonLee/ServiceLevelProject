@@ -27,7 +27,6 @@ final class NearUserViewModel {
         let getTableViewData: Signal<NearSeSACTableModel>
     }
     
-    var nearTableModel: [NearSeSACTableModel] = []
     var queueDB: [QueueDB] = []
     var userLocation = UserLocationModel(lat: 0, long: 0)
     
@@ -80,24 +79,16 @@ final class NearUserViewModel {
 
 extension NearUserViewModel {
     
-    func acceptDB(array: [NearSeSACTableSectionModel]) -> [NearSeSACTableSectionModel] {
-        var array = array
-        nearTableModel.forEach { array[0].items.append($0)}
-        return array
-    }
-    
     private func searchSeSAC() {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                guard let nearTableModel = self?.nearTableModel else { return }
                 self?.hasData(data: data)
                 data.fromQueueDB.forEach {
                     self?.queueDB.append($0)
                     self?.getTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
                 }
-                print(nearTableModel)
             case .failure(let error):
                 print(error)
             }

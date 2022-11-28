@@ -197,13 +197,29 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     }
     
     func configureToNear(indexPath: IndexPath, item: NearSeSACTableSectionModel.Item) {
+        
+        let buttonArray = [mannerButton, timeButton, responseButton, kindButton, niceSkillButton, niceTimeButton]
+        
         profileImage.image = SLPAssets.CustomImage.myInfoProfile.image
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = 8
         
         titleLabel.text = item.title
+        item.review.forEach {
+            reviewContent.text = $0
+        }
         
+        for i in 0..<item.reputation.count {
+            for j in 0..<6 {
+                if item.reputation[i] == 1 {
+                    buttonArray[j].backgroundColor = SLPAssets.CustomColor.green.color
+                    buttonArray[j].setTitleColor(.white, for: .normal)
+                }
+            }
+        }
+        
+        reviewContent.numberOfLines = 0
         backView.backgroundColor = .clear
         backView.layer.borderWidth = 1
         backView.layer.cornerRadius = 8

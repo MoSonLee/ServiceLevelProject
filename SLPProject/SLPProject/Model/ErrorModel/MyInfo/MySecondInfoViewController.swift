@@ -106,11 +106,6 @@ final class MySecondInfoViewController: UIViewController {
                     .subscribe(onNext: {
                         self.toggle = !self.toggle
                         cell.setExpand(toggle: self.toggle)
-                        UIView.transition(
-                            with: tableView,
-                            duration: 0.35,
-                            options: .transitionCrossDissolve,
-                            animations: { self.tableView.reloadData()})
                     })
                     .disposed(by: cell.disposeBag)
                 
