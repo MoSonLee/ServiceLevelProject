@@ -41,12 +41,18 @@ final class NearUserViewController: UIViewController {
         stopButtonTapped: stopButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
-
+    
+    var sections = BehaviorRelay(value: [
+        NearSeSACTableSectionModel(header: "", items: [
+        ])
+    ])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bind()
+        bindTableView()
         viewDidLoadEvent.accept(())
     }
     
@@ -144,6 +150,22 @@ final class NearUserViewController: UIViewController {
         !check ? tableView.backgroundView = backgroundView : nil
     }
     
+    private func bindTableView() {
+        let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+//            cell.configureToNear(indexPath: indexPath, item: item)
+            return cell
+        }
+        
+        sections
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     private func bind() {
         output.popVC
             .emit(onNext: { [weak self] _ in
@@ -174,4 +196,8 @@ final class NearUserViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+}
+
+extension NearUserViewController: UITableViewDelegate {
+    
 }

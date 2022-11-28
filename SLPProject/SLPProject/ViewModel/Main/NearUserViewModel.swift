@@ -79,6 +79,7 @@ extension NearUserViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.hasData(data: data)
+                
             case .failure(let error):
                 print(error)
             }

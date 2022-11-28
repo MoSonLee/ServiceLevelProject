@@ -53,6 +53,7 @@
 		774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433F2930D1EA00220087 /* NearUserViewModel.swift */; };
 		7741434629320AB300220087 /* SeSACTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741434529320AB300220087 /* SeSACTabModel.swift */; };
 		774143482932181D00220087 /* NearSeSACTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774143472932181D00220087 /* NearSeSACTableModel.swift */; };
+		7741436A2934D94F00220087 /* NearSeSACTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774143692934D94F00220087 /* NearSeSACTableViewCell.swift */; };
 		7744A34A291FB83B00A065C8 /* SLPTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A349291FB83B00A065C8 /* SLPTarget.swift */; };
 		7744A34D291FB8A500A065C8 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 7744A34C291FB8A500A065C8 /* Moya */; };
 		7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7744A34E291FBA9000A065C8 /* APIURL.swift */; };
@@ -134,6 +135,7 @@
 		7741433F2930D1EA00220087 /* NearUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewModel.swift; sourceTree = "<group>"; };
 		7741434529320AB300220087 /* SeSACTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACTabModel.swift; sourceTree = "<group>"; };
 		774143472932181D00220087 /* NearSeSACTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearSeSACTableModel.swift; sourceTree = "<group>"; };
+		774143692934D94F00220087 /* NearSeSACTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearSeSACTableViewCell.swift; sourceTree = "<group>"; };
 		7744A349291FB83B00A065C8 /* SLPTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPTarget.swift; sourceTree = "<group>"; };
 		7744A34E291FBA9000A065C8 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		7744A352291FBD5A00A065C8 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			children = (
 				77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */,
 				77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */,
+				774143692934D94F00220087 /* NearSeSACTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
+				7741436A2934D94F00220087 /* NearSeSACTableViewCell.swift in Sources */,
 				77414334292E678200220087 /* SearchHeader.swift in Sources */,
 				77414332292E5DB500220087 /* SearchCollectionViewCell.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,

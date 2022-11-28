@@ -195,6 +195,23 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         
         lineView.backgroundColor = .clear
     }
+    
+    func configureToNear(indexPath: IndexPath, item: NearSeSACTableSectionModel.Item) {
+        profileImage.image = SLPAssets.CustomImage.myInfoProfile.image
+        profileImage.contentMode = .scaleAspectFill
+        profileImage.layer.masksToBounds = true
+        profileImage.layer.cornerRadius = 8
+        
+        titleLabel.text = item.title
+        
+        backView.backgroundColor = .clear
+        backView.layer.borderWidth = 1
+        backView.layer.cornerRadius = 8
+        backView.layer.borderColor = SLPAssets.CustomColor.gray2.color.cgColor
+        
+        lineView.backgroundColor = .clear
+    }
+    
 }
 
 final class GenderCell: MyPageDetailViewCell {
