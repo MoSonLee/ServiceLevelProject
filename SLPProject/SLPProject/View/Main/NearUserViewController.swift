@@ -95,8 +95,10 @@ final class NearUserViewController: UIViewController {
             make.height.equalTo(2)
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(lineView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
         }
         selecetedLineView.snp.makeConstraints { make in
             make.top.left.bottom.equalToSuperview()
@@ -161,24 +163,26 @@ final class NearUserViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.showsHorizontalScrollIndicator = false
-        let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
+        let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
-            
-            cell.showInfoButton.rx.tap
-                .subscribe(onNext: { [weak self] _ in
-                    self?.toggle = !(self?.toggle ?? false)
-                    cell.setExpand(toggle: self?.toggle ?? false)
-                    let index = IndexPath(row: indexPath.row, section: 0)
-                    UIView.transition(
-                        with: tableView,
-                        duration: 0.5,
-                        options: .transitionCrossDissolve,
-                        animations: { self?.tableView.reloadRows(at:[index], with: .fade)})
-                })
-                .disposed(by: cell.disposeBag)
-            
-            cell.configureToNear(indexPath: indexPath, item: item)
             cell.selectionStyle = .none
+            
+            switch self?.currentStatus {
+            case .near:
+                self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
+                cell.configureToNear(indexPath: indexPath, item: item)
+                cell.configureRequestButton()
+                
+            case .receive:
+                self?.tableView.reloadData()
+                self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
+                cell.configureToNear(indexPath: indexPath, item: item)
+                cell.configureGetButton()
+                
+            default:
+                print("error")
+            }
+            
             return cell
         }
         
@@ -187,6 +191,20 @@ final class NearUserViewController: UIViewController {
             .disposed(by: disposeBag)
         
         registerTableView()
+    }
+    
+    private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
+        cell.showInfoButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.toggle = !(self?.toggle ?? false)
+                cell.setExpand(toggle: self?.toggle ?? false)
+                UIView.transition(
+                    with: self?.tableView ?? UIView(),
+                    duration: 0.5,
+                    options: .transitionCrossDissolve,
+                    animations: { self?.tableView.reloadRows(at:[indexPath], with: .fade)})
+            })
+            .disposed(by: cell.disposeBag)
     }
     
     private func bind() {
@@ -210,16 +228,28 @@ final class NearUserViewController: UIViewController {
                     self?.nearButton.isSelected = true
                     self?.receivedButton.isSelected = false
                     self?.selectedBarAnimation(moveX: 0)
+                    self?.tableView.reloadData()
+                    
                 case .receive:
                     self?.currentStatus = .receive
                     self?.receivedButton.isSelected = true
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
+                    self?.tableView.reloadData()
                 }
             })
             .disposed(by: disposeBag)
         
         output.getTableViewData
+            .emit(onNext: { [weak self] model in
+                var array = self?.sections.value
+                array?[0].items.append(model)
+                guard let array = array else { return }
+                self?.sections.accept(array)
+            })
+            .disposed(by: disposeBag)
+        
+        output.getrequestedRelay
             .emit(onNext: { [weak self] model in
                 var array = self?.sections.value
                 array?[0].items.append(model)

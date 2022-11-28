@@ -25,15 +25,18 @@ final class NearUserViewModel {
         let selectedTab: Driver<SeSACTabModel>
         let checkDataCount: Signal<Bool>
         let getTableViewData: Signal<NearSeSACTableModel>
+        let getrequestedRelay: Signal<NearSeSACTableModel>
     }
     
     var queueDB: [QueueDB] = []
+    var recommendedQueueDB: [QueueDB] = []
     var userLocation = UserLocationModel(lat: 0, long: 0)
     
     private let popVCRelay = PublishRelay<Void>()
     private let selectedTabRelay = BehaviorRelay<SeSACTabModel>(value: .near)
     let checkDataCountRelay = PublishRelay<Bool>()
-    let getTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
+    let getQueueDBTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
+    let getrequestedRelay = PublishRelay<NearSeSACTableModel>()
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -72,7 +75,8 @@ final class NearUserViewModel {
             popVC: popVCRelay.asSignal(),
             selectedTab: selectedTabRelay.asDriver(),
             checkDataCount: checkDataCountRelay.asSignal(),
-            getTableViewData: getTableViewDataRelay.asSignal()
+            getTableViewData: getQueueDBTableViewDataRelay.asSignal(),
+            getrequestedRelay: getrequestedRelay.asSignal()
         )
     }
 }
@@ -85,10 +89,19 @@ extension NearUserViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.hasData(data: data)
+                
                 data.fromQueueDB.forEach {
                     self?.queueDB.append($0)
-                    self?.getTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+                    self?.getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
                 }
+                
+                data.fromQueueDBRequested.forEach {
+                    self?.recommendedQueueDB.append($0)
+                    self?.recommendedQueueDB.forEach {
+                        self?.getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+                    }
+                }
+                
             case .failure(let error):
                 print(error)
             }

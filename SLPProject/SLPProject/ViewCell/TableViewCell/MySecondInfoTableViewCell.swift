@@ -35,6 +35,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     let niceTimeButton = UIButton()
     let reviewHeader = UILabel()
     let reviewContent = UILabel()
+    let requestOrGetButton = UIButton()
     
     static var identifider: String {
         return "ProfileImageButtonCell"
@@ -60,6 +61,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         [profileImage, backView].forEach {
             contentView.addSubview($0)
         }
+        profileImage.addSubview(requestOrGetButton)
         
         [titleLabel, showInfoButton, lineView].forEach {
             backView.addSubview($0)
@@ -68,7 +70,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         profileImage.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(16)
+            make.top.equalToSuperview()
             make.height.equalTo(194)
         }
         backView.snp.makeConstraints { make in
@@ -91,6 +93,13 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.height.width.equalTo(30)
             make.right.equalToSuperview().offset(-16)
+        }
+        
+        requestOrGetButton.snp.makeConstraints { make in
+            make.left.lessThanOrEqualToSuperview().offset(265)
+            make.height.width.equalTo(40)
+            make.right.equalToSuperview().offset(-12)
+            make.top.equalToSuperview().offset(12)
         }
     }
     
@@ -196,6 +205,16 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         lineView.backgroundColor = .clear
     }
     
+    func configureRequestButton() {
+        requestOrGetButton.setTitle("요청하기", for: .normal)
+        requestOrGetButton.backgroundColor = SLPAssets.CustomColor.error.color
+    }
+    
+    func configureGetButton() {
+        requestOrGetButton.setTitle("요청하기", for: .normal)
+        requestOrGetButton.backgroundColor = SLPAssets.CustomColor.success.color
+    }
+    
     func configureToNear(indexPath: IndexPath, item: NearSeSACTableSectionModel.Item) {
         
         let buttonArray = [mannerButton, timeButton, responseButton, kindButton, niceSkillButton, niceTimeButton]
@@ -204,6 +223,12 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = 8
+        
+        requestOrGetButton.setTitleColor(.white, for: .normal)
+        
+        requestOrGetButton.titleLabel?.font = .systemFont(ofSize: 14)
+        requestOrGetButton.layer.cornerRadius = 8
+        requestOrGetButton.setTitleColor(.white, for: .normal)
         
         titleLabel.text = item.title
         item.review.forEach {
