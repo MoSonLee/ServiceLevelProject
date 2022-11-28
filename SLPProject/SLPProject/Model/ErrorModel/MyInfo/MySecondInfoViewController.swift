@@ -103,9 +103,10 @@ final class MySecondInfoViewController: UIViewController {
                 cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell ?? MyPageDetailViewCell()
                 guard let cell = cell as? ProfileImageButtonCell else { return MyPageDetailViewCell() }
                 cell.showInfoButton.rx.tap
-                    .subscribe(onNext: {
-                        self.toggle = !self.toggle
-                        cell.setExpand(toggle: self.toggle)
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.toggle = !(self?.toggle ?? false)
+                        cell.setExpand(toggle: self?.toggle ?? false)
+                        self?.tableView.reloadData()
                     })
                     .disposed(by: cell.disposeBag)
                 
