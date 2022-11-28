@@ -58,10 +58,9 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     }
     
     override func setConstraints() {
-        [profileImage, backView].forEach {
+        [profileImage, backView, requestOrGetButton].forEach {
             contentView.addSubview($0)
         }
-        profileImage.addSubview(requestOrGetButton)
         
         [titleLabel, showInfoButton, lineView].forEach {
             backView.addSubview($0)

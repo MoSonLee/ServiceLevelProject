@@ -48,6 +48,11 @@ final class NearUserViewController: UIViewController {
         ])
     ])
     
+    var sections2 = BehaviorRelay(value: [
+        NearSeSACTableSectionModel(header: "", items: [
+        ])
+    ])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
@@ -172,6 +177,13 @@ final class NearUserViewController: UIViewController {
                 self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
                 cell.configureToNear(indexPath: indexPath, item: item)
                 cell.configureRequestButton()
+                cell.requestOrGetButton.rx.tap
+                    .subscribe(onNext: {
+                        self?.showAlertWithCancel(title: "스터디를 요청할게요", okTitle: "확인", completion: {
+                            self?.viewModel.studyRequest(index: indexPath.row)
+                        })
+                    })
+                    .disposed(by: cell.disposeBag)
                 
             case .receive:
                 self?.tableView.reloadData()
@@ -182,20 +194,26 @@ final class NearUserViewController: UIViewController {
             default:
                 print("error")
             }
-            
             return cell
         }
         
-        sections
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
+        switch currentStatus {
+        case .near:
+            sections
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+            
+        case .receive:
+            sections2
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        }
         registerTableView()
     }
     
     private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
         cell.showInfoButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
+            .bind(onNext: { [weak self] _ in
                 self?.toggle = !(self?.toggle ?? false)
                 cell.setExpand(toggle: self?.toggle ?? false)
                 UIView.transition(
@@ -249,12 +267,12 @@ final class NearUserViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.getrequestedRelay
+        output.getrequested
             .emit(onNext: { [weak self] model in
-                var array = self?.sections.value
+                var array = self?.sections2.value
                 array?[0].items.append(model)
                 guard let array = array else { return }
-                self?.sections.accept(array)
+                self?.sections2.accept(array)
             })
             .disposed(by: disposeBag)
     }

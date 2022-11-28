@@ -105,7 +105,7 @@ final class GenderViewModel {
 
 extension GenderViewModel {
     private func requestSignUpUser() {
-        APIService().requestSignUpUser(dictionary: self.User.toDictionary) { result in
+        APIService().requestSignUpUser(dictionary: User.toDictionary) { result in
             switch result {
             case .success(_):
                 self.showMainVCRelay.accept(())
@@ -142,7 +142,7 @@ extension GenderViewModel {
     }
     
     private func updateFMCtoken() {
-        APIService().updateFMCtoken(dictionary: self.userFCMtoken.toDictionary) { [weak self] result in
+        APIService().updateFMCtoken(dictionary: userFCMtoken.toDictionary) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):

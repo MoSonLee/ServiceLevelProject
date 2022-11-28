@@ -25,12 +25,13 @@ final class NearUserViewModel {
         let selectedTab: Driver<SeSACTabModel>
         let checkDataCount: Signal<Bool>
         let getTableViewData: Signal<NearSeSACTableModel>
-        let getrequestedRelay: Signal<NearSeSACTableModel>
+        let getrequested: Signal<NearSeSACTableModel>
     }
     
     var queueDB: [QueueDB] = []
     var recommendedQueueDB: [QueueDB] = []
     var userLocation = UserLocationModel(lat: 0, long: 0)
+    var userId: [StudyRequestModel] = []
     
     private let popVCRelay = PublishRelay<Void>()
     private let selectedTabRelay = BehaviorRelay<SeSACTabModel>(value: .near)
@@ -76,7 +77,7 @@ final class NearUserViewModel {
             selectedTab: selectedTabRelay.asDriver(),
             checkDataCount: checkDataCountRelay.asSignal(),
             getTableViewData: getQueueDBTableViewDataRelay.asSignal(),
-            getrequestedRelay: getrequestedRelay.asSignal()
+            getrequested: getrequestedRelay.asSignal()
         )
     }
 }
@@ -93,14 +94,28 @@ extension NearUserViewModel {
                 data.fromQueueDB.forEach {
                     self?.queueDB.append($0)
                     self?.getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+                    self?.userId.append(StudyRequestModel(otheruid: $0.uid))
                 }
                 
                 data.fromQueueDBRequested.forEach {
                     self?.recommendedQueueDB.append($0)
                     self?.recommendedQueueDB.forEach {
-                        self?.getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+                        self?.getrequestedRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
                     }
                 }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func studyRequest(index: Int) {
+        APIService().studyRequest(dictionary: userId[index].toDictionary) { [weak self] result in
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
+                print(data)
                 
             case .failure(let error):
                 print(error)

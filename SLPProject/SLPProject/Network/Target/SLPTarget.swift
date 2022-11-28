@@ -20,6 +20,7 @@ enum SLPTarget {
     case stopSearchSeSAC
     case searchSeSAC(parameters: DictionaryType)
     case myQueueState
+    case studyrequest(parameters: DictionaryType)
 }
 
 extension SLPTarget: TargetType {
@@ -50,6 +51,9 @@ extension SLPTarget: TargetType {
             
         case .myQueueState:
             return "/queue/myQueueState"
+            
+        case .studyrequest:
+            return "/queue/studyrequest"
         }
     }
     
@@ -58,7 +62,7 @@ extension SLPTarget: TargetType {
         case .login, .myQueueState:
             return .get
             
-        case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC:
+        case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC, .studyrequest:
             return .post
             
         case .update_fcm_token:
@@ -74,7 +78,7 @@ extension SLPTarget: TargetType {
         case .login, .withdraw, .stopSearchSeSAC, .myQueueState:
             return .requestPlain
             
-        case .signUp(let parameters), .update_fcm_token(let parameters), .searchSeSAC(let parameters):
+        case .signUp(let parameters), .update_fcm_token(let parameters), .searchSeSAC(let parameters), .studyrequest(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
             
         case .requestSearchSeSAC(let parameters):
