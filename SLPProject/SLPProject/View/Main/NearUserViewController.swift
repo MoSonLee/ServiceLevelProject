@@ -150,11 +150,18 @@ final class NearUserViewController: UIViewController {
         !check ? tableView.backgroundView = backgroundView : nil
     }
     
+    private func registerTableView() {
+        tableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     private func bindTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
-//            cell.configureToNear(indexPath: indexPath, item: item)
+            cell.configureToNear(indexPath: indexPath, item: item)
+             
             return cell
         }
         
@@ -162,8 +169,7 @@ final class NearUserViewController: UIViewController {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        registerTableView()
     }
     
     private func bind() {
@@ -193,6 +199,15 @@ final class NearUserViewController: UIViewController {
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        output.getTableViewData
+            .emit(onNext: { [weak self] model in
+                var array = self?.sections.value
+                array?[0].items.append(model)
+                guard let array = array else { return }
+                self?.sections.accept(array)
             })
             .disposed(by: disposeBag)
     }

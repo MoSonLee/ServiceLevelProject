@@ -14,7 +14,7 @@ struct NearSeSACTableModel {
     var title: String
     var reputation: [Int]
     var studyList: [String]
-    var review: String
+    var review: [String]
 }
 
 struct NearSeSACTableSectionModel {

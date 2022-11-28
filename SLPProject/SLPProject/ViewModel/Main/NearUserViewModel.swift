@@ -24,12 +24,17 @@ final class NearUserViewModel {
         let popVC: Signal<Void>
         let selectedTab: Driver<SeSACTabModel>
         let checkDataCount: Signal<Bool>
+        let getTableViewData: Signal<NearSeSACTableModel>
     }
     
+    var nearTableModel: [NearSeSACTableModel] = []
+    var queueDB: [QueueDB] = []
     var userLocation = UserLocationModel(lat: 0, long: 0)
+    
     private let popVCRelay = PublishRelay<Void>()
     private let selectedTabRelay = BehaviorRelay<SeSACTabModel>(value: .near)
     let checkDataCountRelay = PublishRelay<Bool>()
+    let getTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -67,19 +72,32 @@ final class NearUserViewModel {
         return Output(
             popVC: popVCRelay.asSignal(),
             selectedTab: selectedTabRelay.asDriver(),
-            checkDataCount: checkDataCountRelay.asSignal()
+            checkDataCount: checkDataCountRelay.asSignal(),
+            getTableViewData: getTableViewDataRelay.asSignal()
         )
     }
 }
 
 extension NearUserViewModel {
+    
+    func acceptDB(array: [NearSeSACTableSectionModel]) -> [NearSeSACTableSectionModel] {
+        var array = array
+        nearTableModel.forEach { array[0].items.append($0)}
+        return array
+    }
+    
     private func searchSeSAC() {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
+                guard let nearTableModel = self?.nearTableModel else { return }
                 self?.hasData(data: data)
-                
+                data.fromQueueDB.forEach {
+                    self?.queueDB.append($0)
+                    self?.getTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+                }
+                print(nearTableModel)
             case .failure(let error):
                 print(error)
             }
@@ -101,10 +119,7 @@ extension NearUserViewModel {
     }
     
     private func hasData(data: SeSACSearchResultModel) {
-        if data.fromQueueDB.count != 0 {
-            checkDataCountRelay.accept(true)
-        } else {
-            checkDataCountRelay.accept(false)
-        }
+        data.fromQueueDB.count != 0 ? checkDataCountRelay.accept(true) :
+        checkDataCountRelay.accept(false)
     }
 }
