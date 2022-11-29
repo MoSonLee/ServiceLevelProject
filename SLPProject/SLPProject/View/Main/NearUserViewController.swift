@@ -171,7 +171,6 @@ final class NearUserViewController: UIViewController {
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
-            
             switch self?.currentStatus {
             case .near:
                 self?.setShowInfoTapped(cell: cell, indexPath: indexPath)

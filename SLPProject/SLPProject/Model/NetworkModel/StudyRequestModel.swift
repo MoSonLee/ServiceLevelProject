@@ -14,6 +14,5 @@ struct StudyRequestModel: Codable {
         ]
         return dictionary
     }
-    
     let otheruid: String
 }

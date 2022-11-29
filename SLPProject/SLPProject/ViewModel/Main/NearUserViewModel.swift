@@ -114,8 +114,7 @@ extension NearUserViewModel {
         APIService().studyRequest(dictionary: userId[index].toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                print(data)
+                print(response)
                 
             case .failure(let error):
                 print(error)
