@@ -15,23 +15,23 @@ final class NearUserViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
     private var stopButton = UIBarButtonItem()
+    private var currentStatus: SeSACTabModel = .near
+    private var toggle: Bool = false
     
     private let nearButton = UIButton()
     private let receivedButton = UIButton()
     private let lineView = UIView()
     private let selecetedLineView = UIView()
-    private let tableView = UITableView()
-    private let tableView2 = UITableView()
+    private let requestTableView = UITableView()
+    private let acceptTableView = UITableView()
     
     private let backgroundView = UIView()
     private let backgroundImage = UIImageView()
     private let backgroundLabel = UILabel()
     private let backgroundSubLabel = UILabel()
     
-    private var currentStatus: SeSACTabModel = .near
-    private var toggle: Bool = false
-    
     let viewModel = NearUserViewModel()
+    
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
@@ -44,14 +44,13 @@ final class NearUserViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
-    var sections = BehaviorRelay(value: [
+    private var requestSection = BehaviorRelay(value: [
         NearSeSACTableSectionModel(header: "", items: [
         ])
     ])
     
-    var sections2 = BehaviorRelay(value: [
+    private var acceptSection = BehaviorRelay(value: [
         NearSeSACTableSectionModel(header: "", items: [
-            NearSeSACTableModel(backGroundImage: 0, title: "AA", reputation: [], studyList: [], review: [])
         ])
     ])
     
@@ -60,12 +59,13 @@ final class NearUserViewController: UIViewController {
         setComponents()
         setConstraints()
         bind()
-        bindTableView()
+        bindFirstTableView()
+        bindSecondTableView()
         viewDidLoadEvent.accept(())
     }
     
     private func setComponents() {
-        [nearButton, receivedButton, lineView, tableView, tableView2].forEach {
+        [nearButton, receivedButton, lineView, requestTableView, acceptTableView].forEach {
             view.addSubview($0)
         }
         [backgroundLabel, backgroundSubLabel, backgroundImage].forEach {
@@ -78,11 +78,11 @@ final class NearUserViewController: UIViewController {
     }
     
     private func registerTableView() {
-        tableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
-        tableView.rx.setDelegate(self)
+        requestTableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        requestTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        tableView2.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
-        tableView2.rx.setDelegate(self)
+        acceptTableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        acceptTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
     }
     
@@ -95,13 +95,13 @@ final class NearUserViewController: UIViewController {
         navigationItem.rightBarButtonItem = stopButton
     }
     
-    private func setTableView() {
-        tableView2.removeFromSuperview()
-        view.addSubview(tableView)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.showsVerticalScrollIndicator = false
-        tableView.snp.makeConstraints { make in
+    private func setRequestTableView() {
+        acceptTableView.removeFromSuperview()
+        view.addSubview(requestTableView)
+        requestTableView.separatorStyle = .none
+        requestTableView.backgroundColor = .clear
+        requestTableView.showsVerticalScrollIndicator = false
+        requestTableView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(20)
             make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(16)
@@ -109,13 +109,13 @@ final class NearUserViewController: UIViewController {
         }
     }
     
-    private func setTableView2() {
-        tableView.removeFromSuperview()
-        view.addSubview(tableView2)
-        tableView2.separatorStyle = .none
-        tableView2.backgroundColor = .clear
-        tableView2.showsVerticalScrollIndicator = false
-        tableView2.snp.makeConstraints { make in
+    private func setAcceptTableView() {
+        requestTableView.removeFromSuperview()
+        view.addSubview(acceptTableView)
+        acceptTableView.separatorStyle = .none
+        acceptTableView.backgroundColor = .clear
+        acceptTableView.showsVerticalScrollIndicator = false
+        acceptTableView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(20)
             make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(16)
@@ -188,53 +188,51 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setTableViewBackground(check: Bool) {
-        !check ? tableView.backgroundView = backgroundView : nil
+        !check ? requestTableView.backgroundView = backgroundView : nil
     }
     
-    private func bindTableView() {
-        
+    private func bindFirstTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.configureToNear(indexPath: indexPath, item: item)
             self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
-            switch self?.currentStatus {
-            case .near:
-                cell.configureRequestButton()
-                cell.requestOrGetButton.rx.tap
-                    .subscribe(onNext: {
-                        self?.showAlertWithCancel(title: "스터디를 요청할게요", okTitle: "확인", completion: {
-                            self?.viewModel.studyRequest(index: indexPath.row)
-                        })
+            cell.configureRequestButton()
+            cell.requestOrGetButton.rx.tap
+                .subscribe(onNext: {
+                    self?.showAlertWithCancel(title: "스터디를 요청할게요", okTitle: "확인", completion: {
+                        self?.viewModel.studyRequest(index: indexPath.row)
                     })
-                    .disposed(by: cell.disposeBag)
-                
-            case .receive:
-                cell.configureGetButton()
-                cell.requestOrGetButton.rx.tap
-                    .subscribe(onNext: {
-                        self?.showAlertWithCancel(title: "스터디를 수락할까요?", okTitle: "확인", completion: {
-                            self?.viewModel.acceptStudy(index: indexPath.row)
-                        })
+                })
+                .disposed(by: cell.disposeBag)
+            return cell
+        }
+        requestSection
+            .bind(to: requestTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindSecondTableView() {
+        let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            cell.configureToNear(indexPath: indexPath, item: item)
+            self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
+            cell.configureRequestButton()
+            cell.configureGetButton()
+            cell.requestOrGetButton.rx.tap
+                .subscribe(onNext: {
+                    self?.showAlertWithCancel(title: "스터디를 수락할까요?", okTitle: "확인", completion: {
+                        self?.viewModel.acceptStudy(index: indexPath.row)
                     })
-                    .disposed(by: cell.disposeBag)
-                
-            default:
-                print("error")
-            }
+                })
+                .disposed(by: cell.disposeBag)
             return cell
         }
         
-        switch currentStatus {
-        case .near:
-            sections
-                .bind(to: tableView.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-        case .receive:
-            sections2
-                .bind(to: tableView2.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-        }
+        acceptSection
+            .bind(to: acceptTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
@@ -243,10 +241,10 @@ final class NearUserViewController: UIViewController {
                 self?.toggle = !(self?.toggle ?? false)
                 cell.setExpand(toggle: self?.toggle ?? false)
                 UIView.transition(
-                    with: self?.tableView ?? UIView(),
+                    with: self?.requestTableView ?? UIView(),
                     duration: 0.5,
                     options: .transitionCrossDissolve,
-                    animations: { self?.tableView.reloadRows(at:[indexPath], with: .fade)})
+                    animations: { self?.requestTableView.reloadRows(at:[indexPath], with: .fade)})
             })
             .disposed(by: cell.disposeBag)
     }
@@ -272,33 +270,33 @@ final class NearUserViewController: UIViewController {
                     self?.nearButton.isSelected = true
                     self?.receivedButton.isSelected = false
                     self?.selectedBarAnimation(moveX: 0)
-                    self?.setTableView()
+                    self?.setRequestTableView()
                     
                 case .receive:
                     self?.currentStatus = .receive
                     self?.receivedButton.isSelected = true
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
-                    self?.setTableView2()
+                    self?.setAcceptTableView()
                 }
             })
             .disposed(by: disposeBag)
         
         output.getTableViewData
             .emit(onNext: { [weak self] model in
-                var array = self?.sections.value
+                var array = self?.requestSection.value
                 array?[0].items.append(model)
                 guard let array = array else { return }
-                self?.sections.accept(array)
+                self?.requestSection.accept(array)
             })
             .disposed(by: disposeBag)
         
         output.getrequested
             .emit(onNext: { [weak self] model in
-                var array = self?.sections2.value
+                var array = self?.acceptSection.value
                 array?[0].items.append(model)
                 guard let array = array else { return }
-                self?.sections2.accept(array)
+                self?.acceptSection.accept(array)
             })
             .disposed(by: disposeBag)
         
