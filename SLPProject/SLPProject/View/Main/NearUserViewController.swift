@@ -167,14 +167,16 @@ final class NearUserViewController: UIViewController {
     private func bindTableView() {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
+        
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
+            cell.configureToNear(indexPath: indexPath, item: item)
+            
+            self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
             switch self?.currentStatus {
             case .near:
-                self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
-                cell.configureToNear(indexPath: indexPath, item: item)
                 cell.configureRequestButton()
                 cell.requestOrGetButton.rx.tap
                     .subscribe(onNext: {
@@ -185,9 +187,6 @@ final class NearUserViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
             case .receive:
-                self?.tableView.reloadData()
-                self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
-                cell.configureToNear(indexPath: indexPath, item: item)
                 cell.configureGetButton()
                 
             default:
@@ -272,11 +271,10 @@ final class NearUserViewController: UIViewController {
                 array?[0].items.append(model)
                 guard let array = array else { return }
                 self?.sections2.accept(array)
+                print(model)
             })
             .disposed(by: disposeBag)
     }
 }
 
-extension NearUserViewController: UITableViewDelegate {
-    
-}
+extension NearUserViewController: UITableViewDelegate { }

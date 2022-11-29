@@ -90,19 +90,7 @@ extension NearUserViewModel {
             case .success(let response):
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.hasData(data: data)
-                
-                data.fromQueueDB.forEach {
-                    self?.queueDB.append($0)
-                    self?.getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
-                    self?.userId.append(StudyRequestModel(otheruid: $0.uid))
-                }
-                
-                data.fromQueueDBRequested.forEach {
-                    self?.recommendedQueueDB.append($0)
-                    self?.recommendedQueueDB.forEach {
-                        self?.getrequestedRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
-                    }
-                }
+                self?.getData(data: data)
                 
             case .failure(let error):
                 print(error)
@@ -110,8 +98,20 @@ extension NearUserViewModel {
         }
     }
     
+    private func getData(data: SeSACSearchResultModel) {
+        data.fromQueueDB.forEach {
+            queueDB.append($0)
+            getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+            userId.append(StudyRequestModel(otheruid: $0.uid))
+        }
+        data.fromQueueDBRequested.forEach {
+            recommendedQueueDB.append($0)
+            getrequestedRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+        }
+    }
+    
     func studyRequest(index: Int) {
-        APIService().studyRequest(dictionary: userId[index].toDictionary) { [weak self] result in
+        APIService().studyRequest(dictionary: userId[index].toDictionary) { result in
             switch result {
             case .success(let response):
                 print(response)
