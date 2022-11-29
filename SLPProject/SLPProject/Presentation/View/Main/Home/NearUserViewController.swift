@@ -192,7 +192,7 @@ final class NearUserViewController: UIViewController {
     }
     
     private func bindTableView() {
-
+        
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
@@ -225,15 +225,16 @@ final class NearUserViewController: UIViewController {
             return cell
         }
         
-        
-        sections
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        
-        sections2
-            .bind(to: tableView2.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+        switch currentStatus {
+        case .near:
+            sections
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        case .receive:
+            sections2
+                .bind(to: tableView2.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        }
     }
     
     private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
