@@ -42,6 +42,7 @@ final class NearUserViewModel {
     private let getQueueDBTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
     private let getrequestedRelay = PublishRelay<NearSeSACTableModel>()
     private let moveToChatVCRelay = PublishRelay<Void>()
+
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {

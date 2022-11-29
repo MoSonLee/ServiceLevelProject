@@ -51,6 +51,7 @@ final class NearUserViewController: UIViewController {
     
     var sections2 = BehaviorRelay(value: [
         NearSeSACTableSectionModel(header: "", items: [
+            NearSeSACTableModel(backGroundImage: 0, title: "AA", reputation: [], studyList: [], review: [])
         ])
     ])
     
@@ -95,8 +96,8 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setTableView() {
-        view.addSubview(tableView)
         tableView2.removeFromSuperview()
+        view.addSubview(tableView)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.showsVerticalScrollIndicator = false
@@ -109,8 +110,8 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setTableView2() {
-        view.addSubview(tableView2)
         tableView.removeFromSuperview()
+        view.addSubview(tableView2)
         tableView2.separatorStyle = .none
         tableView2.backgroundColor = .clear
         tableView2.showsVerticalScrollIndicator = false
@@ -191,12 +192,11 @@ final class NearUserViewController: UIViewController {
     }
     
     private func bindTableView() {
-        
+
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.configureToNear(indexPath: indexPath, item: item)
-            
             self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
             switch self?.currentStatus {
             case .near:
@@ -225,17 +225,15 @@ final class NearUserViewController: UIViewController {
             return cell
         }
         
-        switch currentStatus {
-        case .near:
-            sections
-                .bind(to: tableView.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-            
-        case .receive:
-            sections2
-                .bind(to: tableView2.rx.items(dataSource: dataSource))
-                .disposed(by: disposeBag)
-        }
+        
+        sections
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        
+        sections2
+            .bind(to: tableView2.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
     
     private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
@@ -270,19 +268,17 @@ final class NearUserViewController: UIViewController {
                 switch selectedtab {
                 case .near:
                     self?.currentStatus = .near
-                    self?.setTableView()
                     self?.nearButton.isSelected = true
                     self?.receivedButton.isSelected = false
                     self?.selectedBarAnimation(moveX: 0)
-                    self?.tableView.reloadData()
+                    self?.setTableView()
                     
                 case .receive:
                     self?.currentStatus = .receive
-                    self?.setTableView2()
                     self?.receivedButton.isSelected = true
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
-                    self?.tableView2.reloadData()
+                    self?.setTableView2()
                 }
             })
             .disposed(by: disposeBag)
@@ -307,7 +303,7 @@ final class NearUserViewController: UIViewController {
         
         output.moveToChatVC
             .emit(onNext: { [weak self] _ in
-               let vc = ChatViewController()
+                let vc = ChatViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
