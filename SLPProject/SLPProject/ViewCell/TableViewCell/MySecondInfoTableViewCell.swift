@@ -210,7 +210,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     }
     
     func configureGetButton() {
-        requestOrGetButton.setTitle("요청하기", for: .normal)
+        requestOrGetButton.setTitle("수락하기", for: .normal)
         requestOrGetButton.backgroundColor = SLPAssets.CustomColor.success.color
     }
     

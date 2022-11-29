@@ -21,6 +21,7 @@ final class NearUserViewController: UIViewController {
     private let lineView = UIView()
     private let selecetedLineView = UIView()
     private let tableView = UITableView()
+    private let tableView2 = UITableView()
     
     private let backgroundView = UIView()
     private let backgroundImage = UIImageView()
@@ -63,15 +64,25 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setComponents() {
-        [nearButton, receivedButton, lineView, tableView].forEach {
+        [nearButton, receivedButton, lineView, tableView, tableView2].forEach {
             view.addSubview($0)
         }
         [backgroundLabel, backgroundSubLabel, backgroundImage].forEach {
             backgroundView.addSubview($0)
         }
         lineView.addSubview(selecetedLineView)
+        registerTableView()
         setComponentsValue()
         setNavigation()
+    }
+    
+    private func registerTableView() {
+        tableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        tableView2.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        tableView2.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     private func setNavigation() {
@@ -81,6 +92,34 @@ final class NearUserViewController: UIViewController {
         stopButton.tintColor = SLPAssets.CustomColor.black.color
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = stopButton
+    }
+    
+    private func setTableView() {
+        view.addSubview(tableView)
+        tableView2.removeFromSuperview()
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
+    }
+    
+    private func setTableView2() {
+        view.addSubview(tableView2)
+        tableView.removeFromSuperview()
+        tableView2.separatorStyle = .none
+        tableView2.backgroundColor = .clear
+        tableView2.showsVerticalScrollIndicator = false
+        tableView2.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
     }
     
     private func setConstraints() {
@@ -98,12 +137,6 @@ final class NearUserViewController: UIViewController {
             make.top.equalTo(nearButton.snp.bottom)
             make.right.left.equalToSuperview()
             make.height.equalTo(2)
-        }
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(20)
-            make.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
         }
         selecetedLineView.snp.makeConstraints { make in
             make.top.left.bottom.equalToSuperview()
@@ -138,7 +171,6 @@ final class NearUserViewController: UIViewController {
         nearButton.setTitleColor(SLPAssets.CustomColor.green.color, for: .selected)
         receivedButton.setTitleColor(SLPAssets.CustomColor.green.color, for: .selected)
         selecetedLineView.backgroundColor = SLPAssets.CustomColor.green.color
-        tableView.backgroundColor = .gray
         backgroundLabel.text = currentStatus.emptyViewMain
         backgroundSubLabel.text = currentStatus.emptyViewSub
         backgroundLabel.textColor = SLPAssets.CustomColor.black.color
@@ -158,16 +190,7 @@ final class NearUserViewController: UIViewController {
         !check ? tableView.backgroundView = backgroundView : nil
     }
     
-    private func registerTableView() {
-        tableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-    }
-    
     private func bindTableView() {
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.showsVerticalScrollIndicator = false
         
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
@@ -203,10 +226,9 @@ final class NearUserViewController: UIViewController {
             
         case .receive:
             sections2
-                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .bind(to: tableView2.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         }
-        registerTableView()
     }
     
     private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
@@ -241,6 +263,7 @@ final class NearUserViewController: UIViewController {
                 switch selectedtab {
                 case .near:
                     self?.currentStatus = .near
+                    self?.setTableView()
                     self?.nearButton.isSelected = true
                     self?.receivedButton.isSelected = false
                     self?.selectedBarAnimation(moveX: 0)
@@ -248,10 +271,11 @@ final class NearUserViewController: UIViewController {
                     
                 case .receive:
                     self?.currentStatus = .receive
+                    self?.setTableView2()
                     self?.receivedButton.isSelected = true
                     self?.nearButton.isSelected = false
                     self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
-                    self?.tableView.reloadData()
+                    self?.tableView2.reloadData()
                 }
             })
             .disposed(by: disposeBag)
@@ -271,7 +295,6 @@ final class NearUserViewController: UIViewController {
                 array?[0].items.append(model)
                 guard let array = array else { return }
                 self?.sections2.accept(array)
-                print(model)
             })
             .disposed(by: disposeBag)
     }

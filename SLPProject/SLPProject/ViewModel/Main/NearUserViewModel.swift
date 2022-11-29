@@ -92,6 +92,9 @@ extension NearUserViewModel {
                 self?.hasData(data: data)
                 self?.getData(data: data)
                 
+                print(data.fromQueueDB.count)
+                print(data.fromQueueDBRequested.count)
+                
             case .failure(let error):
                 print(error)
             }
