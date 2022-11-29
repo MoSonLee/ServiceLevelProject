@@ -136,6 +136,7 @@ extension NearUserViewModel {
             switch result {
             case .success(let response):
                 print(response)
+                UserDefaults.homeTabMode = .message
                 self?.moveToChatVCRelay.accept(())
 
             case .failure(let error):
