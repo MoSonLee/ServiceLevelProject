@@ -26,18 +26,22 @@ final class NearUserViewModel {
         let checkDataCount: Signal<Bool>
         let getTableViewData: Signal<NearSeSACTableModel>
         let getrequested: Signal<NearSeSACTableModel>
+        let moveToChatVC: Signal<Void>
     }
     
-    var queueDB: [QueueDB] = []
-    var recommendedQueueDB: [QueueDB] = []
     var userLocation = UserLocationModel(lat: 0, long: 0)
-    var userId: [StudyRequestModel] = []
+    
+    private var queueDB: [QueueDB] = []
+    private var recommendedQueueDB: [QueueDB] = []
+    private var userId: [StudyRequestModel] = []
+    private var acceptUserId: [StudyRequestModel] = []
     
     private let popVCRelay = PublishRelay<Void>()
     private let selectedTabRelay = BehaviorRelay<SeSACTabModel>(value: .near)
-    let checkDataCountRelay = PublishRelay<Bool>()
-    let getQueueDBTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
-    let getrequestedRelay = PublishRelay<NearSeSACTableModel>()
+    private let checkDataCountRelay = PublishRelay<Bool>()
+    private let getQueueDBTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
+    private let getrequestedRelay = PublishRelay<NearSeSACTableModel>()
+    private let moveToChatVCRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -77,7 +81,8 @@ final class NearUserViewModel {
             selectedTab: selectedTabRelay.asDriver(),
             checkDataCount: checkDataCountRelay.asSignal(),
             getTableViewData: getQueueDBTableViewDataRelay.asSignal(),
-            getrequested: getrequestedRelay.asSignal()
+            getrequested: getrequestedRelay.asSignal(),
+            moveToChatVC: moveToChatVCRelay.asSignal()
         )
     }
 }
@@ -110,6 +115,7 @@ extension NearUserViewModel {
         data.fromQueueDBRequested.forEach {
             recommendedQueueDB.append($0)
             getrequestedRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
+            acceptUserId.append(StudyRequestModel(otheruid: $0.uid))
         }
     }
     
@@ -119,6 +125,19 @@ extension NearUserViewModel {
             case .success(let response):
                 print(response)
                 
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func acceptStudy(index: Int) {
+        APIService().studyAccept(dictionary: acceptUserId[index].toDictionary) { [weak self] result in
+            switch result {
+            case .success(let response):
+                print(response)
+                self?.moveToChatVCRelay.accept(())
+
             case .failure(let error):
                 print(error)
             }

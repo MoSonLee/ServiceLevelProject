@@ -32,6 +32,12 @@ final class APIService {
         }
     }
     
+    func studyAccept(dictionary: [String: Any], completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.studyaccept(parameters: dictionary)) { result in
+            completion(result)
+        }
+    }
+    
     func responseGetUser(completion: @escaping  (Result<Response, MoyaError>) -> ()) {
         provider.request(.login) { result in
             completion(result)

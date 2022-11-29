@@ -211,6 +211,13 @@ final class NearUserViewController: UIViewController {
                 
             case .receive:
                 cell.configureGetButton()
+                cell.requestOrGetButton.rx.tap
+                    .subscribe(onNext: {
+                        self?.showAlertWithCancel(title: "스터디를 수락할까요?", okTitle: "확인", completion: {
+                            self?.viewModel.acceptStudy(index: indexPath.row)
+                        })
+                    })
+                    .disposed(by: cell.disposeBag)
                 
             default:
                 print("error")
@@ -295,6 +302,13 @@ final class NearUserViewController: UIViewController {
                 array?[0].items.append(model)
                 guard let array = array else { return }
                 self?.sections2.accept(array)
+            })
+            .disposed(by: disposeBag)
+        
+        output.moveToChatVC
+            .emit(onNext: { [weak self] _ in
+               let vc = ChatViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

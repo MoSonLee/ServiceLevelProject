@@ -13,6 +13,7 @@
 		77145A732919244A0052B2FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77145A722919244A0052B2FB /* Assets.xcassets */; };
 		77145A762919244A0052B2FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77145A742919244A0052B2FB /* LaunchScreen.storyboard */; };
 		77145A84291924690052B2FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 77145A83291924690052B2FB /* Toast */; };
+		771A948B293661CE00771C60 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A948A293661CE00771C60 /* ChatViewController.swift */; };
 		77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A0C2921DD8B000DC6CE /* DoubleSlider */; };
 		77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A0E29229525000DC6CE /* HomeTabViewController.swift */; };
 		77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A1029229537000DC6CE /* SeSACShopViewController.swift */; };
@@ -100,6 +101,7 @@
 		77145A722919244A0052B2FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77145A752919244A0052B2FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		77145A772919244A0052B2FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		771A948A293661CE00771C60 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		77217A0E29229525000DC6CE /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		77217A1029229537000DC6CE /* SeSACShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACShopViewController.swift; sourceTree = "<group>"; };
 		77217A1229229545000DC6CE /* SearchStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyViewController.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				77217A0E29229525000DC6CE /* HomeTabViewController.swift */,
 				77217A1229229545000DC6CE /* SearchStudyViewController.swift */,
 				7741433C2930BC3E00220087 /* NearUserViewController.swift */,
+				771A948A293661CE00771C60 /* ChatViewController.swift */,
 				77217A1029229537000DC6CE /* SeSACShopViewController.swift */,
 			);
 			path = Main;
@@ -666,6 +669,7 @@
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
 				77414334292E678200220087 /* SearchHeader.swift in Sources */,
+				771A948B293661CE00771C60 /* ChatViewController.swift in Sources */,
 				77414332292E5DB500220087 /* SearchCollectionViewCell.swift in Sources */,
 				7744A355291FBD6600A065C8 /* SignUpError.swift in Sources */,
 				77217A1D2922A903000DC6CE /* MyInfoViewModel.swift in Sources */,
