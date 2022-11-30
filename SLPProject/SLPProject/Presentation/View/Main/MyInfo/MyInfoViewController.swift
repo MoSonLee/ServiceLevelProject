@@ -76,7 +76,6 @@ final class MyInfoViewController: UIViewController {
             cell.configure(indexPath: indexPath, item: item)
             return cell
         }
-        
         sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)

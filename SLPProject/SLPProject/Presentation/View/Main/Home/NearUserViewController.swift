@@ -61,6 +61,7 @@ final class NearUserViewController: UIViewController {
         bindFirstTableView()
         bindSecondTableView()
         viewDidLoadEvent.accept(())
+        viewModel.checkMyQueueState()
     }
     
     private func setComponents() {

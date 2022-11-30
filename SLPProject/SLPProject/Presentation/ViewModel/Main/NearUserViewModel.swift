@@ -159,8 +159,8 @@ extension NearUserViewModel {
             case .success(let response):
                 print(response)
                 UserDefaults.homeTabMode = .message
-                self?.changeRootVCRelay.accept(())
                 self?.moveToChatVCRelay.accept(())
+                self?.changeRootVCRelay.accept(())
 
             case .failure(let error):
                 let error = StudyAcceptError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
@@ -186,12 +186,12 @@ extension NearUserViewModel {
         }
     }
     
-    private func checkMyQueueState() {
+    func checkMyQueueState() {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(MyQueueStateModel.self, from: response.data)
-                data.matched == 1 ? self?.showToastRelay.accept("\(data.matchedNick)님과 매칭되셨습니다.") :
+                data.matched == 1 ? self?.showToastRelay.accept("\(data.matchedNick)님과 매칭되셨습니다.") : nil
                 self?.moveToChatVCRelay.accept(())
                 
             case .failure(let error):

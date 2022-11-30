@@ -8,9 +8,21 @@
 import UIKit
 
 final class ChatViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        setComponents()
+        setConstraints()
+    }
+    
+    private func setComponents() {
+        setComponentsValue()
+    }
+    
+    private func setComponentsValue() {
+        view.backgroundColor = .white
+    }
+    
+    private func setConstraints() {
     }
 }
