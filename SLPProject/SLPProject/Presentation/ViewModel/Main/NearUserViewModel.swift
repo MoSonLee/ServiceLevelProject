@@ -252,4 +252,10 @@ extension NearUserViewModel {
         data.fromQueueDB.count != 0 ? checkDataCountRelay.accept(true) :
         checkDataCountRelay.accept(false)
     }
+    
+    func acceptSectionValue(model: NearSeSACTableModel, section: BehaviorRelay<[NearSeSACTableSectionModel]>) {
+        var array = section.value
+        array[0].items.append(model)
+        section.accept(array)
+    }
 }

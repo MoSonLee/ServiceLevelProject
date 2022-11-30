@@ -285,19 +285,15 @@ final class NearUserViewController: UIViewController {
         
         output.getTableViewData
             .emit(onNext: { [weak self] model in
-                var array = self?.requestSection.value
-                array?[0].items.append(model)
-                guard let array = array else { return }
-                self?.requestSection.accept(array)
+                guard let requestSection = self?.requestSection else { return }
+                self?.viewModel.acceptSectionValue(model: model, section: requestSection)
             })
             .disposed(by: disposeBag)
         
         output.getrequested
             .emit(onNext: { [weak self] model in
-                var array = self?.acceptSection.value
-                array?[0].items.append(model)
-                guard let array = array else { return }
-                self?.acceptSection.accept(array)
+                guard let acceptSection = self?.acceptSection else { return }
+                self?.viewModel.acceptSectionValue(model: model, section: acceptSection)
             })
             .disposed(by: disposeBag)
         
