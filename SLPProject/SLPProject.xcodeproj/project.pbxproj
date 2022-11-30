@@ -48,7 +48,7 @@
 		77414334292E678200220087 /* SearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414333292E678200220087 /* SearchHeader.swift */; };
 		77414336292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */; };
 		774143382930A8DB00220087 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774143372930A8DB00220087 /* Array+Extensions.swift */; };
-		7741433B2930BA5D00220087 /* UserSearchErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */; };
+		7741433B2930BA5D00220087 /* UserSearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433A2930BA5D00220087 /* UserSearchError.swift */; };
 		7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433C2930BC3E00220087 /* NearUserViewController.swift */; };
 		7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77414326292D194C00220087 /* SearchStudyViewModel.swift */; };
 		774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7741433F2930D1EA00220087 /* NearUserViewModel.swift */; };
@@ -76,6 +76,10 @@
 		77577014291BDA0800DA331B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77577013291BDA0800DA331B /* GoogleService-Info.plist */; };
 		77577019291D3A2700DA331B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77577018291D3A2700DA331B /* CustomTextField.swift */; };
 		7757701E291DE2DB00DA331B /* FirebaseAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7757701D291DE2DB00DA331B /* FirebaseAuthorization.swift */; };
+		77A1FE86293770E90018A403 /* StopSearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE85293770E90018A403 /* StopSearchError.swift */; };
+		77A1FE88293772940018A403 /* StudyAcceptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE87293772940018A403 /* StudyAcceptError.swift */; };
+		77A1FE8A2937745B0018A403 /* MyQueueStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE892937745B0018A403 /* MyQueueStateModel.swift */; };
+		77A1FE8C2937756B0018A403 /* StudyRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE8B2937756B0018A403 /* StudyRequestError.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -132,7 +136,7 @@
 		77414333292E678200220087 /* SearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeader.swift; sourceTree = "<group>"; };
 		77414335292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLeftAlignFlowLayout.swift; sourceTree = "<group>"; };
 		774143372930A8DB00220087 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchErrorModel.swift; sourceTree = "<group>"; };
+		7741433A2930BA5D00220087 /* UserSearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchError.swift; sourceTree = "<group>"; };
 		7741433C2930BC3E00220087 /* NearUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewController.swift; sourceTree = "<group>"; };
 		7741433F2930D1EA00220087 /* NearUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearUserViewModel.swift; sourceTree = "<group>"; };
 		7741434529320AB300220087 /* SeSACTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACTabModel.swift; sourceTree = "<group>"; };
@@ -157,6 +161,10 @@
 		77577017291CDF5A00DA331B /* SLPProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProject.entitlements; sourceTree = "<group>"; };
 		77577018291D3A2700DA331B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7757701D291DE2DB00DA331B /* FirebaseAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthorization.swift; sourceTree = "<group>"; };
+		77A1FE85293770E90018A403 /* StopSearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopSearchError.swift; sourceTree = "<group>"; };
+		77A1FE87293772940018A403 /* StudyAcceptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyAcceptError.swift; sourceTree = "<group>"; };
+		77A1FE892937745B0018A403 /* MyQueueStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyQueueStateModel.swift; sourceTree = "<group>"; };
+		77A1FE8B2937756B0018A403 /* StudyRequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRequestError.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +399,7 @@
 				77217A3B29269761000DC6CE /* UserLocationModel.swift */,
 				772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */,
 				7741436B29352DC100220087 /* StudyRequestModel.swift */,
+				77A1FE892937745B0018A403 /* MyQueueStateModel.swift */,
 			);
 			path = NetworkModel;
 			sourceTree = "<group>";
@@ -440,7 +449,10 @@
 				7744A356291FBD7300A065C8 /* WithdrawError.swift */,
 				7744A358291FBD8600A065C8 /* UpdateFcmTokenError.swift */,
 				77217A3F2926AE95000DC6CE /* QueueStateError.swift */,
-				7741433A2930BA5D00220087 /* UserSearchErrorModel.swift */,
+				7741433A2930BA5D00220087 /* UserSearchError.swift */,
+				77A1FE85293770E90018A403 /* StopSearchError.swift */,
+				77A1FE87293772940018A403 /* StudyAcceptError.swift */,
+				77A1FE8B2937756B0018A403 /* StudyRequestError.swift */,
 			);
 			path = ErrorModel;
 			sourceTree = "<group>";
@@ -699,6 +711,8 @@
 				77217A1329229545000DC6CE /* SearchStudyViewController.swift in Sources */,
 				7744A359291FBD8600A065C8 /* UpdateFcmTokenError.swift in Sources */,
 				7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */,
+				77A1FE86293770E90018A403 /* StopSearchError.swift in Sources */,
+				77A1FE8A2937745B0018A403 /* MyQueueStateModel.swift in Sources */,
 				77C0D99829195118008FDA83 /* LoginViewModel.swift in Sources */,
 				77414334292E678200220087 /* SearchHeader.swift in Sources */,
 				771A948B293661CE00771C60 /* ChatViewController.swift in Sources */,
@@ -723,9 +737,10 @@
 				77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,
-				7741433B2930BA5D00220087 /* UserSearchErrorModel.swift in Sources */,
+				7741433B2930BA5D00220087 /* UserSearchError.swift in Sources */,
 				774143482932181D00220087 /* NearSeSACTableModel.swift in Sources */,
 				77145A6C291924490052B2FB /* SceneDelegate.swift in Sources */,
+				77A1FE88293772940018A403 /* StudyAcceptError.swift in Sources */,
 				77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */,
 				7757701E291DE2DB00DA331B /* FirebaseAuthorization.swift in Sources */,
 				77414329292D30E400220087 /* SearchCollecionModel.swift in Sources */,
@@ -751,6 +766,7 @@
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 				77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */,
+				77A1FE8C2937756B0018A403 /* StudyRequestError.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
 				7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */,
 				7744A370292105CE00A065C8 /* NetworkReachability.swift in Sources */,

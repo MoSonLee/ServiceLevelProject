@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxDataSources
 import RxSwift
+import Toast
 
 final class NearUserViewController: UIViewController {
     
@@ -304,6 +305,20 @@ final class NearUserViewController: UIViewController {
             .emit(onNext: { [weak self] _ in
                 let vc = ChatViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.showToast
+            .emit(onNext: { [weak self] text in
+                self?.view.makeToast(text)
+            })
+            .disposed(by: disposeBag)
+        
+        output.changeRootVC
+            .emit(onNext: { [weak self] _ in
+                let vc = HomeTabViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                self?.changeRootViewController(nav)
             })
             .disposed(by: disposeBag)
     }

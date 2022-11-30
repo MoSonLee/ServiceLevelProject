@@ -131,7 +131,7 @@ extension SearchStudyViewModel {
                 UserDefaults.homeTabMode = .matching
                 
             case .failure(let error):
-                let error = UserSearchErrorModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                let error = UserSearchError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
                 case .reported3:
                     self?.showToastRelay.accept(SLPAssets.RawString.reported.text)
@@ -142,15 +142,15 @@ extension SearchStudyViewModel {
                 case .cancelThree:
                     self?.showToastRelay.accept(SLPAssets.RawString.penalty3.text)
                 case .tokenError:
-                    print(UserSearchErrorModel.tokenError)
+                    print(UserSearchError.tokenError)
                 case .unregistered:
-                    print(UserSearchErrorModel.unregistered)
+                    print(UserSearchError.unregistered)
                 case .serverError:
-                    print(UserSearchErrorModel.serverError)
+                    print(UserSearchError.serverError)
                 case .clientError:
-                    print(UserSearchErrorModel.clientError)
+                    print(UserSearchError.clientError)
                 case .unknown:
-                    print(UserSearchErrorModel.unknown)
+                    print(UserSearchError.unknown)
                 }
             }
         }

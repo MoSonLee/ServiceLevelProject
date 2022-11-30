@@ -27,6 +27,8 @@ final class NearUserViewModel {
         let getTableViewData: Signal<NearSeSACTableModel>
         let getrequested: Signal<NearSeSACTableModel>
         let moveToChatVC: Signal<Void>
+        let showToast: Signal<String>
+        let changeRootVC: Signal<Void>
     }
     
     var userLocation = UserLocationModel(lat: 0, long: 0)
@@ -42,6 +44,8 @@ final class NearUserViewModel {
     private let getQueueDBTableViewDataRelay = PublishRelay<NearSeSACTableModel>()
     private let getrequestedRelay = PublishRelay<NearSeSACTableModel>()
     private let moveToChatVCRelay = PublishRelay<Void>()
+    private let showToastRelay = PublishRelay<String>()
+    private let changeRootVCRelay = PublishRelay<Void>()
 
     private let disposeBag = DisposeBag()
     
@@ -83,7 +87,9 @@ final class NearUserViewModel {
             checkDataCount: checkDataCountRelay.asSignal(),
             getTableViewData: getQueueDBTableViewDataRelay.asSignal(),
             getrequested: getrequestedRelay.asSignal(),
-            moveToChatVC: moveToChatVCRelay.asSignal()
+            moveToChatVC: moveToChatVCRelay.asSignal(),
+            showToast: showToastRelay.asSignal(),
+            changeRootVC: changeRootVCRelay.asSignal()
         )
     }
 }
@@ -97,7 +103,6 @@ extension NearUserViewModel {
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.hasData(data: data)
                 self?.getData(data: data)
-    
                 print(data.fromQueueDB.count)
                 print(data.fromQueueDBRequested.count)
                 
@@ -121,13 +126,29 @@ extension NearUserViewModel {
     }
     
     func studyRequest(index: Int) {
-        APIService().studyRequest(dictionary: userId[index].toDictionary) { result in
+        APIService().studyRequest(dictionary: userId[index].toDictionary) { [weak self] result in
             switch result {
-            case .success(let response):
-                print(response)
+            case .success(_):
+                self?.showToastRelay.accept("스터디 요청을 보냈습니다.")
                 
             case .failure(let error):
-                print(error)
+                let error = StudyRequestError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .alreadyRequested:
+                    self?.acceptStudy(index: index)
+                case .alreayCanceled:
+                    self?.showToastRelay.accept("상대방이 스터디 찾기를 그만두었습니다")
+                case .tokenError:
+                    print(UserSearchError.tokenError)
+                case .unregistered:
+                    print(UserSearchError.unregistered)
+                case .serverError:
+                    print(UserSearchError.serverError)
+                case .clientError:
+                    print(UserSearchError.clientError)
+                case .unknown:
+                    print(UserSearchError.unknown)
+                }
             }
         }
     }
@@ -138,10 +159,62 @@ extension NearUserViewModel {
             case .success(let response):
                 print(response)
                 UserDefaults.homeTabMode = .message
+                self?.changeRootVCRelay.accept(())
                 self?.moveToChatVCRelay.accept(())
 
             case .failure(let error):
-                print(error)
+                let error = StudyAcceptError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .userAlreadyMatched:
+                    self?.showToastRelay.accept("상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다")
+                case .userCanceledStudy:
+                    self?.showToastRelay.accept("상대방이 스터디 찾기를 그만두었습니다")
+                case .alreadyMatched:
+                    self?.checkMyQueueState()
+                case .tokenError:
+                    print(UserSearchError.tokenError)
+                case .unregistered:
+                    print(UserSearchError.unregistered)
+                case .serverError:
+                    print(UserSearchError.serverError)
+                case .clientError:
+                    print(UserSearchError.clientError)
+                case .unknown:
+                    print(UserSearchError.unknown)
+                }
+            }
+        }
+    }
+    
+    private func checkMyQueueState() {
+        APIService().checkMyQueueState { [weak self] result in
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(MyQueueStateModel.self, from: response.data)
+                data.matched == 1 ? self?.showToastRelay.accept("\(data.matchedNick)님과 매칭되셨습니다.") :
+                self?.moveToChatVCRelay.accept(())
+                
+            case .failure(let error):
+                let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
+                switch error {
+                case .notRequestYet:
+                    print(QueueStateError.notRequestYet)
+                    
+                case .tokenError:
+                    print(QueueStateError.tokenError)
+                    
+                case .unregisteredError:
+                    print(QueueStateError.unregisteredError)
+                    
+                case .serverError:
+                    print(QueueStateError.serverError)
+                    
+                case .clientError:
+                    print(QueueStateError.clientError)
+                    
+                case .unknown:
+                    print(QueueStateError.unknown)
+                }
             }
         }
     }
@@ -155,7 +228,22 @@ extension NearUserViewModel {
                 self?.popVCRelay.accept(())
                 
             case .failure(let error):
-                print(error)
+                let error = StopSearchError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
+                case .alearyStoppedError:
+                    self?.showToastRelay.accept("누군가와 스터디를 함께하기로 약속하셨어요!")
+                    self?.moveToChatVCRelay.accept(())
+                case .tokenError:
+                    print(UserSearchError.tokenError)
+                case .unregistered:
+                    print(UserSearchError.unregistered)
+                case .serverError:
+                    print(UserSearchError.serverError)
+                case .clientError:
+                    print(UserSearchError.clientError)
+                case .unknown:
+                    print(UserSearchError.unknown)
+                }
             }
         }
     }

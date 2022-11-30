@@ -1,5 +1,5 @@
 //
-//  UserSearchErrorModel.swift
+//  UserSearchError.swift
 //  SLPProject
 //
 //  Created by 이승후 on 2022/11/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum UserSearchErrorModel: Int, Error {
+enum UserSearchError: Int, Error {
     case reported3 = 201
     case cancelOnce = 203
     case cancelTwo = 204
@@ -21,7 +21,7 @@ enum UserSearchErrorModel: Int, Error {
     var description: String { self.errorDescription }
 }
 
-extension UserSearchErrorModel {
+extension UserSearchError {
     var errorDescription: String {
         switch self {
         case .reported3:
