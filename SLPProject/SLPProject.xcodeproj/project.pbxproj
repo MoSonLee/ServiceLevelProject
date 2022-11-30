@@ -361,13 +361,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		7741432A292D318A00220087 /* RxModel */ = {
+		7741432A292D318A00220087 /* RxDataSoruceModel */ = {
 			isa = PBXGroup;
 			children = (
 				7741432B292D31A900220087 /* TableModel */,
 				7741432C292D31B600220087 /* CollectionModel */,
 			);
-			path = RxModel;
+			path = RxDataSoruceModel;
 			sourceTree = "<group>";
 		};
 		7741432B292D31A900220087 /* TableModel */ = {
@@ -419,12 +419,12 @@
 			path = APIService;
 			sourceTree = "<group>";
 		};
-		7741434429320A9D00220087 /* Enum */ = {
+		7741434429320A9D00220087 /* EnumModel */ = {
 			isa = PBXGroup;
 			children = (
 				7741434529320AB300220087 /* SeSACTabModel.swift */,
 			);
-			path = Enum;
+			path = EnumModel;
 			sourceTree = "<group>";
 		};
 		7744A348291FB81500A065C8 /* Network */ = {
@@ -439,7 +439,7 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		7744A350291FBD2400A065C8 /* ErrorModel */ = {
+		7744A350291FBD2400A065C8 /* NetworkErrorModel */ = {
 			isa = PBXGroup;
 			children = (
 				7744A352291FBD5A00A065C8 /* LoginError.swift */,
@@ -452,7 +452,7 @@
 				77A1FE87293772940018A403 /* StudyAcceptError.swift */,
 				77A1FE8B2937756B0018A403 /* StudyRequestError.swift */,
 			);
-			path = ErrorModel;
+			path = NetworkErrorModel;
 			sourceTree = "<group>";
 		};
 		7744A351291FBD4700A065C8 /* URL */ = {
@@ -540,13 +540,21 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		77A1FE92293785F20018A403 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				7741432D292D31D000220087 /* NetworkModel */,
+				7744A350291FBD2400A065C8 /* NetworkErrorModel */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		77C0D97C2919255E008FDA83 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7741434429320A9D00220087 /* Enum */,
-				7741432A292D318A00220087 /* RxModel */,
-				7741432D292D31D000220087 /* NetworkModel */,
-				7744A350291FBD2400A065C8 /* ErrorModel */,
+				7741434429320A9D00220087 /* EnumModel */,
+				7741432A292D318A00220087 /* RxDataSoruceModel */,
+				77A1FE92293785F20018A403 /* Network */,
 			);
 			path = Model;
 			sourceTree = "<group>";
