@@ -31,9 +31,10 @@ final class SearchStudyViewModel {
     
     var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var dbData: [SearchCollecionModel] = []
-    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     
+    private var userSearch = UserSearchModel(lat: 0.0, long: 0.0, studylist: [])
     private var studyList: [String] = []
+    
     private let popVCRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let addCollectionModelRelay = PublishRelay<SearchCollecionModel>()
@@ -83,12 +84,7 @@ final class SearchStudyViewModel {
 }
 
 extension SearchStudyViewModel {
-    func acceptDB(array: [SearchCollecionSectionModel]) -> [SearchCollecionSectionModel] {
-        var array = array
-        dbData.forEach { array[0].items.append($0) }
-        print(array)
-        return array
-    }
+    
     private func checkTextCount(text: String) {
         let study = text.components(separatedBy: " ")
         study.forEach {
@@ -154,5 +150,24 @@ extension SearchStudyViewModel {
                 }
             }
         }
+    }
+    
+    func acceptDB(array: [SearchCollecionSectionModel]) -> [SearchCollecionSectionModel] {
+        var array = array
+        dbData.forEach { array[0].items.append($0) }
+        print(array)
+        return array
+    }
+    
+    func setSectionValue(model: SearchCollecionModel, section: BehaviorRelay<[SearchCollecionSectionModel]>) {
+        var array = section.value
+        array[1].items.append(model)
+        section.accept(array)
+    }
+    
+    func deleteSectionValue(indexPath: IndexPath, section: BehaviorRelay<[SearchCollecionSectionModel]>) {
+        var array = section.value
+        array[1].items.remove(at: indexPath.item)
+        section.accept(array)
     }
 }

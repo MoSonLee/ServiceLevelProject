@@ -14,6 +14,8 @@ import Toast
 
 final class NearUserViewController: UIViewController {
     
+    let viewModel = NearUserViewModel()
+    
     private var backButton = UIBarButtonItem()
     private var stopButton = UIBarButtonItem()
     private var currentStatus: SeSACTabModel = .near
@@ -25,14 +27,10 @@ final class NearUserViewController: UIViewController {
     private let selecetedLineView = UIView()
     private let requestTableView = UITableView()
     private let acceptTableView = UITableView()
-    
     private let backgroundView = UIView()
     private let backgroundImage = UIImageView()
     private let backgroundLabel = UILabel()
     private let backgroundSubLabel = UILabel()
-    
-    let viewModel = NearUserViewModel()
-    
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     

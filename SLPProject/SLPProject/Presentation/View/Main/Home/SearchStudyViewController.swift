@@ -128,20 +128,16 @@ final class SearchStudyViewController: UIViewController {
         
         output.addCollectionModel
             .emit(onNext: { [weak self] model in
-                var array = self?.sections.value
-                array?[1].items.append(model)
-                guard let array = array else { return }
-                self?.sections.accept(array)
+                guard let secion = self?.sections else { return }
+                self?.viewModel.setSectionValue(model: model, section: secion)
                 self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
         output.deleteStudy
             .emit(onNext: { [weak self] indexPath in
-                var array = self?.sections.value
-                array?[1].items.remove(at: indexPath.item)
-                guard let array = array else { return }
-                self?.sections.accept(array)
+                guard let section = self?.sections else { return }
+                self?.viewModel.deleteSectionValue(indexPath: indexPath, section: section)
                 self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
