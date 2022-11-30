@@ -97,7 +97,7 @@ extension NearUserViewModel {
                 let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
                 self?.hasData(data: data)
                 self?.getData(data: data)
-                
+    
                 print(data.fromQueueDB.count)
                 print(data.fromQueueDBRequested.count)
                 

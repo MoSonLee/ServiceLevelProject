@@ -214,7 +214,8 @@ final class HomeTabViewController: UIViewController {
             vc.viewModel.userLocation = UserLocationModel(lat: location.latitude, long: location.longitude)
             navigationController?.pushViewController(vc, animated: true)
         case .message:
-            break
+            let vc = ChatViewController()
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     
