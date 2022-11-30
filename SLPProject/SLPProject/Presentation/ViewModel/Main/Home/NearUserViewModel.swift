@@ -54,6 +54,7 @@ final class NearUserViewModel {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.searchSeSAC()
+                self?.checkMyQueueState()
             })
             .disposed(by: disposeBag)
         
@@ -100,11 +101,9 @@ extension NearUserViewModel {
         APIService().sesacSearch(dictionary: userLocation.toDictionary) { [weak self] result in
             switch result {
             case .success(let response):
-                let data = try! JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data)
-                self?.hasData(data: data)
+                guard let data = try? JSONDecoder().decode(SeSACSearchResultModel.self, from: response.data) else { return }
                 self?.getData(data: data)
-                print(data.fromQueueDB.count)
-                print(data.fromQueueDBRequested.count)
+                self?.hasData(data: data)
                 
             case .failure(let error):
                 print(error)
@@ -185,7 +184,7 @@ extension NearUserViewModel {
         }
     }
     
-    func checkMyQueueState() {
+    private func checkMyQueueState() {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
             case .success(let response):
@@ -249,8 +248,7 @@ extension NearUserViewModel {
     }
     
     private func hasData(data: SeSACSearchResultModel) {
-        data.fromQueueDB.count != 0 ? checkDataCountRelay.accept(true) :
-        checkDataCountRelay.accept(false)
+        data.fromQueueDB.count != 0 ? checkDataCountRelay.accept(true) : checkDataCountRelay.accept(false)
     }
     
     func acceptSectionValue(model: NearSeSACTableModel, section: BehaviorRelay<[NearSeSACTableSectionModel]>) {

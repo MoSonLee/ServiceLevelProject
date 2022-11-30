@@ -197,7 +197,8 @@ extension HomeTabViewModel {
             switch result {
             case .success(let response):
                 print(response)
-                self?.homeTabModeRelay.accept(.matching)
+                guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
+                data.matched == 1 ? self?.homeTabModeRelay.accept(.message)  : self?.homeTabModeRelay.accept(.matching)
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
