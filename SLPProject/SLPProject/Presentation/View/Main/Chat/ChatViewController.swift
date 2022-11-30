@@ -54,7 +54,7 @@ final class ChatViewController: UIViewController {
     private func bind() {
         output.popVC
             .emit(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
     }
