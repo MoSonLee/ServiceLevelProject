@@ -230,7 +230,6 @@ final class NearUserViewController: UIViewController {
                 .disposed(by: cell.disposeBag)
             return cell
         }
-        
         acceptSection
             .bind(to: acceptTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -250,6 +249,22 @@ final class NearUserViewController: UIViewController {
             .disposed(by: cell.disposeBag)
     }
     
+    private func setNearTabValues() {
+        currentStatus = .near
+        nearButton.isSelected = true
+        receivedButton.isSelected = false
+        selectedBarAnimation(moveX: 0)
+        setRequestTableView()
+    }
+    
+    private func setReceivedTabValues() {
+        currentStatus = .receive
+        receivedButton.isSelected = true
+        nearButton.isSelected = false
+        selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
+        setAcceptTableView()
+    }
+    
     private func bind() {
         output.popVC
             .emit(onNext: { [weak self] _ in
@@ -267,18 +282,9 @@ final class NearUserViewController: UIViewController {
             .drive(onNext: { [weak self] selectedtab in
                 switch selectedtab {
                 case .near:
-                    self?.currentStatus = .near
-                    self?.nearButton.isSelected = true
-                    self?.receivedButton.isSelected = false
-                    self?.selectedBarAnimation(moveX: 0)
-                    self?.setRequestTableView()
-                    
+                    self?.setNearTabValues()
                 case .receive:
-                    self?.currentStatus = .receive
-                    self?.receivedButton.isSelected = true
-                    self?.nearButton.isSelected = false
-                    self?.selectedBarAnimation(moveX: UIScreen.main.bounds.width / 2)
-                    self?.setAcceptTableView()
+                    self?.setReceivedTabValues()
                 }
             })
             .disposed(by: disposeBag)
@@ -320,4 +326,4 @@ final class NearUserViewController: UIViewController {
     }
 }
 
-extension NearUserViewController: UITableViewDelegate { }
+extension NearUserViewController: UITableViewDelegate {}
