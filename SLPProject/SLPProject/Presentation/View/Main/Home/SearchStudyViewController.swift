@@ -173,7 +173,6 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
-        
         sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
