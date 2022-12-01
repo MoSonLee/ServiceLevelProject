@@ -12,8 +12,6 @@ import RxSwift
 
 final class SeSACShopViewController: UIViewController {
     
-    private var backButton = UIBarButtonItem()
-    
     private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
@@ -24,18 +22,12 @@ final class SeSACShopViewController: UIViewController {
     
     private func setComponents() {
         setComponentsValue()
-        setNavigation()
-    }
-    
-    private func setNavigation() {
-        backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
-        backButton.tintColor = SLPAssets.CustomColor.black.color
-        navigationItem.leftBarButtonItem = backButton
     }
     
     private func setConstraints() { }
     
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
+        navigationItem.title = "새싹샵"
     }
 }

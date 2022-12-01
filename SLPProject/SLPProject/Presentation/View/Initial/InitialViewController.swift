@@ -64,9 +64,8 @@ final class InitialViewController: UIViewController {
         output.showMainVC
             .emit(onNext: { [weak self] _ in
                 let vc = MainTabViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                self?.present(nav, animated: true)
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         

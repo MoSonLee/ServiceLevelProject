@@ -53,11 +53,12 @@ final class MyInfoViewController: UIViewController {
     private func setComponents() {
         view.addSubview(tableView)
         setComponentsValue()
+        navigationItem.title = "내정보"
     }
     
     private func setConstraints() {
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(-24)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(-24)
             make.leading.equalToSuperview().inset(17)
             make.trailing.equalToSuperview().inset(15)
             make.bottom.equalToSuperview().inset(277)

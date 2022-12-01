@@ -29,6 +29,10 @@ final class MainTabViewController: UITabBarController, UITabBarControllerDelegat
         vc2.tabBarItem = secondTabBarItem
         vc3.tabBarItem = fourthTabBarItem
         
-        viewControllers = [vc1, vc2, vc3]
+        let nav1 = UINavigationController(rootViewController: vc1)
+        let nav2 = UINavigationController(rootViewController: vc2)
+        let nav3 = UINavigationController(rootViewController: vc3)
+        
+        viewControllers = [nav1, nav2, nav3]
     }
 }

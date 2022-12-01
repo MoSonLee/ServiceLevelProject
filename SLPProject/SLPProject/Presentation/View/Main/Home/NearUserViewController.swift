@@ -58,8 +58,6 @@ final class NearUserViewController: UIViewController {
         setComponents()
         setConstraints()
         bind()
-        bindFirstTableView()
-        bindSecondTableView()
         viewDidLoadEvent.accept(())
     }
     
@@ -181,7 +179,7 @@ final class NearUserViewController: UIViewController {
         backgroundImage.image = SLPAssets.CustomImage.sprout.image
     }
     
-    private func selectedBarAnimation(moveX: CGFloat){
+    private func selectedBarAnimation(moveX: CGFloat) {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .allowUserInteraction, animations: { [weak self] in
             self?.selecetedLineView.transform = CGAffineTransform(translationX: moveX, y: 0)
         }, completion: nil)
@@ -322,6 +320,9 @@ final class NearUserViewController: UIViewController {
                 self?.changeRootViewController(nav)
             })
             .disposed(by: disposeBag)
+        
+        bindFirstTableView()
+        bindSecondTableView()
     }
 }
 

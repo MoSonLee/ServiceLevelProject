@@ -45,6 +45,7 @@ final class MySecondInfoViewController: UIViewController {
     }
     
     private func setNavigationItems() {
+        navigationItem.title = "정보관리"
         backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
         backButton.tintColor = SLPAssets.CustomColor.black.color
         completeButton = UIBarButtonItem(title: "저장", style: .plain, target: navigationController, action: nil)

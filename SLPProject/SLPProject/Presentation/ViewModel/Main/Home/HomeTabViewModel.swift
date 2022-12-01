@@ -237,7 +237,6 @@ extension HomeTabViewModel {
                         self?.queueDB.append(dbData[i].studylist[j])
                     }
                 }
-                
                 switch self?.num {
                 case -1:
                     data.fromQueueDB.forEach {
