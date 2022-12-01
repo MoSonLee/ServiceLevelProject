@@ -67,6 +67,7 @@ final class HomeTabViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         homeTabMode = UserDefaults.homeTabMode
         button.setImage(homeTabMode.image, for: .normal)
     }
@@ -103,7 +104,8 @@ final class HomeTabViewController: UIViewController {
     
     private func setConstraints() {
         mapView.snp.makeConstraints { make in
-            make.top.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalToSuperview()
+            make.bottom.left.right.equalTo(view.safeAreaLayoutGuide)
         }
         annotationButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -298,7 +300,6 @@ extension HomeTabViewController: MKMapViewDelegate {
         guard let annotation = annotation as? CustomAnnotation else {
             return nil
         }
-        
         var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotationView.identifier)
         
         if annotationView == nil {
@@ -308,7 +309,6 @@ extension HomeTabViewController: MKMapViewDelegate {
         } else {
             annotationView?.annotation = annotation
         }
-        
         let sesacImage: UIImage!
         let size = CGSize(width: 85, height: 85)
         UIGraphicsBeginImageContext(size)

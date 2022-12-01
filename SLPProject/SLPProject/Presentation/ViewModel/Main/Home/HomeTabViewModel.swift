@@ -106,12 +106,12 @@ final class HomeTabViewModel {
         
         input.searchButtonTapped
             .emit(onNext: { [weak self] _ in
-                self?.searchSeSAC()
-                guard let db = self?.queueDB else { return }
-                guard let location = self?.currentLocation else { return }
-                self?.getQueueDBRelay.accept(db)
-                self?.getCenterRelay.accept(location)
-                self?.moveToSearchViewRelay.accept(())
+                guard let self = self else { return }
+                self.searchSeSAC()
+                let db = self.queueDB
+                self.getQueueDBRelay.accept(db)
+                self.getCenterRelay.accept(CLLocationCoordinate2D(latitude: self.userLocation.lat, longitude: self.userLocation.long))
+                self.moveToSearchViewRelay.accept(())
             })
             .disposed(by: disposeBag)
         
@@ -129,6 +129,7 @@ final class HomeTabViewModel {
             })
             .subscribe(onNext: { [weak self] location in
                 self?.userLocation = UserLocationModel(lat: location.center.latitude, long: location.center.longitude)
+//                self?.currentLocation = CLLocationCoordinate2D(latitude: location.center.latitude, longitude: location.center.longitude)
                 self?.searchSeSAC()
             })
             .disposed(by: disposeBag)

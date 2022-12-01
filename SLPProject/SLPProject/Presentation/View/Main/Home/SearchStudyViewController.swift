@@ -61,6 +61,7 @@ final class SearchStudyViewController: UIViewController {
     }
     
     private func setNavigation() {
+        navigationController?.isNavigationBarHidden = false
         backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
         backButton.tintColor = SLPAssets.CustomColor.black.color
         navigationItem.leftBarButtonItem = backButton
@@ -144,10 +145,10 @@ final class SearchStudyViewController: UIViewController {
         
         output.moveToNearUserVC
             .emit(onNext: { [weak self] _ in
-                guard let longtitude = self?.viewModel.location.longitude else { return }
                 guard let latitude = self?.viewModel.location.latitude else { return }
+                guard let longtitude = self?.viewModel.location.longitude else { return }
                 let vc = NearUserViewController()
-                vc.viewModel.userLocation = UserLocationModel(lat: longtitude, long: latitude)
+                vc.viewModel.userLocation = UserLocationModel(lat: latitude, long: longtitude)
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)

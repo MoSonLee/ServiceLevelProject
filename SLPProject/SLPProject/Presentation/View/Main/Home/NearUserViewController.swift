@@ -86,6 +86,7 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setNavigation() {
+        navigationController?.isNavigationBarHidden = false
         backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
         stopButton = UIBarButtonItem(title: "찾기중단", style: .plain, target: navigationController, action: nil)
         backButton.tintColor = SLPAssets.CustomColor.black.color
@@ -187,7 +188,7 @@ final class NearUserViewController: UIViewController {
     }
     
     private func setTableViewBackground(check: Bool) {
-        !check ? requestTableView.backgroundView = backgroundView : nil
+        requestTableView.backgroundView = check ? nil : backgroundView
     }
     
     private func bindFirstTableView() {
