@@ -35,7 +35,7 @@ final class ChatViewController: UIViewController {
     }
     
     private func setComponentsValue() {
-        view.backgroundColor = .white
+        view.backgroundColor = SLPAssets.CustomColor.white.color
     }
     
     private func setNavigation() {

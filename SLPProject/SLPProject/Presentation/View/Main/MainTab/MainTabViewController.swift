@@ -18,12 +18,13 @@ final class MainTabViewController: UITabBarController, UITabBarControllerDelegat
         view.backgroundColor = SLPAssets.CustomColor.white.color
         
         let vc1 = HomeTabViewController()
-        let vc2 = SeSACShopViewController()
+//        let vc2 = SeSACShopViewController()
+        let vc2 = ChatViewController()
         let vc3 = MyInfoViewController()
         
         let firstTabBarItem = UITabBarItem(title: "홈", image: SLPAssets.CustomImage.homeIcon.image, tag: 0)
         let secondTabBarItem = UITabBarItem(title: "새싹샵", image: SLPAssets.CustomImage.shopIcon.image, tag: 1)
-        let fourthTabBarItem = UITabBarItem(title: "내정보", image: SLPAssets.CustomImage.homeIcon.image, tag: 3)
+        let fourthTabBarItem = UITabBarItem(title: "내정보", image: SLPAssets.CustomImage.homeIcon.image, tag: 2)
         
         vc1.tabBarItem = firstTabBarItem
         vc2.tabBarItem = secondTabBarItem
