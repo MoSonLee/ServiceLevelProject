@@ -210,13 +210,16 @@ final class HomeTabViewController: UIViewController {
             let vc = SearchStudyViewController()
             vc.viewModel.location = location
             vc.viewModel.dbData = searchCollectionModel
+            vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         case .matching:
             let vc = NearUserViewController()
             vc.viewModel.userLocation = UserLocationModel(lat: location.latitude, long: location.longitude)
+            vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         case .message:
             let vc = ChatViewController()
+            vc.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(vc, animated: true)
         }
     }

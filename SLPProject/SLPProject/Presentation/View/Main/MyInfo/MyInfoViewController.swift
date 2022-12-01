@@ -89,7 +89,8 @@ final class MyInfoViewController: UIViewController {
         output.showMySecondInfoVC
             .emit { [weak self] indexPath in
                 let vc = MySecondInfoViewController()
-                 self?.navigationController?.pushViewController(vc, animated: true)
+                vc.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

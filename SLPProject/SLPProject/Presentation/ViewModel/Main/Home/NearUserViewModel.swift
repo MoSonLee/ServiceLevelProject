@@ -46,7 +46,7 @@ final class NearUserViewModel {
     private let moveToChatVCRelay = PublishRelay<Void>()
     private let showToastRelay = PublishRelay<String>()
     private let changeRootVCRelay = PublishRelay<Void>()
-
+    
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
@@ -159,7 +159,7 @@ extension NearUserViewModel {
                 UserDefaults.homeTabMode = .message
                 self?.moveToChatVCRelay.accept(())
                 self?.changeRootVCRelay.accept(())
-
+                
             case .failure(let error):
                 let error = StudyAcceptError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {

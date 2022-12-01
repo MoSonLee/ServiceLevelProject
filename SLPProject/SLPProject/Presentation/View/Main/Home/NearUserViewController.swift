@@ -19,7 +19,9 @@ final class NearUserViewController: UIViewController {
     private var backButton = UIBarButtonItem()
     private var stopButton = UIBarButtonItem()
     private var currentStatus: SeSACTabModel = .near
-    private var toggle: Bool = false
+    
+    private var requestToggleArray: [Bool] = [false]
+    private var acceptToggleArray: [Bool] = [false]
     
     private let nearButton = UIButton()
     private let receivedButton = UIButton()
@@ -192,17 +194,28 @@ final class NearUserViewController: UIViewController {
     private func bindFirstTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
+            guard let self = self else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.configureToNear(indexPath: indexPath, item: item)
-            self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
             cell.configureRequestButton()
+            cell.setExpand(toggle: self.requestToggleArray[indexPath.row])
+            
+            cell.showInfoButton.rx.tap
+                .bind(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.requestToggleArray[indexPath.row] = !(self.requestToggleArray[indexPath.row])
+                    self.requestTableView.reloadRows(at:[indexPath], with: .automatic)
+                })
+                .disposed(by: cell.disposeBag)
+            
             cell.requestOrGetButton.rx.tap
-                .subscribe(onNext: {
+                .subscribe(onNext: { [weak self] _ in
                     self?.showAlertWithCancel(title: "스터디를 요청할게요", okTitle: "확인", completion: {
                         self?.viewModel.studyRequest(index: indexPath.row)
                     })
                 })
                 .disposed(by: cell.disposeBag)
+            
             return cell
         }
         requestSection
@@ -213,13 +226,23 @@ final class NearUserViewController: UIViewController {
     private func bindSecondTableView() {
         let dataSource = RxTableViewSectionedAnimatedDataSource<NearSeSACTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileImageButtonCell.identifider, for: indexPath) as? ProfileImageButtonCell else { return UITableViewCell() }
+            guard let self = self else { return UITableViewCell() }
             cell.selectionStyle = .none
             cell.configureToNear(indexPath: indexPath, item: item)
-            self?.setShowInfoTapped(cell: cell, indexPath: indexPath)
             cell.configureRequestButton()
             cell.configureGetButton()
+            cell.setExpand(toggle: self.acceptToggleArray[indexPath.row])
+            
+            cell.showInfoButton.rx.tap
+                .bind(onNext: { [weak self] _ in
+                    guard let self = self else { return }
+                    self.acceptToggleArray[indexPath.row] = !(self.acceptToggleArray[indexPath.row])
+                    self.acceptTableView.reloadRows(at:[indexPath], with: .automatic)
+                })
+                .disposed(by: cell.disposeBag)
+            
             cell.requestOrGetButton.rx.tap
-                .subscribe(onNext: {
+                .subscribe(onNext: { [weak self] _ in
                     self?.showAlertWithCancel(title: "스터디를 수락할까요?", okTitle: "확인", completion: {
                         self?.viewModel.acceptStudy(index: indexPath.row)
                     })
@@ -230,20 +253,6 @@ final class NearUserViewController: UIViewController {
         acceptSection
             .bind(to: acceptTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-    }
-    
-    private func setShowInfoTapped(cell: ProfileImageButtonCell, indexPath: IndexPath) {
-        cell.showInfoButton.rx.tap
-            .bind(onNext: { [weak self] _ in
-                self?.toggle = !(self?.toggle ?? false)
-                cell.setExpand(toggle: self?.toggle ?? false)
-                UIView.transition(
-                    with: self?.requestTableView ?? UIView(),
-                    duration: 0.5,
-                    options: .transitionCrossDissolve,
-                    animations: { self?.requestTableView.reloadRows(at:[indexPath], with: .fade)})
-            })
-            .disposed(by: cell.disposeBag)
     }
     
     private func setNearTabValues() {
@@ -290,6 +299,10 @@ final class NearUserViewController: UIViewController {
             .emit(onNext: { [weak self] model in
                 guard let requestSection = self?.requestSection else { return }
                 self?.viewModel.acceptSectionValue(model: model, section: requestSection)
+                let count = requestSection.value[0].items.count
+                for _ in 0..<count {
+                    self?.requestToggleArray.append(false)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -297,6 +310,10 @@ final class NearUserViewController: UIViewController {
             .emit(onNext: { [weak self] model in
                 guard let acceptSection = self?.acceptSection else { return }
                 self?.viewModel.acceptSectionValue(model: model, section: acceptSection)
+                let count = acceptSection.value[0].items.count
+                for _ in 0..<count {
+                    self?.acceptToggleArray.append(false)
+                }
             })
             .disposed(by: disposeBag)
         
