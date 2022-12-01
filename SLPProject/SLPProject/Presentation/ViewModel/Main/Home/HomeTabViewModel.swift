@@ -129,7 +129,6 @@ final class HomeTabViewModel {
             })
             .subscribe(onNext: { [weak self] location in
                 self?.userLocation = UserLocationModel(lat: location.center.latitude, long: location.center.longitude)
-//                self?.currentLocation = CLLocationCoordinate2D(latitude: location.center.latitude, longitude: location.center.longitude)
                 self?.searchSeSAC()
             })
             .disposed(by: disposeBag)
