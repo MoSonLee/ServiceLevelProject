@@ -101,7 +101,7 @@ final class SeSACShopViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(20)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
         }
@@ -180,6 +180,4 @@ final class SeSACShopViewController: UIViewController {
     }
 }
 
-extension SeSACShopViewController: UICollectionViewDelegate {
-    
-}
+extension SeSACShopViewController: UICollectionViewDelegate { }
