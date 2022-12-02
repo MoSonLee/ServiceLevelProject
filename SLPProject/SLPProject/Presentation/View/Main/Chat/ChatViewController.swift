@@ -8,12 +8,18 @@
 import UIKit
 
 import RxCocoa
+import RxDataSources
 import RxSwift
+import SnapKit
 
 final class ChatViewController: UIViewController {
     
     private var backButton = UIBarButtonItem()
     private var ellipsisButton = UIBarButtonItem()
+    
+    private let tableView = UITableView()
+    private let textField = CustomTextField()
+    private let sendButton = UIButton()
     
     private let viewModel = ChatViewModel()
     private lazy var input = ChatViewModel.Input(
@@ -24,18 +30,27 @@ final class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigation()
         setComponents()
+        setComponentsValue()
         setConstraints()
         bind()
     }
     
     private func setComponents() {
-        setComponentsValue()
-        setNavigation()
+        [tableView, textField].forEach {
+            view.addSubview($0)
+        }
+        textField.addSubview(sendButton)
     }
     
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
+        tableView.backgroundColor = .black
+        sendButton.setImage(SLPAssets.CustomImage.sendMessageButton.image, for: .normal)
+        textField.backgroundColor =  SLPAssets.CustomColor.gray1.color
+        textField.placeholder = "메세지를 입력하세요"
+        textField.layer.cornerRadius = 8
     }
     
     private func setNavigation() {
@@ -48,7 +63,23 @@ final class ChatViewController: UIViewController {
     }
     
     private func setConstraints() {
-        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalTo(textField.snp.top).offset(-16)
+        }
+        textField.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.height.equalTo(52)
+        }
+        sendButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
     }
     
     private func bind() {
@@ -57,5 +88,9 @@ final class ChatViewController: UIViewController {
                 self?.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func bindTableView() {
+        
     }
 }
