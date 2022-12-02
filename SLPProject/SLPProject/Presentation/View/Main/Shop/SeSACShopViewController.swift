@@ -8,6 +8,7 @@
 import UIKit
 
 import RxCocoa
+import RxDataSources
 import RxSwift
 import SnapKit
 
@@ -29,15 +30,26 @@ final class SeSACShopViewController: UIViewController {
         backgroundButtonTapped: backgroundButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
-    
     private let disposeBag = DisposeBag()
+    
+    private var collectionSection = BehaviorRelay(value: [
+        SeSACIconCollectionSectionModel(header: "", items: [
+            SeSACIconCollectionModel(imageString: SeSACIconModel.first.iconImageString, titleText: SeSACIconModel.first.titleText, descriptionText: SeSACIconModel.first.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.second.iconImageString, titleText: SeSACIconModel.second.titleText, descriptionText: SeSACIconModel.second.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.third.iconImageString, titleText: SeSACIconModel.third.titleText, descriptionText: SeSACIconModel.third.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.fourth.iconImageString, titleText: SeSACIconModel.fourth.titleText, descriptionText: SeSACIconModel.fourth.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.fifth.iconImageString, titleText: SeSACIconModel.fifth.titleText, descriptionText: SeSACIconModel.fifth.descriptionText)
+        ])
+    ])
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setComponentsValue()
         setConstraints()
+        registerCollectionandTableView()
         bind()
+        bindCollectionView()
     }
     
     private func setComponents() {
@@ -82,12 +94,35 @@ final class SeSACShopViewController: UIViewController {
         }
     }
     
+    private func setcollectionView() {
+        tableView.removeFromSuperview()
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
+    }
+    
+    private func registerCollectionandTableView() {
+        collectionView.register(ShopCollectionViewCell.self, forCellWithReuseIdentifier: ShopCollectionViewCell.identifider)
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        collectionView.collectionViewLayout = collectionView.setCollectionViewLayout()
+        tableView.register(ProfileImageButtonCell.self, forCellReuseIdentifier: ProfileImageButtonCell.identifider)
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+    
     private func setSesacTabValues() {
         currentStatus = .sesac
         sesacButton.isSelected = true
         backgroundButton.isSelected = false
         selectedBarAnimation(moveX: 0)
-//        setRequestTableView()
+        setcollectionView()
     }
     
     private func setBackgroundTabValues() {
@@ -132,4 +167,19 @@ final class SeSACShopViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func bindCollectionView() {
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<SeSACIconCollectionSectionModel>(configureCell: { (datasource, collectionView, indexPath, item) in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShopCollectionViewCell.identifider, for: indexPath) as? ShopCollectionViewCell else { return UICollectionViewCell() }
+            cell.configure(indexPath: indexPath, item: item)
+            return cell
+        })
+        collectionSection
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SeSACShopViewController: UICollectionViewDelegate {
+    
 }

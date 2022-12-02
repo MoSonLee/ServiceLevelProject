@@ -8,6 +8,7 @@
 import Foundation
 
 enum ShopTabModel: String {
+    
     case sesac
     case background
 }

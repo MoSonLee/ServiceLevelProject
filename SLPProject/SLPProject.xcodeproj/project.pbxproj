@@ -91,6 +91,10 @@
 		77A1FEA9293A34F20018A403 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEA8293A34F20018A403 /* SocketIO */; };
 		77A1FEAB293A4CA30018A403 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEAA293A4CA20018A403 /* ShopViewModel.swift */; };
 		77A1FEAD293A4D580018A403 /* ShopTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEAC293A4D580018A403 /* ShopTabModel.swift */; };
+		77A1FEAF293A5AAB0018A403 /* ShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEAE293A5AAB0018A403 /* ShopTableViewCell.swift */; };
+		77A1FEB1293A5AB50018A403 /* ShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB0293A5AB50018A403 /* ShopCollectionViewCell.swift */; };
+		77A1FEB3293A5EF70018A403 /* SeSACIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB2293A5EF60018A403 /* SeSACIconModel.swift */; };
+		77A1FEB5293A611A0018A403 /* SeSACIconCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB4293A611A0018A403 /* SeSACIconCollectionModel.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -186,6 +190,10 @@
 		77A1FEA5293A34A20018A403 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		77A1FEAA293A4CA20018A403 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
 		77A1FEAC293A4D580018A403 /* ShopTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTabModel.swift; sourceTree = "<group>"; };
+		77A1FEAE293A5AAB0018A403 /* ShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTableViewCell.swift; sourceTree = "<group>"; };
+		77A1FEB0293A5AB50018A403 /* ShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCollectionViewCell.swift; sourceTree = "<group>"; };
+		77A1FEB2293A5EF60018A403 /* SeSACIconModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACIconModel.swift; sourceTree = "<group>"; };
+		77A1FEB4293A611A0018A403 /* SeSACIconCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACIconCollectionModel.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +309,7 @@
 				77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */,
 				77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */,
 				77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */,
+				77A1FEAE293A5AAB0018A403 /* ShopTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -407,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				77414328292D30E400220087 /* SearchCollecionModel.swift */,
+				77A1FEB4293A611A0018A403 /* SeSACIconCollectionModel.swift */,
 			);
 			path = CollectionModel;
 			sourceTree = "<group>";
@@ -432,6 +442,7 @@
 			children = (
 				77414331292E5DB500220087 /* SearchCollectionViewCell.swift */,
 				77414333292E678200220087 /* SearchHeader.swift */,
+				77A1FEB0293A5AB50018A403 /* ShopCollectionViewCell.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -450,6 +461,7 @@
 			children = (
 				7741434529320AB300220087 /* SeSACTabModel.swift */,
 				77A1FEAC293A4D580018A403 /* ShopTabModel.swift */,
+				77A1FEB2293A5EF60018A403 /* SeSACIconModel.swift */,
 			);
 			path = EnumModel;
 			sourceTree = "<group>";
@@ -819,6 +831,7 @@
 				7744A35C291FC32600A065C8 /* UserInfo.swift in Sources */,
 				77C0D99629194F50008FDA83 /* LoginViewController.swift in Sources */,
 				7741433E2930BEE400220087 /* SearchStudyViewModel.swift in Sources */,
+				77A1FEB3293A5EF70018A403 /* SeSACIconModel.swift in Sources */,
 				7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */,
 				7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */,
 				7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */,
@@ -829,6 +842,7 @@
 				774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */,
 				77A1FE9C293A1EAF0018A403 /* ChatMessageModel.swift in Sources */,
 				77A1FEA2293A312D0018A403 /* UserChatTableViewCell.swift in Sources */,
+				77A1FEB5293A611A0018A403 /* SeSACIconCollectionModel.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
@@ -838,10 +852,12 @@
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
 				77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */,
 				7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */,
+				77A1FEAF293A5AAB0018A403 /* ShopTableViewCell.swift in Sources */,
 				7741436C29352DC100220087 /* StudyRequestModel.swift in Sources */,
 				77C0D9A429199970008FDA83 /* String.swift in Sources */,
 				77C0D990291942E4008FDA83 /* CustomColor.swift in Sources */,
 				77217A3A292684E2000DC6CE /* HomeTabViewModel.swift in Sources */,
+				77A1FEB1293A5AB50018A403 /* ShopCollectionViewCell.swift in Sources */,
 				77A1FE8C2937756B0018A403 /* StudyRequestError.swift in Sources */,
 				7737FD3B291ACB4B0029DEA2 /* EmailViewController.swift in Sources */,
 				7741433D2930BC3E00220087 /* NearUserViewController.swift in Sources */,

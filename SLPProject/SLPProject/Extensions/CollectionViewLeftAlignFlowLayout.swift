@@ -7,6 +7,16 @@
 
 import UIKit
 
+extension UICollectionView {
+    func setCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 8
+        let width = UIScreen.main.bounds.width / 2 - (spacing * 3)
+        layout.itemSize = CGSize(width: width, height: width * (279 / 165))
+        return layout
+    }
+}
+
 final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
@@ -39,3 +49,4 @@ final class CollectionViewLeftAlignFlowLayout: UICollectionViewFlowLayout {
         return attributes
     }
 }
+
