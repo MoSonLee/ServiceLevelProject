@@ -9,17 +9,17 @@ import Foundation
 
 import RxDataSources
 
-struct MyChatTableModel {
+struct ChatTableModel {
     var title: String
     var imageString: String
 }
 
-struct MyChatTableSectionModel {
+struct ChatTableSectionModel {
     var header: String
-    var items: [MyChatTableModel]
+    var items: [ChatTableModel]
 }
 
-extension MyChatTableModel: IdentifiableType, Equatable {
+extension ChatTableModel: IdentifiableType, Equatable {
     typealias Identity = String
     var identity: String {
         return UUID().uuidString
