@@ -13,15 +13,35 @@ import RxSwift
 final class ShopViewModel {
     
     struct Input {
-        let viewDidLoad: Observable<Void>
         let sesacButtonTapped: Signal<Void>
         let backgroundButtonTapped: Signal<Void>
     }
     
     struct Output {
-        let selectedTab: Driver<SeSACTabModel>
-        let getTableViewData: Signal<NearSeSACTableModel>
-        let getrequested: Signal<NearSeSACTableModel>
+        let selectedTab: Driver<ShopTabModel>
         let showToast: Signal<String>
+    }
+    
+    private let selectedTabRelay = BehaviorRelay<ShopTabModel>(value: .sesac)
+    private let showToastRelay = PublishRelay<String>()
+    private let disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
+        
+        input.sesacButtonTapped
+            .emit(onNext: { [weak self] _ in
+                self?.selectedTabRelay.accept(.sesac)
+            })
+            .disposed(by: disposeBag)
+        
+        input.backgroundButtonTapped
+            .emit(onNext: { [weak self] _ in
+                self?.selectedTabRelay.accept(.background)
+            })
+            .disposed(by: disposeBag)
+        return Output(
+            selectedTab: selectedTabRelay.asDriver(),
+            showToast: showToastRelay.asSignal()
+        )
     }
 }
