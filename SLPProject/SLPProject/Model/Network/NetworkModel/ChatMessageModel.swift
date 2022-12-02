@@ -8,7 +8,7 @@
 import Foundation
 
 struct ChatMessageModel: Codable {
-    var ChatModel: [String: Any] {
+    var toDictionary: [String: Any] {
         let dictionary: [String: Any] = [
             "chat": chat
         ]

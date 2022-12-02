@@ -11,7 +11,6 @@ import RxDataSources
 
 struct ChatTableModel {
     var title: String
-    var imageString: String
 }
 
 struct ChatTableSectionModel {
@@ -23,5 +22,18 @@ extension ChatTableModel: IdentifiableType, Equatable {
     typealias Identity = String
     var identity: String {
         return UUID().uuidString
+    }
+}
+
+extension ChatTableSectionModel: AnimatableSectionModelType {
+    typealias Item = ChatTableModel
+    typealias Identity = String
+    var identity: String {
+        return header
+    }
+    
+    init(original: ChatTableSectionModel, items: [Item]) {
+        self = original
+        self.items = items
     }
 }

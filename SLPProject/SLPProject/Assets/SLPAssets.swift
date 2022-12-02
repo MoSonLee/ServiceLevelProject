@@ -37,6 +37,7 @@ enum SLPAssets {
         case sprout
         case ellipsis
         case sendMessageButton
+        case sendMessageButtonFilled
         
         var image: UIImage {
             switch self {
@@ -120,6 +121,9 @@ enum SLPAssets {
                 
             case .sendMessageButton:
                 return UIImage(named: "sendMessageButton")!
+                
+            case .sendMessageButtonFilled:
+                return UIImage(named: "sendMessageButtonFilled")!
             }
         }
     }

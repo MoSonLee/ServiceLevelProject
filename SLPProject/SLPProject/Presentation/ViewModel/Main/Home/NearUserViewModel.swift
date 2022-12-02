@@ -159,6 +159,7 @@ extension NearUserViewModel {
                 UserDefaults.homeTabMode = .message
                 self?.moveToChatVCRelay.accept(())
                 self?.changeRootVCRelay.accept(())
+                UserDefaults.matchedUID = self?.acceptUserId[index].otheruid ?? ""
                 
             case .failure(let error):
                 let error = StudyAcceptError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown

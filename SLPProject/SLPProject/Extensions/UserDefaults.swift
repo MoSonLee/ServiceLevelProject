@@ -66,4 +66,7 @@ extension UserDefaults {
     
     @UserDefault(key: "homeTabMode", defaultValue: HomeTabMode.search)
     static var homeTabMode: HomeTabMode
+    
+    @UserDefault(key: "matchedUID", defaultValue: "")
+    static var matchedUID: String
 }

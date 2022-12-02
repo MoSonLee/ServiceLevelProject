@@ -21,15 +21,26 @@ final class ChatViewController: UIViewController {
     private let textField = CustomTextField()
     private let sendButton = UIButton()
     
+    private let viewDidLoadEvent = PublishRelay<Void>()
+    private let viewDidDisapperEvent = PublishRelay<Void>()
+    
     private let viewModel = ChatViewModel()
     private lazy var input = ChatViewModel.Input(
-        backButtonTapped: backButton.rx.tap.asSignal()
+        viewDidLoad: viewDidLoadEvent.asObservable(),
+        backButtonTapped: backButton.rx.tap.asSignal(),
+        sendButtonTapped: sendButton.rx.tap
+            .withLatestFrom(textField.rx.text.orEmpty).asSignal(onErrorJustReturn: ""),
+        textFieldValue: textField.rx.text
+            .withLatestFrom(textField.rx.text.orEmpty)
+            .asSignal(onErrorJustReturn: ""),
+        viewDidDisapper: viewDidDisapperEvent.asObservable()
     )
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
     private var chattingSection = BehaviorRelay(value: [
         ChatTableSectionModel(header: "", items: [
+            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ")
         ])
     ])
     
@@ -40,6 +51,13 @@ final class ChatViewController: UIViewController {
         setComponentsValue()
         setConstraints()
         bind()
+        bindMyChatTableView()
+        viewDidLoadEvent.accept(())
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewDidDisapperEvent.accept(())
     }
     
     private func setComponents() {
@@ -47,11 +65,18 @@ final class ChatViewController: UIViewController {
             view.addSubview($0)
         }
         textField.addSubview(sendButton)
+        registerTableView()
+    }
+    
+    private func registerTableView() {
+        tableView.register(MyChatTableViewCell.self, forCellReuseIdentifier: MyChatTableViewCell.identifider)
+        tableView.register(UserChatTableViewCell.self, forCellReuseIdentifier: UserChatTableViewCell.identifider)
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
     
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
-        tableView.backgroundColor = .black
         sendButton.setImage(SLPAssets.CustomImage.sendMessageButton.image, for: .normal)
         textField.backgroundColor =  SLPAssets.CustomColor.gray1.color
         textField.placeholder = "메세지를 입력하세요"
@@ -59,6 +84,7 @@ final class ChatViewController: UIViewController {
     }
     
     private func setNavigation() {
+        navigationController?.isNavigationBarHidden = false
         backButton = UIBarButtonItem(image: SLPAssets.CustomImage.backButton.image, style: .plain, target: navigationController, action: nil)
         backButton.tintColor = SLPAssets.CustomColor.black.color
         ellipsisButton = UIBarButtonItem(image: SLPAssets.CustomImage.ellipsis.image, style: .plain, target: navigationController, action: nil)
@@ -93,9 +119,34 @@ final class ChatViewController: UIViewController {
                 self?.navigationController?.popToRootViewController(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        output.reloadTableView
+            .emit(onNext: { [weak self] _ in
+                self?.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        output.enableSendButton
+            .emit(onNext: { [weak self] check in
+                check ? self?.sendButton.setImage(SLPAssets.CustomImage.sendMessageButtonFilled.image, for: .normal) : self?.sendButton.setImage(SLPAssets.CustomImage.sendMessageButton.image, for: .normal)
+            })
+            .disposed(by: disposeBag)
     }
     
-    private func bindTableView() {
-        
+    private func bindMyChatTableView() {
+        let dataSource = RxTableViewSectionedAnimatedDataSource<ChatTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
+            guard let self = self else { return UITableViewCell() }
+            tableView.separatorStyle = .none
+            cell.selectionStyle = .none
+            cell.configure(indexPath: indexPath, item: item)
+            
+            return cell
+        }
+        chattingSection
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 }
+
+extension ChatViewController: UITextViewDelegate { }

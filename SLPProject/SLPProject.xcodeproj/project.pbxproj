@@ -87,6 +87,8 @@
 		77A1FEA0293A20FC0018A403 /* ChatMessagErroreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9F293A20FC0018A403 /* ChatMessagErroreModel.swift */; };
 		77A1FEA2293A312D0018A403 /* UserChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */; };
 		77A1FEA4293A31DB0018A403 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */; };
+		77A1FEA6293A34A20018A403 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA5293A34A20018A403 /* SocketService.swift */; };
+		77A1FEA9293A34F20018A403 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEA8293A34F20018A403 /* SocketIO */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -179,6 +181,7 @@
 		77A1FE9F293A20FC0018A403 /* ChatMessagErroreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagErroreModel.swift; sourceTree = "<group>"; };
 		77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatTableViewCell.swift; sourceTree = "<group>"; };
 		77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
+		77A1FEA5293A34A20018A403 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 				77145A84291924690052B2FB /* Toast in Frameworks */,
 				7744A35F291FDD3F00A065C8 /* FirebaseAuth in Frameworks */,
 				77FC639D2927F0B4002E183E /* RxCoreLocation in Frameworks */,
+				77A1FEA9293A34F20018A403 /* SocketIO in Frameworks */,
 				77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */,
 				77217A272922AE21000DC6CE /* RxDataSources in Frameworks */,
 				77217A202922ADF7000DC6CE /* RxCocoa in Frameworks */,
@@ -432,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				7744A37329210F0B00A065C8 /* APIService.swift */,
+				77A1FEA5293A34A20018A403 /* SocketService.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -683,6 +688,7 @@
 				77217A262922AE21000DC6CE /* RxDataSources */,
 				77217A422926CA9B000DC6CE /* RxMKMapView */,
 				77FC639C2927F0B4002E183E /* RxCoreLocation */,
+				77A1FEA8293A34F20018A403 /* SocketIO */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -722,6 +728,7 @@
 				77217A232922AE21000DC6CE /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */,
 				77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */,
+				77A1FEA7293A34F20018A403 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -758,6 +765,7 @@
 				77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */,
 				7744A357291FBD7300A065C8 /* WithdrawError.swift in Sources */,
 				7744A353291FBD5A00A065C8 /* LoginError.swift in Sources */,
+				77A1FEA6293A34A20018A403 /* SocketService.swift in Sources */,
 				7744A3632920013D00A065C8 /* UIViewController+Extension.swift in Sources */,
 				77217A1529229550000DC6CE /* MyInfoViewController.swift in Sources */,
 				77217A1129229537000DC6CE /* SeSACShopViewController.swift in Sources */,
@@ -1105,6 +1113,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		77A1FEA7293A34F20018A403 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1173,6 +1189,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7744A35D291FDD3F00A065C8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		77A1FEA8293A34F20018A403 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77A1FEA7293A34F20018A403 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		77C0D984291927B1008FDA83 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
