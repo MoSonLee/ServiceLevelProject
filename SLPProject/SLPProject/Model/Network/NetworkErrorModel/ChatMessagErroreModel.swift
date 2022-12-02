@@ -1,5 +1,5 @@
 //
-//  CharErrorModel.swift
+//  ChatMessagErroreModel.swift
 //  SLPProject
 //
 //  Created by 이승후 on 2022/12/02.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CharErrorModel: Int, Error {
+enum ChatMessagErroreModel: Int, Error {
     case sendChatFailure = 201
     case tokenError = 401
     case unregistered = 406
@@ -18,7 +18,7 @@ enum CharErrorModel: Int, Error {
     var description: String { self.errorDescription }
 }
 
-extension CharErrorModel {
+extension ChatMessagErroreModel {
     var errorDescription: String {
         switch self {
         case .sendChatFailure:
