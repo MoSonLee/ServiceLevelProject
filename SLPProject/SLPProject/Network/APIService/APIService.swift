@@ -73,4 +73,10 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func sendChatMessage(dictionary: [String: Any], id: String, completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.sendChatMessage(parameters: dictionary, id: id)) { result in
+            completion(result)
+        }
+    }
 }
