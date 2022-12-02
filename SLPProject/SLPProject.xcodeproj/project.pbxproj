@@ -89,6 +89,8 @@
 		77A1FEA4293A31DB0018A403 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */; };
 		77A1FEA6293A34A20018A403 /* SocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA5293A34A20018A403 /* SocketService.swift */; };
 		77A1FEA9293A34F20018A403 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEA8293A34F20018A403 /* SocketIO */; };
+		77A1FEAB293A4CA30018A403 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEAA293A4CA20018A403 /* ShopViewModel.swift */; };
+		77A1FEAD293A4D580018A403 /* ShopTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEAC293A4D580018A403 /* ShopTabModel.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -182,6 +184,8 @@
 		77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatTableViewCell.swift; sourceTree = "<group>"; };
 		77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
 		77A1FEA5293A34A20018A403 /* SocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketService.swift; sourceTree = "<group>"; };
+		77A1FEAA293A4CA20018A403 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		77A1FEAC293A4D580018A403 /* ShopTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTabModel.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -445,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				7741434529320AB300220087 /* SeSACTabModel.swift */,
+				77A1FEAC293A4D580018A403 /* ShopTabModel.swift */,
 			);
 			path = EnumModel;
 			sourceTree = "<group>";
@@ -543,6 +548,7 @@
 				77217A39292684E2000DC6CE /* HomeTabViewModel.swift */,
 				77414326292D194C00220087 /* SearchStudyViewModel.swift */,
 				7741433F2930D1EA00220087 /* NearUserViewModel.swift */,
+				77A1FEAA293A4CA20018A403 /* ShopViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -760,6 +766,7 @@
 				77145A6E291924490052B2FB /* OnBoardingPageViewController.swift in Sources */,
 				77414336292E7B2A00220087 /* CollectionViewLeftAlignFlowLayout.swift in Sources */,
 				7744A3652920048000A065C8 /* UINavigationViewController+Extensions.swift in Sources */,
+				77A1FEAD293A4D580018A403 /* ShopTabModel.swift in Sources */,
 				77A1FE9E293A1F2F0018A403 /* ChatResultModel.swift in Sources */,
 				7744A36729200B0800A065C8 /* UserLoginInfo.swift in Sources */,
 				77C0D98D29193CA7008FDA83 /* SLPAssets.swift in Sources */,
@@ -827,6 +834,7 @@
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */,
 				77217A362923EAA1000DC6CE /* MySecondInfoTableModel.swift in Sources */,
+				77A1FEAB293A4CA30018A403 /* ShopViewModel.swift in Sources */,
 				77577012291BD4D000DA331B /* UserDefaults.swift in Sources */,
 				77217A3C29269761000DC6CE /* UserLocationModel.swift in Sources */,
 				7744A34F291FBA9000A065C8 /* APIURL.swift in Sources */,

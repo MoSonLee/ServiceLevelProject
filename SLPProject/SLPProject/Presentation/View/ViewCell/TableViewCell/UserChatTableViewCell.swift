@@ -29,6 +29,7 @@ final class UserChatTableViewCell: UITableViewCell {
         contentView.addSubview(label)
         label.backgroundColor = SLPAssets.CustomColor.gray4.color
         label.textColor = .black
+        label.layer.masksToBounds = true
         label.layer.cornerRadius = 8
         label.layer.borderColor = UIColor.black.cgColor
     }
