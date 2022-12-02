@@ -85,6 +85,8 @@
 		77A1FE9C293A1EAF0018A403 /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9B293A1EAF0018A403 /* ChatMessageModel.swift */; };
 		77A1FE9E293A1F2F0018A403 /* ChatResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9D293A1F2F0018A403 /* ChatResultModel.swift */; };
 		77A1FEA0293A20FC0018A403 /* ChatMessagErroreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9F293A20FC0018A403 /* ChatMessagErroreModel.swift */; };
+		77A1FEA2293A312D0018A403 /* UserChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */; };
+		77A1FEA4293A31DB0018A403 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -175,6 +177,8 @@
 		77A1FE9B293A1EAF0018A403 /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
 		77A1FE9D293A1F2F0018A403 /* ChatResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResultModel.swift; sourceTree = "<group>"; };
 		77A1FE9F293A20FC0018A403 /* ChatMessagErroreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessagErroreModel.swift; sourceTree = "<group>"; };
+		77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChatTableViewCell.swift; sourceTree = "<group>"; };
+		77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 			children = (
 				77217A1A2922A3B8000DC6CE /* MyInfoTableViewCell.swift */,
 				77217A332923DB42000DC6CE /* MySecondInfoTableViewCell.swift */,
+				77A1FEA1293A312D0018A403 /* UserChatTableViewCell.swift */,
+				77A1FEA3293A31DB0018A403 /* MyChatTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -773,6 +779,7 @@
 				7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */,
 				77C0D99C2919754B008FDA83 /* MainTabViewController.swift in Sources */,
 				77C0D9A229198AE7008FDA83 /* CertificationViewModel.swift in Sources */,
+				77A1FEA4293A31DB0018A403 /* MyChatTableViewCell.swift in Sources */,
 				77217A302922DFC3000DC6CE /* MySecondInfoViewController.swift in Sources */,
 				7744A36A2920F75E00A065C8 /* InitialViewController.swift in Sources */,
 				77217A0F29229525000DC6CE /* HomeTabViewController.swift in Sources */,
@@ -806,6 +813,7 @@
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */,
 				77A1FE9C293A1EAF0018A403 /* ChatMessageModel.swift in Sources */,
+				77A1FEA2293A312D0018A403 /* UserChatTableViewCell.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
 				772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
@@ -977,9 +985,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1005,9 +1016,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.memolease.sesacslp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

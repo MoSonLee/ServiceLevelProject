@@ -28,6 +28,11 @@ final class ChatViewController: UIViewController {
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
+    private var chattingSection = BehaviorRelay(value: [
+        ChatTableSectionModel(header: "", items: [
+        ])
+    ])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
