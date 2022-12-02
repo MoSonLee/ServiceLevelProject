@@ -84,6 +84,7 @@
 		77A1FE98293A17E40018A403 /* ChatTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE97293A17E40018A403 /* ChatTableModel.swift */; };
 		77A1FE9C293A1EAF0018A403 /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9B293A1EAF0018A403 /* ChatMessageModel.swift */; };
 		77A1FE9E293A1F2F0018A403 /* ChatResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9D293A1F2F0018A403 /* ChatResultModel.swift */; };
+		77A1FEA0293A20FC0018A403 /* CharErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FE9F293A20FC0018A403 /* CharErrorModel.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -173,6 +174,7 @@
 		77A1FE97293A17E40018A403 /* ChatTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableModel.swift; sourceTree = "<group>"; };
 		77A1FE9B293A1EAF0018A403 /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
 		77A1FE9D293A1F2F0018A403 /* ChatResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatResultModel.swift; sourceTree = "<group>"; };
+		77A1FE9F293A20FC0018A403 /* CharErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharErrorModel.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				77A1FE85293770E90018A403 /* StopSearchError.swift */,
 				77A1FE87293772940018A403 /* StudyAcceptError.swift */,
 				77A1FE8B2937756B0018A403 /* StudyRequestError.swift */,
+				77A1FE9F293A20FC0018A403 /* CharErrorModel.swift */,
 			);
 			path = NetworkErrorModel;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */,
 				7737FD41291ACB970029DEA2 /* GenderViewModel.swift in Sources */,
 				7737FD3D291ACB690029DEA2 /* EmailViewModel.swift in Sources */,
+				77A1FEA0293A20FC0018A403 /* CharErrorModel.swift in Sources */,
 				77A1FE91293785730018A403 /* ChatViewModel.swift in Sources */,
 				77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */,
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
