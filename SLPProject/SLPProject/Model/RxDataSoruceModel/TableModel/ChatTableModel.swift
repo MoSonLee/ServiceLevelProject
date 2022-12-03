@@ -11,11 +11,7 @@ import RxDataSources
 
 struct ChatTableModel {
     var title: String
-}
-
-struct ChatTableSectionModel {
-    var header: String
-    var items: [ChatTableModel]
+    var userId: String
 }
 
 extension ChatTableModel: IdentifiableType, Equatable {
@@ -23,6 +19,11 @@ extension ChatTableModel: IdentifiableType, Equatable {
     var identity: String {
         return UUID().uuidString
     }
+}
+
+struct ChatTableSectionModel {
+    var header: String
+    var items: [ChatTableModel]
 }
 
 extension ChatTableSectionModel: AnimatableSectionModelType {

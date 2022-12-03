@@ -36,7 +36,7 @@ final class MyChatTableViewCell: UITableViewCell {
     private func setConstraints() {
         label.snp.makeConstraints { make in
             make.right.equalToSuperview()
-            make.left.lessThanOrEqualToSuperview().offset(-100)
+            make.left.lessThanOrEqualToSuperview().offset(100)
             make.height.equalTo(50)
         }
     }

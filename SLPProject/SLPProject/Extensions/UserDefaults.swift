@@ -69,4 +69,7 @@ extension UserDefaults {
     
     @UserDefault(key: "matchedUID", defaultValue: "")
     static var matchedUID: String
+    
+    @UserDefault(key: "userId", defaultValue: "")
+    static var userId: String
 }

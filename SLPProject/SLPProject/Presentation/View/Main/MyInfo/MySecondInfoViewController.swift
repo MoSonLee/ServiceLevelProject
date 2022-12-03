@@ -42,6 +42,7 @@ final class MySecondInfoViewController: UIViewController {
         setComponents()
         setNavigationItems()
         setConstraints()
+        print(userInfo.id)
     }
     
     private func setNavigationItems() {
@@ -161,7 +162,6 @@ final class MySecondInfoViewController: UIViewController {
             cell.selectionStyle = .none
             return cell
         }
-        
         sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)

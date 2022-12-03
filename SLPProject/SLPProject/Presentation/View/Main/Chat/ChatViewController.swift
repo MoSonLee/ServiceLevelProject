@@ -33,6 +33,8 @@ final class ChatViewController: UIViewController {
         textFieldValue: textField.rx.text
             .withLatestFrom(textField.rx.text.orEmpty)
             .asSignal(onErrorJustReturn: ""),
+        tapped: ellipsisButton.rx.tap
+            .withLatestFrom(textField.rx.text.orEmpty).asSignal(onErrorJustReturn: ""),
         viewDidDisapper: viewDidDisapperEvent.asObservable()
     )
     private lazy var output = viewModel.transform(input: input)
@@ -40,7 +42,8 @@ final class ChatViewController: UIViewController {
     
     private var chattingSection = BehaviorRelay(value: [
         ChatTableSectionModel(header: "", items: [
-            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ")
+            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ", userId: ""),
+            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ", userId: "")
         ])
     ])
     
@@ -51,7 +54,7 @@ final class ChatViewController: UIViewController {
         setComponentsValue()
         setConstraints()
         bind()
-        bindMyChatTableView()
+        bindChatTableView()
         viewDidLoadEvent.accept(())
     }
     
@@ -61,10 +64,9 @@ final class ChatViewController: UIViewController {
     }
     
     private func setComponents() {
-        [tableView, textField].forEach {
+        [tableView, textField,sendButton].forEach {
             view.addSubview($0)
         }
-        textField.addSubview(sendButton)
         registerTableView()
     }
     
@@ -107,7 +109,7 @@ final class ChatViewController: UIViewController {
             make.height.equalTo(52)
         }
         sendButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(textField.snp.centerY)
             make.top.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
         }
@@ -131,17 +133,49 @@ final class ChatViewController: UIViewController {
                 check ? self?.sendButton.setImage(SLPAssets.CustomImage.sendMessageButtonFilled.image, for: .normal) : self?.sendButton.setImage(SLPAssets.CustomImage.sendMessageButton.image, for: .normal)
             })
             .disposed(by: disposeBag)
+        
+        output.addMyChat
+            .emit(onNext: { [weak self] data in
+                var array = self?.chattingSection.value
+                array?[0].items.append(data)
+                guard let array = array else { return }
+                self?.chattingSection.accept(array)
+            })
+            .disposed(by: disposeBag)
+        
+        output.addUserChat
+            .emit(onNext: { [weak self] data in
+                var array = self?.chattingSection.value
+                array?[0].items.append(data)
+                guard let array = array else { return }
+                self?.chattingSection.accept(array)
+            })
+            .disposed(by: disposeBag)
     }
     
-    private func bindMyChatTableView() {
-        let dataSource = RxTableViewSectionedAnimatedDataSource<ChatTableSectionModel>(animationConfiguration: AnimationConfiguration(insertAnimation: .top, reloadAnimation: .fade, deleteAnimation: .left)) { [weak self] data, tableView, indexPath, item in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
-            guard let self = self else { return UITableViewCell() }
+    private func bindChatTableView() {
+        let dataSource = RxTableViewSectionedReloadDataSource<ChatTableSectionModel> { [weak self] data, tableView, indexPath, item in
             tableView.separatorStyle = .none
-            cell.selectionStyle = .none
-            cell.configure(indexPath: indexPath, item: item)
             
-            return cell
+            if self?.chattingSection.value[0].items[indexPath.item].userId  == UserDefaults.userId {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifider, for: indexPath) as? MyChatTableViewCell else { return UITableViewCell() }
+               cell.selectionStyle = .none
+               cell.configure(indexPath: indexPath, item: item)
+                DispatchQueue.main.async {
+                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
+                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
+               return cell
+           } else {
+               guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
+               cell.selectionStyle = .none
+               cell.configure(indexPath: indexPath, item: item)
+               DispatchQueue.main.async {
+                   let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
+                   tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+               }
+               return cell
+           }
         }
         chattingSection
             .bind(to: tableView.rx.items(dataSource: dataSource))

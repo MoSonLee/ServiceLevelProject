@@ -333,8 +333,7 @@ final class NearUserViewController: UIViewController {
         output.changeRootVC
             .emit(onNext: { [weak self] _ in
                 let vc = HomeTabViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                self?.changeRootViewController(nav)
+                self?.changeRootViewController(vc)
             })
             .disposed(by: disposeBag)
         

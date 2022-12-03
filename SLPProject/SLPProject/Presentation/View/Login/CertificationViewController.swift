@@ -186,8 +186,7 @@ final class CertificationViewController: UIViewController {
         output.changeRootViewToMain
             .emit(onNext: { [weak self] _ in
                 let vc = MainTabViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                self?.changeRootViewController(nav)
+                self?.changeRootViewController(vc)
             })
             .disposed(by: disposeBag)
         
