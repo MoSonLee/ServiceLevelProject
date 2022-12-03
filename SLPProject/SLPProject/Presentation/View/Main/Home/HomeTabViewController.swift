@@ -44,7 +44,7 @@ final class HomeTabViewController: UIViewController {
     private let girlButton = UIButton()
     private let gpsButton = UIButton()
     private let annotationButton = UIButton()
-    
+    private let viewWillAppearEvent = PublishRelay<Void>()
     private let viewDidLoadEvent = PublishRelay<Void>()
     private let viewModel = HomeTabViewModel()
     
@@ -228,7 +228,6 @@ final class HomeTabViewController: UIViewController {
         output.homeTabMode
             .emit { [weak self] mode in
                 self?.homeTabMode = mode
-                self?.button.setImage(mode.image, for: .normal)
             }
             .disposed(by: disposeBag)
         

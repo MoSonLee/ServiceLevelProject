@@ -52,5 +52,4 @@ extension UIViewController {
         requestLocationServiceAlert.addAction(goSetting)
         present(requestLocationServiceAlert, animated: true, completion: nil)
     }
-    
 }

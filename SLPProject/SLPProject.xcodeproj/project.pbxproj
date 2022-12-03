@@ -95,6 +95,9 @@
 		77A1FEB1293A5AB50018A403 /* ShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB0293A5AB50018A403 /* ShopCollectionViewCell.swift */; };
 		77A1FEB3293A5EF70018A403 /* SeSACIconModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB2293A5EF60018A403 /* SeSACIconModel.swift */; };
 		77A1FEB5293A611A0018A403 /* SeSACIconCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEB4293A611A0018A403 /* SeSACIconCollectionModel.swift */; };
+		77A1FEB8293BB2A10018A403 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEB7293BB2A10018A403 /* IQKeyboardManagerSwift */; };
+		77A1FEBB293BBB800018A403 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEBA293BBB800018A403 /* Realm */; };
+		77A1FEBD293BBB800018A403 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEBC293BBB800018A403 /* RealmSwift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -221,7 +224,10 @@
 				77217A0D2921DD8B000DC6CE /* DoubleSlider in Frameworks */,
 				77217A272922AE21000DC6CE /* RxDataSources in Frameworks */,
 				77217A202922ADF7000DC6CE /* RxCocoa in Frameworks */,
+				77A1FEB8293BB2A10018A403 /* IQKeyboardManagerSwift in Frameworks */,
+				77A1FEBD293BBB800018A403 /* RealmSwift in Frameworks */,
 				7744A361291FDD3F00A065C8 /* FirebaseMessaging in Frameworks */,
+				77A1FEBB293BBB800018A403 /* Realm in Frameworks */,
 				7744A34D291FB8A500A065C8 /* Moya in Frameworks */,
 				77217A222922ADF7000DC6CE /* RxSwift in Frameworks */,
 				77217A252922AE21000DC6CE /* Differentiator in Frameworks */,
@@ -707,6 +713,9 @@
 				77217A422926CA9B000DC6CE /* RxMKMapView */,
 				77FC639C2927F0B4002E183E /* RxCoreLocation */,
 				77A1FEA8293A34F20018A403 /* SocketIO */,
+				77A1FEB7293BB2A10018A403 /* IQKeyboardManagerSwift */,
+				77A1FEBA293BBB800018A403 /* Realm */,
+				77A1FEBC293BBB800018A403 /* RealmSwift */,
 			);
 			productName = SLPProject;
 			productReference = 77145A66291924490052B2FB /* SLPProject.app */;
@@ -747,6 +756,8 @@
 				77217A412926CA9B000DC6CE /* XCRemoteSwiftPackageReference "RxMKMapView" */,
 				77FC639B2927F0B4002E183E /* XCRemoteSwiftPackageReference "RxCoreLocation" */,
 				77A1FEA7293A34F20018A403 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				77A1FEB6293BB2A10018A403 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				77A1FEB9293BBB800018A403 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 77145A67291924490052B2FB /* Products */;
 			projectDirPath = "";
@@ -1145,6 +1156,22 @@
 				kind = branch;
 			};
 		};
+		77A1FEB6293BB2A10018A403 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.0;
+			};
+		};
+		77A1FEB9293BBB800018A403 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		77C0D983291927B1008FDA83 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1218,6 +1245,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 77A1FEA7293A34F20018A403 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
 			productName = SocketIO;
+		};
+		77A1FEB7293BB2A10018A403 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77A1FEB6293BB2A10018A403 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		77A1FEBA293BBB800018A403 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77A1FEB9293BBB800018A403 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		77A1FEBC293BBB800018A403 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77A1FEB9293BBB800018A403 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		77C0D984291927B1008FDA83 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

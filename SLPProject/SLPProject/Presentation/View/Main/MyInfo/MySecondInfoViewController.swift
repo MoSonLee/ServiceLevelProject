@@ -42,7 +42,6 @@ final class MySecondInfoViewController: UIViewController {
         setComponents()
         setNavigationItems()
         setConstraints()
-        print(userInfo.id)
     }
     
     private func setNavigationItems() {
@@ -178,14 +177,21 @@ extension MySecondInfoViewController: UITableViewDelegate {
 }
 
 extension MySecondInfoViewController {
+    
+    func resetDefaults() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
+    
     private func withdrawUser() {
         showAlertWithCancel(title: "정말 탈퇴하시겠습니까?", okTitle: "확인", completion: {
             APIService().withdrawUser {[weak self] result in
                 switch result {
                 case .success(_):
-                    if let appDomain = Bundle.main.bundleIdentifier {
-                        UserDefaults.standard.removePersistentDomain(forName: appDomain)
-                    }
+                    self?.resetDefaults()
                     let nav = UINavigationController(rootViewController: OnBoardingPageViewController())
                     self?.changeRootViewController(nav)
                     self?.navigationController?.popToRootViewController(animated: true)
@@ -219,6 +225,7 @@ extension MySecondInfoViewController {
             case .success(let response):
                 let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
                 self?.userInfo = data
+                
                 self?.bindTableView()
                 
             case .failure(let error):

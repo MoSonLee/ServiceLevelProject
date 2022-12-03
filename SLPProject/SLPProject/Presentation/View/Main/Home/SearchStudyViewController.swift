@@ -91,7 +91,7 @@ final class SearchStudyViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.height.greaterThanOrEqualTo(view.bounds.height / 3 * 2 )
+            make.bottom.equalTo(searchButton.snp.top).offset(-32)
         }
     }
     

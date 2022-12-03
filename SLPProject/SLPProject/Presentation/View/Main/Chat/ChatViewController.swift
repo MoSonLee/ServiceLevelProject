@@ -18,7 +18,7 @@ final class ChatViewController: UIViewController {
     private var ellipsisButton = UIBarButtonItem()
     
     private let tableView = UITableView()
-    private let textField = CustomTextField()
+    private let textView = UITextView()
     private let sendButton = UIButton()
     
     private let viewDidLoadEvent = PublishRelay<Void>()
@@ -29,12 +29,10 @@ final class ChatViewController: UIViewController {
         viewDidLoad: viewDidLoadEvent.asObservable(),
         backButtonTapped: backButton.rx.tap.asSignal(),
         sendButtonTapped: sendButton.rx.tap
-            .withLatestFrom(textField.rx.text.orEmpty).asSignal(onErrorJustReturn: ""),
-        textFieldValue: textField.rx.text
-            .withLatestFrom(textField.rx.text.orEmpty)
+            .withLatestFrom(textView.rx.text.orEmpty).asSignal(onErrorJustReturn: ""),
+        textFieldValue: textView.rx.text
+            .withLatestFrom(textView.rx.text.orEmpty)
             .asSignal(onErrorJustReturn: ""),
-        tapped: ellipsisButton.rx.tap
-            .withLatestFrom(textField.rx.text.orEmpty).asSignal(onErrorJustReturn: ""),
         viewDidDisapper: viewDidDisapperEvent.asObservable()
     )
     private lazy var output = viewModel.transform(input: input)
@@ -42,8 +40,6 @@ final class ChatViewController: UIViewController {
     
     private var chattingSection = BehaviorRelay(value: [
         ChatTableSectionModel(header: "", items: [
-            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ", userId: ""),
-            ChatTableModel(title: "ㅁㅇㄴㅇㄴㅁㅁㅇㄴㅁㄴㅇ", userId: "")
         ])
     ])
     
@@ -64,7 +60,7 @@ final class ChatViewController: UIViewController {
     }
     
     private func setComponents() {
-        [tableView, textField,sendButton].forEach {
+        [tableView, textView,sendButton].forEach {
             view.addSubview($0)
         }
         registerTableView()
@@ -80,9 +76,8 @@ final class ChatViewController: UIViewController {
     private func setComponentsValue() {
         view.backgroundColor = SLPAssets.CustomColor.white.color
         sendButton.setImage(SLPAssets.CustomImage.sendMessageButton.image, for: .normal)
-        textField.backgroundColor =  SLPAssets.CustomColor.gray1.color
-        textField.placeholder = "메세지를 입력하세요"
-        textField.layer.cornerRadius = 8
+        textView.backgroundColor =  SLPAssets.CustomColor.gray1.color
+        textView.layer.cornerRadius = 8
     }
     
     private func setNavigation() {
@@ -93,6 +88,8 @@ final class ChatViewController: UIViewController {
         ellipsisButton.tintColor = SLPAssets.CustomColor.black.color
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = ellipsisButton
+        textView.font = .systemFont(ofSize: 16)
+        textView.delegate = self
     }
     
     private func setConstraints() {
@@ -100,18 +97,18 @@ final class ChatViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
-            make.bottom.equalTo(textField.snp.top).offset(-16)
+            make.bottom.equalTo(textView.snp.top).offset(-16)
         }
-        textField.snp.makeConstraints { make in
+        textView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
             make.height.equalTo(52)
         }
         sendButton.snp.makeConstraints { make in
-            make.centerY.equalTo(textField.snp.centerY)
+            make.centerY.equalTo(textView.snp.centerY)
             make.top.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.right.equalToSuperview().offset(-32)
         }
     }
     
@@ -159,23 +156,23 @@ final class ChatViewController: UIViewController {
             
             if self?.chattingSection.value[0].items[indexPath.item].userId  == UserDefaults.userId {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifider, for: indexPath) as? MyChatTableViewCell else { return UITableViewCell() }
-               cell.selectionStyle = .none
-               cell.configure(indexPath: indexPath, item: item)
+                cell.selectionStyle = .none
+                cell.configure(indexPath: indexPath, item: item)
                 DispatchQueue.main.async {
                     let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
                     tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
-               return cell
-           } else {
-               guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
-               cell.selectionStyle = .none
-               cell.configure(indexPath: indexPath, item: item)
-               DispatchQueue.main.async {
-                   let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
-                   tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-               }
-               return cell
-           }
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
+                cell.selectionStyle = .none
+                cell.configure(indexPath: indexPath, item: item)
+                DispatchQueue.main.async {
+                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
+                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
+                return cell
+            }
         }
         chattingSection
             .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -183,4 +180,16 @@ final class ChatViewController: UIViewController {
     }
 }
 
-extension ChatViewController: UITextViewDelegate { }
+extension ChatViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let size = CGSize(width: view.frame.width, height: .infinity)
+        let estimatedSize = textView.sizeThatFits(size)
+        
+        guard estimatedSize.height < 73 else { return }
+        textView.constraints.forEach { constraint in
+            if constraint.firstAttribute == .height {
+                constraint.constant = estimatedSize.height
+            }
+        }
+    }
+}

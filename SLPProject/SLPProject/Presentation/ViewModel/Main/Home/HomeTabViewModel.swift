@@ -71,6 +71,7 @@ final class HomeTabViewModel {
             .subscribe(onNext: { [weak self] _ in
                 self?.checkUserDeviceLocationServiceAuthorization()
                 self?.checkMyQueueState()
+                self?.gerUserId()
             })
             .disposed(by: disposeBag)
         
@@ -191,7 +192,7 @@ extension HomeTabViewModel {
         default: print("DEFAULT")
         }
     }
-    
+
     private func checkMyQueueState() {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
@@ -259,4 +260,32 @@ extension HomeTabViewModel {
             }
         }
     }
+    
+   private func gerUserId() {
+       APIService().responseGetUser { result in
+           switch result {
+           case .success(let response):
+               let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
+               UserDefaults.userId = data.uid
+           case .failure(let error):
+               let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+               switch error {
+               case .tokenError:
+                   print(SLPLoginError.tokenError)
+                   
+               case .unRegisteredUser:
+                   print(SLPLoginError.unRegisteredUser)
+                   
+               case .serverError:
+                   print(SLPLoginError.serverError)
+                   
+               case .clientError:
+                   print(SLPLoginError.clientError)
+                   
+               case .unknown:
+                   print(SLPLoginError.unknown)
+               }
+           }
+       }
+   }
 }

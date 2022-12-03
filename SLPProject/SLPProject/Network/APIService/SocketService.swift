@@ -25,7 +25,7 @@ final class SocketIOManager {
          
         socket.on(clientEvent: .connect) { data, ack in
             print("SOCKET IS CONNECTED", data, ack)
-            self.socket.emit("changesocketid", "kasYmSROz4aMhpmDvnbxiqOtnOF3")
+            self.socket.emit("changesocketid", UserDefaults.userId)
             
         }
          

@@ -17,7 +17,6 @@ final class ChatViewModel {
         let backButtonTapped: Signal<Void>
         let sendButtonTapped: Signal<String>
         let textFieldValue: Signal<String>
-        let tapped: Signal<String>
         let viewDidDisapper: Observable<Void>
     }
     
@@ -53,13 +52,6 @@ final class ChatViewModel {
             }
             .disposed(by: disposeBag)
         
-        input.tapped
-            .emit { [weak self] chatMessage in
-                self?.chat = ChatMessageModel(chat: chatMessage)
-                self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.matchedUID))
-            }
-            .disposed(by: disposeBag)
-        
         input.sendButtonTapped
             .emit { [weak self] chatMessage in
                 self?.chat = ChatMessageModel(chat: chatMessage)
@@ -82,9 +74,7 @@ final class ChatViewModel {
         manager.getDataRelay.asSignal()
             .emit(onNext: { [weak self] data in
                 self?.chat = ChatMessageModel(chat: data.chat)
-//                self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.matchedUID))
                 self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
-                print(data)
             })
             .disposed(by: disposeBag)
         
@@ -105,7 +95,6 @@ extension ChatViewModel {
             switch result {
             case .success(_):
                 self?.addMyChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
-                print(UserDefaults.userToken)
             case .failure(let error):
                 let error = ChatMessagErroreModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
