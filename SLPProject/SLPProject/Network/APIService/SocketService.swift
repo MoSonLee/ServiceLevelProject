@@ -15,7 +15,7 @@ final class SocketIOManager {
     
     var manager: SocketManager!
     var socket: SocketIOClient!
-    var url = URL(string: "http://api.sesac.co.kr:1210")
+    var url = URL(string: APIURL.url)
     let getDataRelay = PublishRelay<ChatResultModel>()
 
      init() {

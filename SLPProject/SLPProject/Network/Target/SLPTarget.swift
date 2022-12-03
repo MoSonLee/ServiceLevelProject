@@ -37,31 +37,31 @@ extension SLPTarget: TargetType {
     var path: String {
         switch self {
         case .login, .signUp:
-            return "/user"
+            return "/v1/user"
             
         case .withdraw:
-            return "/user/withdraw"
+            return "/v1/user/withdraw"
             
         case .update_fcm_token:
-            return "/user/update_fcm_token"
+            return "/v1/user/update_fcm_token"
             
         case .requestSearchSeSAC, .stopSearchSeSAC:
-            return "/queue"
+            return "/v1/queue"
             
         case .searchSeSAC:
-            return "/queue/search"
+            return "/v1/queue/search"
             
         case .myQueueState:
-            return "/queue/myQueueState"
+            return "/v1/queue/myQueueState"
             
         case .studyrequest:
-            return "/queue/studyrequest"
+            return "/v1/queue/studyrequest"
             
         case .studyaccept:
-            return "/queue/studyaccept"
+            return "/v1/queue/studyaccept"
             
         case .sendChatMessage(_, let id):
-            return "/chat/\(id)"
+            return "/v1/chat/\(id)"
         }
     }
     

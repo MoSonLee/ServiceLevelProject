@@ -153,7 +153,6 @@ final class ChatViewController: UIViewController {
     private func bindChatTableView() {
         let dataSource = RxTableViewSectionedReloadDataSource<ChatTableSectionModel> { [weak self] data, tableView, indexPath, item in
             tableView.separatorStyle = .none
-            
             if self?.chattingSection.value[0].items[indexPath.item].userId  == UserDefaults.userId {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifider, for: indexPath) as? MyChatTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
