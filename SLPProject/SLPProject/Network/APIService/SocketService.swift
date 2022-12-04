@@ -33,9 +33,9 @@ final class SocketIOManager {
             print("SOCKET IS DISCONNECTED", data, ack)
         }
          
-         socket.on("chat") { [weak self] dataArray, ack in
-             print("보낸 사람 채팅: ", dataArray, ack)
-             let data = dataArray[0] as! NSDictionary
+         socket.on("chat") { [weak self] data, ack in
+             print("보낸 사람 채팅: ", data, ack)
+             let data = data[0] as! NSDictionary
              let chat = data["chat"] as! String
              let to = data["to"] as! String
              let from = data["from"] as! String

@@ -10,9 +10,9 @@ import Foundation
 struct GetChatMessageModel: Codable {
     var toDictionary: [String: Any] {
         let dictionary: [String: Any] = [
-            "playload": playload
+            "payload": payload
         ]
         return dictionary
     }
-    let playload: [ChatResultModel]
+    let payload: [ChatResultModel]
 }

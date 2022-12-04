@@ -29,6 +29,7 @@ final class ChatViewModel {
     }
     
     private let manager = SocketIOManager()
+    private var lastChatDate: String = ""
     
     private var chat: ChatMessageModel = ChatMessageModel(chat: "")
     private let enableSendButtonRelay = PublishRelay<Bool>()
@@ -43,6 +44,7 @@ final class ChatViewModel {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.manager.establishConnection()
+                self?.getChatMessage()
             })
             .disposed(by: disposeBag)
         
@@ -75,6 +77,7 @@ final class ChatViewModel {
             .emit(onNext: { [weak self] data in
                 self?.chat = ChatMessageModel(chat: data.chat)
                 self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
+                self?.lastChatDate = data.createdAt
             })
             .disposed(by: disposeBag)
         
@@ -100,6 +103,42 @@ extension ChatViewModel {
                 switch error {
                 case .sendChatFailure:
                     print(ChatMessagErroreModel.sendChatFailure)
+                case .tokenError:
+                    print(ChatMessagErroreModel.tokenError)
+                case .unregistered:
+                    print(ChatMessagErroreModel.unregistered)
+                case .serverError:
+                    print(ChatMessagErroreModel.serverError)
+                case .clientError:
+                    print(ChatMessagErroreModel.clientError)
+                case .unknown:
+                    print(ChatMessagErroreModel.unknown)
+                }
+            }
+        }
+    }
+    
+    private func getChatMessage() {
+        if lastChatDate.isEmpty  {
+            lastChatDate = "2000-01-01T06:55:54.784Z"
+        }
+        print(lastChatDate)
+        APIService().getChatMessage(id: UserDefaults.matchedUID, date: lastChatDate) { [weak self] result in
+            switch result {
+            case .success(let response):
+                print("success")
+                guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
+                for index in 0..<data.payload.count {
+                    if data.payload[index].id == UserDefaults.matchedUID {
+                        self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
+                    } else {
+                        self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
+                    }
+                }
+                
+            case .failure(let error):
+                let error = GetChatMessageError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                switch error {
                 case .tokenError:
                     print(ChatMessagErroreModel.tokenError)
                 case .unregistered:
