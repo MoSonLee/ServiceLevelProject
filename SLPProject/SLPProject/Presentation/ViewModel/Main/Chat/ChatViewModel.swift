@@ -43,8 +43,8 @@ final class ChatViewModel {
         
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
-                self?.manager.establishConnection()
                 self?.getChatMessage()
+                self?.manager.establishConnection()
             })
             .disposed(by: disposeBag)
         
@@ -77,7 +77,6 @@ final class ChatViewModel {
             .emit(onNext: { [weak self] data in
                 self?.chat = ChatMessageModel(chat: data.chat)
                 self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
-                self?.lastChatDate = data.createdAt
             })
             .disposed(by: disposeBag)
         
@@ -123,11 +122,12 @@ extension ChatViewModel {
             lastChatDate = "2000-01-01T06:55:54.784Z"
         }
         print(lastChatDate)
-        APIService().getChatMessage(id: UserDefaults.matchedUID, date: lastChatDate) { [weak self] result in
+        APIService().getChatMessage(id: UserDefaults.matchedUID, date: "2000-01-01T06:55:54.784Z") { [weak self] result in
             switch result {
             case .success(let response):
                 print("success")
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
+                print(data)
                 for index in 0..<data.payload.count {
                     if data.payload[index].id == UserDefaults.matchedUID {
                         self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
