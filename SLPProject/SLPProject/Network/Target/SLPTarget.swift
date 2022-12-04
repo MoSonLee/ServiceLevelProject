@@ -22,6 +22,7 @@ enum SLPTarget {
     case myQueueState
     case studyrequest(parameters: DictionaryType)
     case studyaccept(parameters: DictionaryType)
+    case getChatMessage(id: String, date: String)
     case sendChatMessage(parameters: DictionaryType, id: String)
 }
 
@@ -62,12 +63,15 @@ extension SLPTarget: TargetType {
             
         case .sendChatMessage(_, let id):
             return "/v1/chat/\(id)"
+            
+        case .getChatMessage(let id, _):
+            return "/v1/chat/\(id)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login, .myQueueState:
+        case .login, .myQueueState, .getChatMessage:
             return .get
             
         case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC, .studyrequest, .studyaccept, .sendChatMessage:
@@ -91,6 +95,9 @@ extension SLPTarget: TargetType {
             
         case .requestSearchSeSAC(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding(arrayEncoding: .noBrackets))
+            
+        case .getChatMessage(_, let date):
+            return .requestParameters(parameters: ["lastchatDate": date], encoding: URLEncoding.queryString)
         }
     }
     
