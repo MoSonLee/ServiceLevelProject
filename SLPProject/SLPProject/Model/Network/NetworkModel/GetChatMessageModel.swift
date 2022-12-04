@@ -14,13 +14,5 @@ struct GetChatMessageModel: Codable {
         ]
         return dictionary
     }
-    let playload: [payload]
-}
-
-struct payload: Codable {
-    let uid, nick: String
-    let lat, long: Double
-    let reputation: [Int]
-    let studylist, reviews: [String]
-    let gender, type, sesac, background: Int
+    let playload: [ChatResultModel]
 }

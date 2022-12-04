@@ -79,4 +79,10 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func getChatMessage(dictionary: [String: Any], id: String, date: String, completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.getChatMessage(id: id, date: date)) { result in
+            completion(result)
+        }
+    }
 }
