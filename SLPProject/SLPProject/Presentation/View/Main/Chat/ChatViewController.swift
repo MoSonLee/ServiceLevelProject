@@ -33,7 +33,8 @@ final class ChatViewController: UIViewController {
         textFieldValue: textView.rx.text
             .withLatestFrom(textView.rx.text.orEmpty)
             .asSignal(onErrorJustReturn: ""),
-        viewDidDisapper: viewDidDisapperEvent.asObservable()
+        viewDidDisapper: viewDidDisapperEvent.asObservable(),
+        dodgeButtonTapped: ellipsisButton.rx.tap.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()

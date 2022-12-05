@@ -85,4 +85,10 @@ final class APIService {
             completion(result)
         }
     }
+    
+    func dodgeStudy(dictionary: [String: Any], completion: @escaping  (Result<Response, MoyaError>) -> ()) {
+        provider.request(.dodgeStudy(parameters: dictionary)) { result in
+            completion(result)
+        }
+    }
 }

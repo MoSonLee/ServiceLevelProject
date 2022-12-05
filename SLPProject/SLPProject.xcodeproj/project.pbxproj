@@ -100,6 +100,7 @@
 		77A1FEBD293BBB800018A403 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 77A1FEBC293BBB800018A403 /* RealmSwift */; };
 		77A1FEBF293CA2C40018A403 /* GetChatMessageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEBE293CA2C40018A403 /* GetChatMessageError.swift */; };
 		77A1FEC1293CA2FD0018A403 /* GetChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEC0293CA2FD0018A403 /* GetChatMessageModel.swift */; };
+		77C09EAE293E39FC0096E6F3 /* DodgeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C09EAD293E39FC0096E6F3 /* DodgeError.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -201,6 +202,7 @@
 		77A1FEB4293A611A0018A403 /* SeSACIconCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACIconCollectionModel.swift; sourceTree = "<group>"; };
 		77A1FEBE293CA2C40018A403 /* GetChatMessageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatMessageError.swift; sourceTree = "<group>"; };
 		77A1FEC0293CA2FD0018A403 /* GetChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatMessageModel.swift; sourceTree = "<group>"; };
+		77C09EAD293E39FC0096E6F3 /* DodgeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodgeError.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 				77A1FE8B2937756B0018A403 /* StudyRequestError.swift */,
 				77A1FE9F293A20FC0018A403 /* ChatMessagErroreModel.swift */,
 				77A1FEBE293CA2C40018A403 /* GetChatMessageError.swift */,
+				77C09EAD293E39FC0096E6F3 /* DodgeError.swift */,
 			);
 			path = NetworkErrorModel;
 			sourceTree = "<group>";
@@ -834,6 +837,7 @@
 				77414325292BC5C300220087 /* CustomAnnotationView.swift in Sources */,
 				7744A37429210F0B00A065C8 /* APIService.swift in Sources */,
 				77217A2C2922B0B0000DC6CE /* MyInfoTableModel.swift in Sources */,
+				77C09EAE293E39FC0096E6F3 /* DodgeError.swift in Sources */,
 				77A1FEC1293CA2FD0018A403 /* GetChatMessageModel.swift in Sources */,
 				77145A6A291924490052B2FB /* AppDelegate.swift in Sources */,
 				77C0D98B29192F35008FDA83 /* ThirdOnBoardingViewController.swift in Sources */,

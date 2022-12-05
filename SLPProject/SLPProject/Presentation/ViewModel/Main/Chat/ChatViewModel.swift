@@ -18,6 +18,7 @@ final class ChatViewModel {
         let sendButtonTapped: Signal<String>
         let textFieldValue: Signal<String>
         let viewDidDisapper: Observable<Void>
+        let dodgeButtonTapped: Signal<Void>
     }
     
     struct Output {
@@ -32,6 +33,7 @@ final class ChatViewModel {
     private var matchedNick = ""
     private let manager = SocketIOManager()
     private var lastChatDate: String = ""
+    private var dodgeStudyModel = StudyRequestModel(otheruid: "")
     
     private var chat: ChatMessageModel = ChatMessageModel(chat: "")
     private let enableSendButtonRelay = PublishRelay<Bool>()
@@ -48,6 +50,12 @@ final class ChatViewModel {
                 self?.manager.establishConnection()
                 self?.checkMyQueueState()
             })
+            .disposed(by: disposeBag)
+        
+        input.dodgeButtonTapped
+            .emit { [weak self] _ in
+                self?.dodgeStudy()
+            }
             .disposed(by: disposeBag)
         
         input.textFieldValue
@@ -188,6 +196,40 @@ extension ChatViewModel {
                     print(ChatMessagErroreModel.clientError)
                 case .unknown:
                     print(ChatMessagErroreModel.unknown)
+                }
+            }
+        }
+    }
+    
+    private func dodgeStudy() {
+        dodgeStudyModel = StudyRequestModel(otheruid: matchedId)
+        APIService().dodgeStudy(dictionary: dodgeStudyModel.toDictionary) { [weak self] result in
+            switch result {
+            case .success(_):
+                UserDefaults.homeTabMode = .search
+                self?.popVCRelay.accept(())
+                
+            case .failure(let error):
+                let error = DodgeError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
+                switch error {
+                case .wrongUID:
+                    print(DodgeError.wrongUID)
+                    
+                case .tokenError:
+                    print(DodgeError.tokenError)
+                    
+                case .serverError:
+                    print(DodgeError.serverError)
+                    
+                case .clientError:
+                    print(DodgeError.clientError)
+                    
+                case .unregistered:
+                    print(DodgeError.unregistered)
+                    
+                case .unknown:
+                    print(DodgeError.unknown)
+                    
                 }
             }
         }

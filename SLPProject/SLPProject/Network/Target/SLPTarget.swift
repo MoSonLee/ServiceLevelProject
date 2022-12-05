@@ -24,6 +24,7 @@ enum SLPTarget {
     case studyaccept(parameters: DictionaryType)
     case getChatMessage(id: String, date: String)
     case sendChatMessage(parameters: DictionaryType, id: String)
+    case dodgeStudy(parameters: DictionaryType)
 }
 
 extension SLPTarget: TargetType {
@@ -66,6 +67,9 @@ extension SLPTarget: TargetType {
             
         case .getChatMessage(let id, _):
             return "/v1/chat/\(id)"
+            
+        case .dodgeStudy(parameters: let parameters):
+            return "/v1/queue/dodge"
         }
     }
     
@@ -74,7 +78,7 @@ extension SLPTarget: TargetType {
         case .login, .myQueueState, .getChatMessage:
             return .get
             
-        case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC, .studyrequest, .studyaccept, .sendChatMessage:
+        case .signUp, .withdraw, .searchSeSAC, .requestSearchSeSAC, .studyrequest, .studyaccept, .sendChatMessage, .dodgeStudy:
             return .post
             
         case .update_fcm_token:
@@ -90,7 +94,7 @@ extension SLPTarget: TargetType {
         case .login, .withdraw, .stopSearchSeSAC, .myQueueState:
             return .requestPlain
             
-        case .signUp(let parameters), .update_fcm_token(let parameters), .searchSeSAC(let parameters), .studyrequest(let parameters), .studyaccept(let parameters), .sendChatMessage(let parameters, _):
+        case .signUp(let parameters), .update_fcm_token(let parameters), .searchSeSAC(let parameters), .studyrequest(let parameters), .studyaccept(let parameters), .sendChatMessage(let parameters, _), .dodgeStudy(let parameters):
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
             
         case .requestSearchSeSAC(let parameters):
