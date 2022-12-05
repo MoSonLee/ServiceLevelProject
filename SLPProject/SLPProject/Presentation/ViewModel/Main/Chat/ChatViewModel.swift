@@ -28,6 +28,8 @@ final class ChatViewModel {
         let addMyChat: Signal<ChatTableModel>
     }
     
+    private var matchedId = ""
+    private var matchedNick = ""
     private let manager = SocketIOManager()
     private var lastChatDate: String = ""
     
@@ -43,7 +45,7 @@ final class ChatViewModel {
         
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
-                self?.getChatMessage()
+                self?.checkMyQueueState()
                 self?.manager.establishConnection()
             })
             .disposed(by: disposeBag)
@@ -92,8 +94,47 @@ final class ChatViewModel {
 
 extension ChatViewModel {
     
+    private func checkMyQueueState() {
+        APIService().checkMyQueueState { [weak self] result in
+            switch result {
+            case .success(let response):
+                print(response)
+                guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
+                UserDefaults.matchedUID = data.matchedUid
+                if data.matched == 1 {
+                    self?.matchedId = data.matchedUid
+                    self?.matchedNick = data.matchedNick
+                    self?.getChatMessage()
+                    print(UserDefaults.userToken)
+                }
+                
+            case .failure(let error):
+                let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
+                switch error {
+                case .notRequestYet:
+                    print(QueueStateError.notRequestYet)
+                    
+                case .tokenError:
+                    print(QueueStateError.tokenError)
+                    
+                case .unregisteredError:
+                    print(QueueStateError.unregisteredError)
+                    
+                case .serverError:
+                    print(QueueStateError.serverError)
+                    
+                case .clientError:
+                    print(QueueStateError.clientError)
+                    
+                case .unknown:
+                    print(QueueStateError.unknown)
+                }
+            }
+        }
+    }
+    
     private func sendChatMessage() {
-        APIService().sendChatMessage(dictionary: chat.toDictionary, id: UserDefaults.matchedUID) { [weak self] result in
+        APIService().sendChatMessage(dictionary: chat.toDictionary, id: matchedId) { [weak self] result in
             switch result {
             case .success(_):
                 self?.addMyChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
@@ -121,8 +162,7 @@ extension ChatViewModel {
         if lastChatDate.isEmpty  {
             lastChatDate = "2000-01-01T06:55:54.784Z"
         }
-        print(lastChatDate)
-        APIService().getChatMessage(id: UserDefaults.matchedUID, date: "2000-01-01T06:55:54.784Z") { [weak self] result in
+        APIService().getChatMessage(id: matchedId, date: "2000-01-01T06:55:54.784Z") { [weak self] result in
             switch result {
             case .success(let response):
                 print("success")
