@@ -64,7 +64,7 @@ extension SLPTarget: TargetType {
         case .sendChatMessage(_, let id):
             return "/v1/chat/\(id)"
             
-        case .getChatMessage(_, let id):
+        case .getChatMessage(let id, _):
             return "/v1/chat/\(id)"
         }
     }

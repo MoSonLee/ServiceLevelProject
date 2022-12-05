@@ -8,20 +8,14 @@
 import Foundation
 
 struct ChatResultModel: Codable {
-    var ChatResultModel: [String: Any] {
-        let dictionary: [String: Any] = [
-            "_id": id,
-            "to": to,
-            "from": from,
-            "chat": chat,
-            "createdAt": createdAt
-            
-        ]
-        return dictionary
-    }
     let id: String
     let to: String
     let from: String
     let chat: String
     let createdAt: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case to, from, chat, createdAt
+    }
 }

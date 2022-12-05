@@ -157,19 +157,19 @@ final class ChatViewController: UIViewController {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifider, for: indexPath) as? MyChatTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
                 cell.configure(indexPath: indexPath, item: item)
-                DispatchQueue.main.async {
-                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
-                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
+//                DispatchQueue.main.async {
+//                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
+//                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//                }
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: UserChatTableViewCell.identifider, for: indexPath) as? UserChatTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
                 cell.configure(indexPath: indexPath, item: item)
-                DispatchQueue.main.async {
-                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
-                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
+//                DispatchQueue.main.async {
+//                    let indexPath:IndexPath = IndexPath(row: (self?.chattingSection.value[0].items.count ?? 0) - 1, section: 0)
+//                    tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//                }
                 return cell
             }
         }

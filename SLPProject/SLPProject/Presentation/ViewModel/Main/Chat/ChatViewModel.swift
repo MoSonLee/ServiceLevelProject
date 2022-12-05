@@ -45,8 +45,8 @@ final class ChatViewModel {
         
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
-                self?.checkMyQueueState()
                 self?.manager.establishConnection()
+                self?.checkMyQueueState()
             })
             .disposed(by: disposeBag)
         
@@ -98,7 +98,6 @@ extension ChatViewModel {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
             case .success(let response):
-                print(response)
                 guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
                 UserDefaults.matchedUID = data.matchedUid
                 if data.matched == 1 {
@@ -160,16 +159,16 @@ extension ChatViewModel {
     
     private func getChatMessage() {
         if lastChatDate.isEmpty  {
-            lastChatDate = "2000-01-01T06:55:54.784Z"
+            lastChatDate = "2000-12-04T09:37:29.029+0900"
         }
-        APIService().getChatMessage(id: matchedId, date: "2000-01-01T06:55:54.784Z") { [weak self] result in
+        APIService().getChatMessage(id: matchedId, date: lastChatDate) { [weak self] result in
             switch result {
             case .success(let response):
                 print("success")
+                print(UserDefaults.userToken)
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
-                print(data)
                 for index in 0..<data.payload.count {
-                    if data.payload[index].id == UserDefaults.matchedUID {
+                    if data.payload[index].from == self?.matchedId {
                         self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                     } else {
                         self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
