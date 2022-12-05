@@ -7,6 +7,7 @@
 
 import Foundation
 
+import RealmSwift
 import RxCocoa
 import RxSwift
 
@@ -29,13 +30,15 @@ final class ChatViewModel {
         let addMyChat: Signal<ChatTableModel>
     }
     
+    private var chatDB: Results<Chat>!
     private var matchedId = ""
     private var matchedNick = ""
-    private let manager = SocketIOManager()
     private var lastChatDate: String = ""
     private var dodgeStudyModel = StudyRequestModel(otheruid: "")
-    
     private var chat: ChatMessageModel = ChatMessageModel(chat: "")
+    
+    private let manager = SocketIOManager()
+    private let respositoy = RealmRepository()
     private let enableSendButtonRelay = PublishRelay<Bool>()
     private let popVCRelay = PublishRelay<Void>()
     private let reloadTableViewRelay = PublishRelay<Void>()
@@ -47,8 +50,9 @@ final class ChatViewModel {
         
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
-                self?.manager.establishConnection()
+                self?.fetchRealm()
                 self?.checkMyQueueState()
+                self?.manager.establishConnection()
             })
             .disposed(by: disposeBag)
         
@@ -102,17 +106,33 @@ final class ChatViewModel {
 
 extension ChatViewModel {
     
+    private func fetchRealm() {
+        chatDB = respositoy.fetch(id: matchedId)
+        print(chatDB)
+    }
+    
+    private func getLastChatDate() {
+        //        guard let lastDate = chatDB.last?.chatDate else { return }
+        //        lastChatDate = lastDate
+        if lastChatDate.isEmpty  {
+            lastChatDate = "2000-12-04T09:37:29.029+0900"
+        }
+    }
+    
     private func checkMyQueueState() {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
             case .success(let response):
                 guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
-                UserDefaults.matchedUID = data.matchedUid
+                
                 if data.matched == 1 {
                     self?.matchedId = data.matchedUid
                     self?.matchedNick = data.matchedNick
                     self?.getChatMessage()
                     print(UserDefaults.userToken)
+                } else if data.matched == 0 {
+                    UserDefaults.homeTabMode = .matching
+                    self?.popVCRelay.accept(())
                 }
                 
             case .failure(let error):
@@ -141,6 +161,9 @@ extension ChatViewModel {
     }
     
     private func sendChatMessage() {
+        print(UserDefaults.homeTabMode)
+        print(UserDefaults.matchedUID)
+        print(UserDefaults.userToken)
         APIService().sendChatMessage(dictionary: chat.toDictionary, id: matchedId) { [weak self] result in
             switch result {
             case .success(_):
@@ -166,10 +189,8 @@ extension ChatViewModel {
     }
     
     private func getChatMessage() {
-        if lastChatDate.isEmpty  {
-            lastChatDate = "2000-12-04T09:37:29.029+0900"
-        }
-        APIService().getChatMessage(id: matchedId, date: lastChatDate) { [weak self] result in
+        //        getLastChatDate()
+        APIService().getChatMessage(id: matchedId, date: "2000-12-04T09:37:29.029+0900") { [weak self] result in
             switch result {
             case .success(let response):
                 print("success")

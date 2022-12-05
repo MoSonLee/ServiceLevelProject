@@ -157,7 +157,6 @@ extension NearUserViewModel {
             switch result {
             case .success(_):
                 UserDefaults.homeTabMode = .message
-                UserDefaults.matchedUID = self?.acceptUserId[index].otheruid ?? ""
                 self?.moveToChatVCRelay.accept(())
                 self?.changeRootVCRelay.accept(())
                 
@@ -190,9 +189,13 @@ extension NearUserViewModel {
             switch result {
             case .success(let response):
                 guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
-                data.matched == 1 ? self?.showToastRelay.accept("\(data.matchedNick)님과 매칭되셨습니다.") : nil
-                UserDefaults.homeTabMode = .message
-                self?.moveToChatVCRelay.accept(())
+                if data.matched == 1 {
+                    self?.showToastRelay.accept("\(data.matchedNick)님과 매칭되셨습니다.")
+                    UserDefaults.homeTabMode = .message
+                    self?.moveToChatVCRelay.accept(())
+                } else {
+                    UserDefaults.homeTabMode = .matching
+                }
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown

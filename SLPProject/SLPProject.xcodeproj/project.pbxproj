@@ -101,6 +101,8 @@
 		77A1FEBF293CA2C40018A403 /* GetChatMessageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEBE293CA2C40018A403 /* GetChatMessageError.swift */; };
 		77A1FEC1293CA2FD0018A403 /* GetChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A1FEC0293CA2FD0018A403 /* GetChatMessageModel.swift */; };
 		77C09EAE293E39FC0096E6F3 /* DodgeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C09EAD293E39FC0096E6F3 /* DodgeError.swift */; };
+		77C09EB1293E80C60096E6F3 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C09EB0293E80C60096E6F3 /* Chat.swift */; };
+		77C09EB3293E80D10096E6F3 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C09EB2293E80D10096E6F3 /* RealmRepository.swift */; };
 		77C0D9822919270D008FDA83 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */; };
 		77C0D985291927B1008FDA83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 77C0D984291927B1008FDA83 /* SnapKit */; };
 		77C0D98729192F16008FDA83 /* FirstOnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */; };
@@ -203,6 +205,8 @@
 		77A1FEBE293CA2C40018A403 /* GetChatMessageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatMessageError.swift; sourceTree = "<group>"; };
 		77A1FEC0293CA2FD0018A403 /* GetChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChatMessageModel.swift; sourceTree = "<group>"; };
 		77C09EAD293E39FC0096E6F3 /* DodgeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodgeError.swift; sourceTree = "<group>"; };
+		77C09EB0293E80C60096E6F3 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		77C09EB2293E80D10096E6F3 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		77C0D9812919270D008FDA83 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		77C0D98629192F16008FDA83 /* FirstOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnBoardingViewController.swift; sourceTree = "<group>"; };
 		77C0D98829192F28008FDA83 /* SecondOnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -605,9 +609,19 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		77C09EAF293E7FAD0096E6F3 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				77C09EB0293E80C60096E6F3 /* Chat.swift */,
+				77C09EB2293E80D10096E6F3 /* RealmRepository.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		77C0D97C2919255E008FDA83 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				77C09EAF293E7FAD0096E6F3 /* Realm */,
 				7741434429320A9D00220087 /* EnumModel */,
 				7741432A292D318A00220087 /* RxDataSoruceModel */,
 				77A1FE92293785F20018A403 /* Network */,
@@ -860,6 +874,8 @@
 				77A1FEA0293A20FC0018A403 /* ChatMessagErroreModel.swift in Sources */,
 				77A1FE91293785730018A403 /* ChatViewModel.swift in Sources */,
 				77217A1B2922A3B8000DC6CE /* MyInfoTableViewCell.swift in Sources */,
+				77C09EB3293E80D10096E6F3 /* RealmRepository.swift in Sources */,
+				77C09EB1293E80C60096E6F3 /* Chat.swift in Sources */,
 				77217A342923DB42000DC6CE /* MySecondInfoTableViewCell.swift in Sources */,
 				774143402930D1EA00220087 /* NearUserViewModel.swift in Sources */,
 				77A1FE9C293A1EAF0018A403 /* ChatMessageModel.swift in Sources */,

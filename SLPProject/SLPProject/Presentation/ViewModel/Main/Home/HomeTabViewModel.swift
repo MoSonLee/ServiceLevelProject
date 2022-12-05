@@ -200,7 +200,6 @@ extension HomeTabViewModel {
                 print(response)
                 guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
                 data.matched == 1 ? self?.homeTabModeRelay.accept(.message)  : self?.homeTabModeRelay.accept(.matching)
-                UserDefaults.matchedUID = data.matchedUid
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
                 switch error {
