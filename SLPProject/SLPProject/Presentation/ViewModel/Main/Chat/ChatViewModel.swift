@@ -91,6 +91,7 @@ final class ChatViewModel {
             .emit(onNext: { [weak self] data in
                 self?.chat = ChatMessageModel(chat: data.chat)
                 self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
+                self?.addRealm(chat: Chat(chat: self?.chat.chat ?? "", chatDate: "", id: data.id))
             })
             .disposed(by: disposeBag)
         
@@ -106,14 +107,17 @@ final class ChatViewModel {
 
 extension ChatViewModel {
     
+    private func addRealm(chat: Chat) {
+        respositoy.create(chat: chat)
+    }
+    
     private func fetchRealm() {
         chatDB = respositoy.fetch(id: matchedId)
-        print(chatDB)
     }
     
     private func getLastChatDate() {
-        //        guard let lastDate = chatDB.last?.chatDate else { return }
-        //        lastChatDate = lastDate
+        guard let lastDate = chatDB.last?.chatDate else { return }
+        lastChatDate = lastDate
         if lastChatDate.isEmpty  {
             lastChatDate = "2000-12-04T09:37:29.029+0900"
         }
@@ -161,13 +165,12 @@ extension ChatViewModel {
     }
     
     private func sendChatMessage() {
-        print(UserDefaults.homeTabMode)
-        print(UserDefaults.matchedUID)
-        print(UserDefaults.userToken)
         APIService().sendChatMessage(dictionary: chat.toDictionary, id: matchedId) { [weak self] result in
             switch result {
             case .success(_):
+                self?.addRealm(chat: Chat(chat: self?.chat.chat ?? "", chatDate: Date().ISO8601Format(), id: UserDefaults.userId))
                 self?.addMyChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
+                
             case .failure(let error):
                 let error = ChatMessagErroreModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
@@ -189,8 +192,8 @@ extension ChatViewModel {
     }
     
     private func getChatMessage() {
-        //        getLastChatDate()
-        APIService().getChatMessage(id: matchedId, date: "2000-12-04T09:37:29.029+0900") { [weak self] result in
+        getLastChatDate()
+        APIService().getChatMessage(id: matchedId, date: lastChatDate) { [weak self] result in
             switch result {
             case .success(let response):
                 print("success")
@@ -199,6 +202,7 @@ extension ChatViewModel {
                 for index in 0..<data.payload.count {
                     if data.payload[index].from == self?.matchedId {
                         self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
+                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                     } else {
                         self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
                     }

@@ -15,6 +15,16 @@ final class RealmRepository {
     lazy var config = Realm.Configuration(encryptionKey: key)
     lazy var realm = try! Realm(configuration: config)
     
+    func create(chat: Chat) {
+        do {
+            try realm.write  {
+                realm.add(chat)
+            }
+        } catch _ {
+            print("ERROR")
+        }
+    }
+    
     func fetch(id: String) -> Results<Chat>! {
         return realm.objects(Chat.self)
             .filter("id == %@", id)
