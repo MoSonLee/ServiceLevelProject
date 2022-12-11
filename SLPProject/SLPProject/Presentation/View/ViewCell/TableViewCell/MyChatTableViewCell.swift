@@ -9,7 +9,7 @@ import UIKit
 
 final class MyChatTableViewCell: UITableViewCell {
     
-    let label = UILabel()
+    let textView = UITextView()
     
     static var identifider: String {
         return "MyChatTableViewCell"
@@ -26,22 +26,27 @@ final class MyChatTableViewCell: UITableViewCell {
     }
     
     private func setComponents() {
-        contentView.addSubview(label)
-        label.backgroundColor = SLPAssets.CustomColor.yellowGreen.color
-        label.textColor = .black
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 8
+        contentView.addSubview(textView)
+        textView.backgroundColor = SLPAssets.CustomColor.yellowGreen.color
+        textView.textColor = .black
+        textView.layer.masksToBounds = true
+        textView.layer.cornerRadius = 8
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        textView.isScrollEnabled = false
+        textView.isUserInteractionEnabled = false
+        textView.font = .systemFont(ofSize: 15)
     }
     
     private func setConstraints() {
-        label.snp.makeConstraints { make in
+        textView.snp.makeConstraints { make in
             make.right.equalToSuperview()
-            make.left.lessThanOrEqualToSuperview().offset(100)
-            make.height.equalTo(50)
+            make.width.lessThanOrEqualToSuperview()
+            make.top.equalToSuperview().offset(4)
+            make.bottom.equalToSuperview().offset(-4)
         }
     }
     
     func configure(indexPath: IndexPath, item: ChatTableSectionModel.Item) {
-        label.text = item.title
+        textView.text = item.title
     }
 }
