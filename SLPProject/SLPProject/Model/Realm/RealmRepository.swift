@@ -25,9 +25,9 @@ final class RealmRepository {
         }
     }
     
-    func fetch(id: String) -> Results<Chat>! {
-        return realm.objects(Chat.self)
-            .filter("id == %@", id)
-            .sorted(byKeyPath: "chatDate", ascending: false)
+    func fetch(id: String, myId: String) -> [Chat] {
+        return Array(realm.objects(Chat.self)
+            .filter("id == %@ || id == %@", id, myId)
+            .sorted(byKeyPath: "chatDate", ascending: true))
     }
 }

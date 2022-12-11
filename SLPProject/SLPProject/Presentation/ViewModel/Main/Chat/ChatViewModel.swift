@@ -7,7 +7,6 @@
 
 import Foundation
 
-import RealmSwift
 import RxCocoa
 import RxSwift
 
@@ -35,13 +34,13 @@ final class ChatViewModel {
        ])
    ])
     
-    private var chatDB: Results<Chat>!
+    private var chatArray: [Chat] = []
     private var matchedId = ""
     private var matchedNick = ""
     private var lastChatDate: String = ""
     private var dodgeStudyModel = StudyRequestModel(otheruid: "")
     private var chat: ChatMessageModel = ChatMessageModel(chat: "")
-    
+
     private let manager = SocketIOManager()
     private let respositoy = RealmRepository()
     private let enableSendButtonRelay = PublishRelay<Bool>()
@@ -56,6 +55,7 @@ final class ChatViewModel {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.fetchRealm()
+                self?.addRealmData()
                 self?.checkMyQueueState()
                 self?.manager.establishConnection()
             })
@@ -117,15 +117,16 @@ extension ChatViewModel {
     }
     
     private func fetchRealm() {
-        chatDB = respositoy.fetch(id: matchedId)
+        chatArray = respositoy.fetch(id: UserDefaults.matchedUID, myId: UserDefaults.userId)
+        print(chatArray)
     }
     
     private func getLastChatDate() {
-        guard let lastDate = chatDB.last?.chatDate else { return }
-        lastChatDate = lastDate
-        if lastChatDate.isEmpty  {
+        guard let lastDate = chatArray.last?.chatDate else {
             lastChatDate = "2000-12-04T09:37:29.029+0900"
+            return
         }
+        lastChatDate = lastDate
     }
     
     private func checkMyQueueState() {
@@ -207,12 +208,12 @@ extension ChatViewModel {
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
                 for index in 0..<data.payload.count {
                     if data.payload[index].from == self?.matchedId {
+                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                         var array = self?.chattingSection.value
                         array?[0].items.append(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                         guard let array = array else { return }
                         self?.chattingSection.accept(array)
                         self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
-                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                     } else {
                         self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
                     }
@@ -266,6 +267,14 @@ extension ChatViewModel {
                     print(DodgeError.unknown)
                 }
             }
+        }
+    }
+    
+    private func addRealmData() {
+        chatArray.forEach {
+            var array = chattingSection.value
+            array[0].items.append(ChatTableModel(title: $0.chat, userId: $0.id))
+            chattingSection.accept(array)
         }
     }
 }
