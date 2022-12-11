@@ -27,11 +27,11 @@ final class UserChatTableViewCell: UITableViewCell {
     
     private func setComponents() {
         contentView.addSubview(textView)
-        textView.backgroundColor = SLPAssets.CustomColor.gray4.color
+        textView.backgroundColor = SLPAssets.CustomColor.white.color
         textView.textColor = .black
-        textView.layer.masksToBounds = true
         textView.layer.cornerRadius = 8
-        textView.layer.borderColor = UIColor.black.cgColor
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = SLPAssets.CustomColor.gray4.color.cgColor
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false

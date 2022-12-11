@@ -27,7 +27,7 @@ final class MyChatTableViewCell: UITableViewCell {
     
     private func setComponents() {
         contentView.addSubview(textView)
-        textView.backgroundColor = SLPAssets.CustomColor.yellowGreen.color
+        textView.backgroundColor = SLPAssets.CustomColor.whiteGreen.color
         textView.textColor = .black
         textView.layer.masksToBounds = true
         textView.layer.cornerRadius = 8
