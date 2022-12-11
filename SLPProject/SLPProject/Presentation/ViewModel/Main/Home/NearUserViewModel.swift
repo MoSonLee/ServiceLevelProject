@@ -31,6 +31,16 @@ final class NearUserViewModel {
         let changeRootVC: Signal<Void>
     }
     
+    var requestSection = BehaviorRelay(value: [
+        NearSeSACTableSectionModel(header: "", items: [
+        ])
+    ])
+    
+    var acceptSection = BehaviorRelay(value: [
+        NearSeSACTableSectionModel(header: "", items: [
+        ])
+    ])
+    
     var userLocation = UserLocationModel(lat: 0, long: 0)
     
     private var queueDB: [QueueDB] = []
@@ -114,11 +124,13 @@ extension NearUserViewModel {
     private func getData(data: SeSACSearchResultModel) {
         data.fromQueueDB.forEach {
             queueDB.append($0)
+            acceptSectionValue(model: NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews), section: requestSection)
             getQueueDBTableViewDataRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
             userId.append(StudyRequestModel(otheruid: $0.uid))
         }
         data.fromQueueDBRequested.forEach {
             recommendedQueueDB.append($0)
+            acceptSectionValue(model: NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews), section: acceptSection)
             getrequestedRelay.accept(NearSeSACTableModel(backGroundImage: $0.background, title: $0.nick, reputation: $0.reputation, studyList: $0.studylist, review: $0.reviews))
             acceptUserId.append(StudyRequestModel(otheruid: $0.uid))
         }

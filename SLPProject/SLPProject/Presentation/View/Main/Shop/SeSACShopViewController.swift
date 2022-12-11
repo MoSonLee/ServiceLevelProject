@@ -31,16 +31,6 @@ final class SeSACShopViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
-    
-    private var collectionSection = BehaviorRelay(value: [
-        SeSACIconCollectionSectionModel(header: "", items: [
-            SeSACIconCollectionModel(imageString: SeSACIconModel.first.iconImageString, titleText: SeSACIconModel.first.titleText, descriptionText: SeSACIconModel.first.descriptionText),
-            SeSACIconCollectionModel(imageString: SeSACIconModel.second.iconImageString, titleText: SeSACIconModel.second.titleText, descriptionText: SeSACIconModel.second.descriptionText),
-            SeSACIconCollectionModel(imageString: SeSACIconModel.third.iconImageString, titleText: SeSACIconModel.third.titleText, descriptionText: SeSACIconModel.third.descriptionText),
-            SeSACIconCollectionModel(imageString: SeSACIconModel.fourth.iconImageString, titleText: SeSACIconModel.fourth.titleText, descriptionText: SeSACIconModel.fourth.descriptionText),
-            SeSACIconCollectionModel(imageString: SeSACIconModel.fifth.iconImageString, titleText: SeSACIconModel.fifth.titleText, descriptionText: SeSACIconModel.fifth.descriptionText)
-        ])
-    ])
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,7 +164,7 @@ final class SeSACShopViewController: UIViewController {
             cell.configure(indexPath: indexPath, item: item)
             return cell
         })
-        collectionSection
+        viewModel.collectionSection
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

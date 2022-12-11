@@ -19,7 +19,6 @@ final class MainTabViewController: UITabBarController, UITabBarControllerDelegat
         
         let vc1 = HomeTabViewController()
         let vc2 = SeSACShopViewController()
-//        let vc2 = ChatViewController()
         let vc3 = MyInfoViewController()
         
         let firstTabBarItem = UITabBarItem(title: "홈", image: SLPAssets.CustomImage.homeIcon.image, tag: 0)

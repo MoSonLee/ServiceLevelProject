@@ -20,11 +20,13 @@ final class SearchStudyViewController: UIViewController {
     private let searchBar = UISearchBar()
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private let searchButton = UIButton()
+    private let viewDidLoadEvent = PublishRelay<Void>()
     
     let viewModel = SearchStudyViewModel()
     private let disposeBag = DisposeBag()
     
     private lazy var input = SearchStudyViewModel.Input(
+        viewDidLoad: viewDidLoadEvent.asObservable(),
         backButtonTapped: backButton.rx.tap.asSignal(),
         searchBarButtonTapped: searchBar.rx.searchButtonClicked
             .withLatestFrom(
@@ -36,19 +38,13 @@ final class SearchStudyViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
-    var sections = BehaviorRelay(value: [
-        SearchCollecionSectionModel(header: "지금 주변에는", items: [
-        ]),
-        SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
-        ])
-    ])
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
         setConstraints()
         bind()
         bindCollectionView()
+        viewDidLoadEvent.accept(())
     }
     
     private func setComponents() {
@@ -105,12 +101,6 @@ final class SearchStudyViewController: UIViewController {
         searchButton.setTitleColor(SLPAssets.CustomColor.white.color, for: .normal)
         searchButton.layer.cornerRadius = 8
         searchButton.backgroundColor = SLPAssets.CustomColor.green.color
-        setRecommended()
-    }
-    
-    private func setRecommended() {
-        let array = sections.value
-        sections.accept( viewModel.acceptDB(array: array))
     }
     
     private func bind() {
@@ -129,16 +119,12 @@ final class SearchStudyViewController: UIViewController {
         
         output.addCollectionModel
             .emit(onNext: { [weak self] model in
-                guard let secion = self?.sections else { return }
-                self?.viewModel.setSectionValue(model: model, section: secion)
                 self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
         output.deleteStudy
             .emit(onNext: { [weak self] indexPath in
-                guard let section = self?.sections else { return }
-                self?.viewModel.deleteSectionValue(indexPath: indexPath, section: section)
                 self?.searchBar.resignFirstResponder()
             })
             .disposed(by: disposeBag)
@@ -174,7 +160,8 @@ final class SearchStudyViewController: UIViewController {
                 fatalError()
             }
         })
-        sections
+        
+        viewModel.sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         

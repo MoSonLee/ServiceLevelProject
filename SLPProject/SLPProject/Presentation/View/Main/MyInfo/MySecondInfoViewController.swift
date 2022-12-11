@@ -18,22 +18,8 @@ final class MySecondInfoViewController: UIViewController {
     private var backButton = UIBarButtonItem()
     private var toggle: Bool = false
     private let tableView = UITableView(frame: .zero, style: .plain)
+    private let viewModel = MySecondInfoViewModel()
     
-    private var userInfo = UserLoginInfo(id: "", v: 0, uid: "", phoneNumber: "", email: "", fcMtoken: "", nick: "", birth: "", gender: 0, study: "", comment: [""], reputation: [], sesac: 0, sesacCollection: [], background: 0, backgroundCollection: [], purchaseToken: [""], transactionID: [""], reviewedBefore: [""], reportedNum: 0, reportedUser: [""], dodgepenalty: 0, dodgeNum: 0, ageMin: 0, ageMax: 0, searchable: 0, createdAt: "")
-    
-    private lazy var sections = BehaviorRelay(value: [
-        MySecondInfoTableSectionModel(header: "", items: [
-            MySecondInfoTableModel(title: userInfo.nick, gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
-        ]),
-        MySecondInfoTableSectionModel(header: "", items: [
-            MySecondInfoTableModel(title: "내 성별", gender: userInfo.gender, study: nil, switchType: nil, age: nil, slider: nil),
-            MySecondInfoTableModel(title: "자주 하는 스터디", gender: nil, study: "", switchType: nil, age: nil, slider: nil),
-            MySecondInfoTableModel(title: "내 번호 검색 허용", gender: nil, study: nil, switchType: false, age: nil, slider: nil),
-            MySecondInfoTableModel(title: "상대방 연령대", gender: nil, study: nil, switchType: nil, age: "\(userInfo.ageMin) ~ \(userInfo.ageMax)", slider: nil),
-            MySecondInfoTableModel(title: nil, gender: nil, study: nil, switchType: nil, age: nil, slider: ""),
-            MySecondInfoTableModel(title: "회원탈퇴", gender: nil, study: nil, switchType: nil, age: nil, slider: nil)
-        ])
-    ])
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -117,18 +103,18 @@ final class MySecondInfoViewController: UIViewController {
                 case 0:
                     cell = tableView.dequeueReusableCell(withIdentifier: GenderCell.identifider, for: indexPath) as? GenderCell ?? MyPageDetailViewCell()
                     guard let cell = cell as? GenderCell else { return MyPageDetailViewCell() }
-                    self.userInfo.gender == 0 ? cell.girlButtonClicked() : cell.boyButtonClicked()
+                    self.viewModel.userInfo.gender == 0 ? cell.girlButtonClicked() : cell.boyButtonClicked()
                     cell.boyButton.rx.tap
                         .subscribe(onNext: {
                             cell.boyButtonClicked()
-                            self.userInfo.gender = 1
+                            self.viewModel.userInfo.gender = 1
                         })
                         .disposed(by: cell.disposeBag)
                     
                     cell.girlButton.rx.tap
                         .subscribe(onNext: {
                             cell.girlButtonClicked()
-                            self.userInfo.gender = 1
+                            self.viewModel.userInfo.gender = 1
                         })
                         .disposed(by: cell.disposeBag)
                     
@@ -161,7 +147,7 @@ final class MySecondInfoViewController: UIViewController {
             cell.selectionStyle = .none
             return cell
         }
-        sections
+        viewModel.sections
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -224,8 +210,7 @@ extension MySecondInfoViewController {
             switch result {
             case .success(let response):
                 let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
-                self?.userInfo = data
-                
+                self?.viewModel.userInfo = data
                 self?.bindTableView()
                 
             case .failure(let error):

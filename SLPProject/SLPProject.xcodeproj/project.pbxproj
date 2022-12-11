@@ -35,6 +35,7 @@
 		77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77217A3F2926AE95000DC6CE /* QueueStateError.swift */; };
 		77217A432926CA9B000DC6CE /* RxMKMapView in Frameworks */ = {isa = PBXBuildFile; productRef = 77217A422926CA9B000DC6CE /* RxMKMapView */; };
 		772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */; };
+		772E819B2945F10F00125AA1 /* MySecondInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772E819A2945F10F00125AA1 /* MySecondInfoViewModel.swift */; };
 		7737FD35291AC8A50029DEA2 /* NickNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */; };
 		7737FD37291ACABD0029DEA2 /* BirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD36291ACABD0029DEA2 /* BirthViewController.swift */; };
 		7737FD39291ACAC60029DEA2 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7737FD38291ACAC60029DEA2 /* BirthViewModel.swift */; };
@@ -144,6 +145,7 @@
 		77217A3D29269777000DC6CE /* UserSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchModel.swift; sourceTree = "<group>"; };
 		77217A3F2926AE95000DC6CE /* QueueStateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueStateError.swift; sourceTree = "<group>"; };
 		772BD38D292A5E040000547D /* SeSACSearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeSACSearchResultModel.swift; sourceTree = "<group>"; };
+		772E819A2945F10F00125AA1 /* MySecondInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondInfoViewModel.swift; sourceTree = "<group>"; };
 		7737FD23291A9C830029DEA2 /* SLPProjectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SLPProjectDebug.entitlements; sourceTree = "<group>"; };
 		7737FD34291AC8A50029DEA2 /* NickNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewModel.swift; sourceTree = "<group>"; };
 		7737FD36291ACABD0029DEA2 /* BirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewController.swift; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 			isa = PBXGroup;
 			children = (
 				77217A1C2922A903000DC6CE /* MyInfoViewModel.swift */,
+				772E819A2945F10F00125AA1 /* MySecondInfoViewModel.swift */,
 				77217A39292684E2000DC6CE /* HomeTabViewModel.swift */,
 				77414326292D194C00220087 /* SearchStudyViewModel.swift */,
 				7741433F2930D1EA00220087 /* NearUserViewModel.swift */,
@@ -882,6 +885,7 @@
 				77A1FEA2293A312D0018A403 /* UserChatTableViewCell.swift in Sources */,
 				77A1FEB5293A611A0018A403 /* SeSACIconCollectionModel.swift in Sources */,
 				7737FD3F291ACB8E0029DEA2 /* GenderViewController.swift in Sources */,
+				772E819B2945F10F00125AA1 /* MySecondInfoViewModel.swift in Sources */,
 				772BD38E292A5E040000547D /* SeSACSearchResultModel.swift in Sources */,
 				77C0D99E29197554008FDA83 /* NickNameViewController.swift in Sources */,
 				77217A402926AE95000DC6CE /* QueueStateError.swift in Sources */,

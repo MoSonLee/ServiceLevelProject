@@ -30,6 +30,11 @@ final class ChatViewModel {
         let addMyChat: Signal<ChatTableModel>
     }
     
+    var chattingSection = BehaviorRelay(value: [
+       ChatTableSectionModel(header: "", items: [
+       ])
+   ])
+    
     private var chatDB: Results<Chat>!
     private var matchedId = ""
     private var matchedNick = ""
@@ -133,7 +138,6 @@ extension ChatViewModel {
                     self?.matchedId = data.matchedUid
                     self?.matchedNick = data.matchedNick
                     self?.getChatMessage()
-                    print(UserDefaults.userToken)
                 } else if data.matched == 0 {
                     UserDefaults.homeTabMode = .matching
                     self?.popVCRelay.accept(())
@@ -169,6 +173,10 @@ extension ChatViewModel {
             switch result {
             case .success(_):
                 self?.addRealm(chat: Chat(chat: self?.chat.chat ?? "", chatDate: Date().ISO8601Format(), id: UserDefaults.userId))
+                var array = self?.chattingSection.value
+                array?[0].items.append(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
+                guard let array = array else { return }
+                self?.chattingSection.accept(array)
                 self?.addMyChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
                 
             case .failure(let error):
@@ -196,11 +204,13 @@ extension ChatViewModel {
         APIService().getChatMessage(id: matchedId, date: lastChatDate) { [weak self] result in
             switch result {
             case .success(let response):
-                print("success")
-                print(UserDefaults.userToken)
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
                 for index in 0..<data.payload.count {
                     if data.payload[index].from == self?.matchedId {
+                        var array = self?.chattingSection.value
+                        array?[0].items.append(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
+                        guard let array = array else { return }
+                        self?.chattingSection.accept(array)
                         self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                         self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                     } else {
@@ -254,7 +264,6 @@ extension ChatViewModel {
                     
                 case .unknown:
                     print(DodgeError.unknown)
-                    
                 }
             }
         }

@@ -39,11 +39,6 @@ final class ChatViewController: UIViewController {
     private lazy var output = viewModel.transform(input: input)
     private let disposeBag = DisposeBag()
     
-    private var chattingSection = BehaviorRelay(value: [
-        ChatTableSectionModel(header: "", items: [
-        ])
-    ])
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
@@ -134,10 +129,6 @@ final class ChatViewController: UIViewController {
         
         output.addMyChat
             .emit(onNext: { [weak self] data in
-                var array = self?.chattingSection.value
-                array?[0].items.append(data)
-                guard let array = array else { return }
-                self?.chattingSection.accept(array)
                 self?.textView.text = ""
                 self?.scrollTableView()
             })
@@ -145,10 +136,7 @@ final class ChatViewController: UIViewController {
         
         output.addUserChat
             .emit(onNext: { [weak self] data in
-                var array = self?.chattingSection.value
-                array?[0].items.append(data)
-                guard let array = array else { return }
-                self?.chattingSection.accept(array)
+                self?.scrollTableView()
             })
             .disposed(by: disposeBag)
     }
@@ -156,7 +144,7 @@ final class ChatViewController: UIViewController {
     private func bindChatTableView() {
         let dataSource = RxTableViewSectionedReloadDataSource<ChatTableSectionModel> { [weak self] data, tableView, indexPath, item in
             tableView.separatorStyle = .none
-            if self?.chattingSection.value[0].items[indexPath.item].userId  == UserDefaults.userId {
+            if self?.viewModel.chattingSection.value[0].items[indexPath.item].userId  == UserDefaults.userId {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifider, for: indexPath) as? MyChatTableViewCell else { return UITableViewCell() }
                 cell.selectionStyle = .none
                 cell.configure(indexPath: indexPath, item: item)
@@ -168,7 +156,7 @@ final class ChatViewController: UIViewController {
                 return cell
             }
         }
-        chattingSection
+        viewModel.chattingSection
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -176,7 +164,7 @@ final class ChatViewController: UIViewController {
    private func scrollTableView() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            let indexPath:IndexPath = IndexPath(row: (self.chattingSection.value[0].items.count ) - 1, section: 0)
+            let indexPath:IndexPath = IndexPath(row: (self.viewModel.chattingSection.value[0].items.count ) - 1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }

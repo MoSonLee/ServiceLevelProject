@@ -45,16 +45,6 @@ final class NearUserViewController: UIViewController {
     )
     private lazy var output = viewModel.transform(input: input)
     
-    private var requestSection = BehaviorRelay(value: [
-        NearSeSACTableSectionModel(header: "", items: [
-        ])
-    ])
-    
-    private var acceptSection = BehaviorRelay(value: [
-        NearSeSACTableSectionModel(header: "", items: [
-        ])
-    ])
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setComponents()
@@ -218,7 +208,7 @@ final class NearUserViewController: UIViewController {
             
             return cell
         }
-        requestSection
+        viewModel.requestSection
             .bind(to: requestTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -250,7 +240,7 @@ final class NearUserViewController: UIViewController {
                 .disposed(by: cell.disposeBag)
             return cell
         }
-        acceptSection
+        viewModel.acceptSection
             .bind(to: acceptTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -297,9 +287,7 @@ final class NearUserViewController: UIViewController {
         
         output.getTableViewData
             .emit(onNext: { [weak self] model in
-                guard let requestSection = self?.requestSection else { return }
-                self?.viewModel.acceptSectionValue(model: model, section: requestSection)
-                let count = requestSection.value[0].items.count
+                guard let count = self?.viewModel.requestSection.value[0].items.count else { return }
                 for _ in 0..<count {
                     self?.requestToggleArray.append(false)
                 }
@@ -308,9 +296,7 @@ final class NearUserViewController: UIViewController {
         
         output.getrequested
             .emit(onNext: { [weak self] model in
-                guard let acceptSection = self?.acceptSection else { return }
-                self?.viewModel.acceptSectionValue(model: model, section: acceptSection)
-                let count = acceptSection.value[0].items.count
+                guard let count = self?.viewModel.acceptSection.value[0].items.count else { return }
                 for _ in 0..<count {
                     self?.acceptToggleArray.append(false)
                 }

@@ -22,6 +22,16 @@ final class ShopViewModel {
         let showToast: Signal<String>
     }
     
+    var collectionSection = BehaviorRelay(value: [
+        SeSACIconCollectionSectionModel(header: "", items: [
+            SeSACIconCollectionModel(imageString: SeSACIconModel.first.iconImageString, titleText: SeSACIconModel.first.titleText, descriptionText: SeSACIconModel.first.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.second.iconImageString, titleText: SeSACIconModel.second.titleText, descriptionText: SeSACIconModel.second.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.third.iconImageString, titleText: SeSACIconModel.third.titleText, descriptionText: SeSACIconModel.third.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.fourth.iconImageString, titleText: SeSACIconModel.fourth.titleText, descriptionText: SeSACIconModel.fourth.descriptionText),
+            SeSACIconCollectionModel(imageString: SeSACIconModel.fifth.iconImageString, titleText: SeSACIconModel.fifth.titleText, descriptionText: SeSACIconModel.fifth.descriptionText)
+        ])
+    ])
+    
     private let selectedTabRelay = BehaviorRelay<ShopTabModel>(value: .sesac)
     private let showToastRelay = PublishRelay<String>()
     private let disposeBag = DisposeBag()

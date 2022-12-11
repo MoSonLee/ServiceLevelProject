@@ -14,6 +14,7 @@ import RxSwift
 final class SearchStudyViewModel {
     
     struct Input {
+        let viewDidLoad: Observable<Void>
         let backButtonTapped: Signal<Void>
         let searchBarButtonTapped: Signal<String>
         let cellTapped: Signal<IndexPath>
@@ -28,6 +29,13 @@ final class SearchStudyViewModel {
         let deleteStudy: Signal<IndexPath>
         let moveToNearUserVC: Signal<Void>
     }
+    
+    var sections = BehaviorRelay(value: [
+        SearchCollecionSectionModel(header: "지금 주변에는", items: [
+        ]),
+        SearchCollecionSectionModel(header: "내가 하고 싶은", items: [
+        ])
+    ])
     
     var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var dbData: [SearchCollecionModel] = []
@@ -44,6 +52,12 @@ final class SearchStudyViewModel {
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
+        
+        input.viewDidLoad
+            .subscribe(onNext: { [weak self] _ in
+                self?.setRecommended()
+            })
+            .disposed(by: disposeBag)
         
         input.backButtonTapped
             .emit(onNext: { [weak self] _ in
@@ -85,6 +99,11 @@ final class SearchStudyViewModel {
 
 extension SearchStudyViewModel {
     
+    private func setRecommended() {
+        let array = sections.value
+        sections.accept(acceptDB(array: array))
+    }
+    
     private func checkTextCount(text: String) {
         let study = text.components(separatedBy: " ")
         study.forEach {
@@ -96,6 +115,7 @@ extension SearchStudyViewModel {
                 showToastRelay.accept(SLPAssets.RawString.studyCountLimit.text)
             } else {
                 studyList.append($0)
+                setSectionValue(model: SearchCollecionModel(title: $0), section: sections)
                 addCollectionModelRelay.accept(SearchCollecionModel(title: $0))
             }
         }
@@ -104,6 +124,7 @@ extension SearchStudyViewModel {
     private func cellTapEvent(indexPath: IndexPath) {
         if indexPath.section == 1 {
             studyList.remove(at: indexPath.item)
+            deleteSectionValue(indexPath: indexPath, section: sections)
             deleteStudyRelay.accept(indexPath)
         } else {
             if studyList.count < 8 {
@@ -111,6 +132,7 @@ extension SearchStudyViewModel {
                     showToastRelay.accept(SLPAssets.RawString.duplicateStudy.text)
                 } else {
                     studyList.append(dbData[indexPath.item].title)
+                    setSectionValue(model: SearchCollecionModel(title: dbData[indexPath.item].title), section: sections)
                     addCollectionModelRelay.accept(SearchCollecionModel(title: studyList.last ?? ""))
                 }
             } else {
