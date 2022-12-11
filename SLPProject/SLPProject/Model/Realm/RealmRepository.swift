@@ -11,9 +11,9 @@ import RealmSwift
 
 final class RealmRepository {
     
-    let key = Data(count: 64)
-    lazy var config = Realm.Configuration(encryptionKey: key)
-    lazy var realm = try! Realm(configuration: config)
+    private let key = Data(count: 64)
+    private lazy var config = Realm.Configuration(encryptionKey: key)
+    private lazy var realm = try! Realm(configuration: config)
     
     func create(chat: Chat) {
         do {
