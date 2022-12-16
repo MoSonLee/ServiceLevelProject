@@ -9,7 +9,7 @@ import UIKit
 
 final class MyChatTableViewCell: UITableViewCell {
     
-    let textView = UITextView()
+    private let textView = UITextView()
     
     static var identifider: String {
         return "MyChatTableViewCell"
