@@ -30,9 +30,9 @@ final class ChatViewModel {
     }
     
     var chattingSection = BehaviorRelay(value: [
-       ChatTableSectionModel(header: "", items: [
-       ])
-   ])
+        ChatTableSectionModel(header: "", items: [
+        ])
+    ])
     
     private var chatArray: [Chat] = []
     private var matchedId = ""
@@ -40,7 +40,7 @@ final class ChatViewModel {
     private var lastChatDate: String = ""
     private var dodgeStudyModel = StudyRequestModel(otheruid: "")
     private var chat: ChatMessageModel = ChatMessageModel(chat: "")
-
+    
     private let manager = SocketIOManager()
     private let respositoy = RealmRepository()
     private let enableSendButtonRelay = PublishRelay<Bool>()
@@ -138,7 +138,6 @@ extension ChatViewModel {
             switch result {
             case .success(let response):
                 guard let data = try? JSONDecoder().decode(MyQueueStateModel.self, from: response.data) else { return }
-                
                 if data.matched == 1 {
                     self?.matchedId = data.matchedUid
                     self?.matchedNick = data.matchedNick
@@ -150,25 +149,7 @@ extension ChatViewModel {
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
-                switch error {
-                case .notRequestYet:
-                    print(QueueStateError.notRequestYet)
-                    
-                case .tokenError:
-                    print(QueueStateError.tokenError)
-                    
-                case .unregisteredError:
-                    print(QueueStateError.unregisteredError)
-                    
-                case .serverError:
-                    print(QueueStateError.serverError)
-                    
-                case .clientError:
-                    print(QueueStateError.clientError)
-                    
-                case .unknown:
-                    print(QueueStateError.unknown)
-                }
+                print(error)
             }
         }
     }
@@ -183,23 +164,10 @@ extension ChatViewModel {
                 guard let array = array else { return }
                 self?.chattingSection.accept(array)
                 self?.addMyChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: UserDefaults.userId))
-                
+              
             case .failure(let error):
                 let error = ChatMessagErroreModel(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                switch error {
-                case .sendChatFailure:
-                    print(ChatMessagErroreModel.sendChatFailure)
-                case .tokenError:
-                    print(ChatMessagErroreModel.tokenError)
-                case .unregistered:
-                    print(ChatMessagErroreModel.unregistered)
-                case .serverError:
-                    print(ChatMessagErroreModel.serverError)
-                case .clientError:
-                    print(ChatMessagErroreModel.clientError)
-                case .unknown:
-                    print(ChatMessagErroreModel.unknown)
-                }
+                print(error)
             }
         }
     }
@@ -211,32 +179,26 @@ extension ChatViewModel {
             case .success(let response):
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
                 for index in 0..<data.payload.count {
-                    self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                     if data.payload[index].from == self?.matchedId {
+                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                         var array = self?.chattingSection.value
                         array?[0].items.append(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                         guard let array = array else { return }
                         self?.chattingSection.accept(array)
-                        self?.addUserChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
+                        self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                     } else {
+                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: UserDefaults.userId))
+                        var array = self?.chattingSection.value
+                        array?[0].items.append(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
+                        guard let array = array else { return }
+                        self?.chattingSection.accept(array)
                         self?.addMyChatRelay.accept(ChatTableModel(title: data.payload[index].chat, userId: UserDefaults.userId))
                     }
                 }
                 
             case .failure(let error):
                 let error = GetChatMessageError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                switch error {
-                case .tokenError:
-                    print(ChatMessagErroreModel.tokenError)
-                case .unregistered:
-                    print(ChatMessagErroreModel.unregistered)
-                case .serverError:
-                    print(ChatMessagErroreModel.serverError)
-                case .clientError:
-                    print(ChatMessagErroreModel.clientError)
-                case .unknown:
-                    print(ChatMessagErroreModel.unknown)
-                }
+                print(error)
             }
         }
     }
@@ -251,31 +213,13 @@ extension ChatViewModel {
                 
             case .failure(let error):
                 let error = DodgeError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
-                switch error {
-                case .wrongUID:
-                    print(DodgeError.wrongUID)
-                    
-                case .tokenError:
-                    print(DodgeError.tokenError)
-                    
-                case .serverError:
-                    print(DodgeError.serverError)
-                    
-                case .clientError:
-                    print(DodgeError.clientError)
-                    
-                case .unregistered:
-                    print(DodgeError.unregistered)
-                    
-                case .unknown:
-                    print(DodgeError.unknown)
-                }
+                print(error)
             }
         }
     }
     
     private func addSectionData() {
-       let chats = chatArray.map {
+        let chats = chatArray.map {
             return ChatTableModel(title: $0.chat, userId: $0.id)
         }
         var array = chattingSection.value

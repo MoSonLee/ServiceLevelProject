@@ -192,7 +192,7 @@ extension HomeTabViewModel {
         default: print("DEFAULT")
         }
     }
-
+    
     private func checkMyQueueState() {
         APIService().checkMyQueueState { [weak self] result in
             switch result {
@@ -202,25 +202,7 @@ extension HomeTabViewModel {
                 data.matched == 1 ? self?.homeTabModeRelay.accept(.message)  : self?.homeTabModeRelay.accept(.matching)
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
-                switch error {
-                case .notRequestYet:
-                    print(QueueStateError.notRequestYet)
-                    
-                case .tokenError:
-                    print(QueueStateError.tokenError)
-                    
-                case .unregisteredError:
-                    print(QueueStateError.unregisteredError)
-                    
-                case .serverError:
-                    print(QueueStateError.serverError)
-                    
-                case .clientError:
-                    print(QueueStateError.clientError)
-                    
-                case .unknown:
-                    print(QueueStateError.unknown)
-                }
+                print(error)
             }
         }
     }
@@ -260,31 +242,16 @@ extension HomeTabViewModel {
         }
     }
     
-   private func gerUserId() {
-       APIService().responseGetUser { result in
-           switch result {
-           case .success(let response):
-               let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
-               UserDefaults.userId = data.uid
-           case .failure(let error):
-               let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-               switch error {
-               case .tokenError:
-                   print(SLPLoginError.tokenError)
-                   
-               case .unRegisteredUser:
-                   print(SLPLoginError.unRegisteredUser)
-                   
-               case .serverError:
-                   print(SLPLoginError.serverError)
-                   
-               case .clientError:
-                   print(SLPLoginError.clientError)
-                   
-               case .unknown:
-                   print(SLPLoginError.unknown)
-               }
-           }
-       }
-   }
+    private func gerUserId() {
+        APIService().responseGetUser { result in
+            switch result {
+            case .success(let response):
+                let data = try! JSONDecoder().decode(UserLoginInfo.self, from: response.data)
+                UserDefaults.userId = data.uid
+            case .failure(let error):
+                let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
+                print(error)
+            }
+        }
+    }
 }

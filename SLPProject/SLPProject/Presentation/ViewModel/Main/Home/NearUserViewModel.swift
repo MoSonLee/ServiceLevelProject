@@ -149,16 +149,8 @@ extension NearUserViewModel {
                     self?.acceptStudy(index: index)
                 case .alreayCanceled:
                     self?.showToastRelay.accept("상대방이 스터디 찾기를 그만두었습니다")
-                case .tokenError:
-                    print(UserSearchError.tokenError)
-                case .unregistered:
-                    print(UserSearchError.unregistered)
-                case .serverError:
-                    print(UserSearchError.serverError)
-                case .clientError:
-                    print(UserSearchError.clientError)
-                case .unknown:
-                    print(UserSearchError.unknown)
+                default:
+                    print(error)
                 }
             }
         }
@@ -181,16 +173,8 @@ extension NearUserViewModel {
                     self?.showToastRelay.accept("상대방이 스터디 찾기를 그만두었습니다")
                 case .alreadyMatched:
                     self?.checkMyQueueState()
-                case .tokenError:
-                    print(UserSearchError.tokenError)
-                case .unregistered:
-                    print(UserSearchError.unregistered)
-                case .serverError:
-                    print(UserSearchError.serverError)
-                case .clientError:
-                    print(UserSearchError.clientError)
-                case .unknown:
-                    print(UserSearchError.unknown)
+                default:
+                    print(error)
                 }
             }
         }
@@ -211,25 +195,7 @@ extension NearUserViewModel {
                 
             case .failure(let error):
                 let error = QueueStateError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
-                switch error {
-                case .notRequestYet:
-                    print(QueueStateError.notRequestYet)
-                    
-                case .tokenError:
-                    print(QueueStateError.tokenError)
-                    
-                case .unregisteredError:
-                    print(QueueStateError.unregisteredError)
-                    
-                case .serverError:
-                    print(QueueStateError.serverError)
-                    
-                case .clientError:
-                    print(QueueStateError.clientError)
-                    
-                case .unknown:
-                    print(QueueStateError.unknown)
-                }
+                print(error)
             }
         }
     }
@@ -248,16 +214,8 @@ extension NearUserViewModel {
                 case .alearyStoppedError:
                     self?.showToastRelay.accept("누군가와 스터디를 함께하기로 약속하셨어요!")
                     self?.moveToChatVCRelay.accept(())
-                case .tokenError:
-                    print(UserSearchError.tokenError)
-                case .unregistered:
-                    print(UserSearchError.unregistered)
-                case .serverError:
-                    print(UserSearchError.serverError)
-                case .clientError:
-                    print(UserSearchError.clientError)
-                case .unknown:
-                    print(UserSearchError.unknown)
+                default:
+                    print(error)
                 }
             }
         }

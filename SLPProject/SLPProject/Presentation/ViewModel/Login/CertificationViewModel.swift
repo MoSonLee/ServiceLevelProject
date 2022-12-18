@@ -161,23 +161,13 @@ extension CertificationViewModel {
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1) ?? .unknown
                 switch error {
-                case .tokenError:
-                    print(SLPLoginError.tokenError)
-                    return
                 case .unRegisteredUser:
                     self.showSingUpVCRelay.accept(())
                     self.changeRootViewToNicknameRelay.accept(())
                     UserDefaults.verified = true
-                    return
-                case .serverError:
-                    print(SLPLoginError.serverError)
-                    return
-                case .clientError:
-                    print(SLPLoginError.clientError)
-                    return
-                case .unknown:
-                    print(SLPLoginError.unknown)
-                    return
+                    
+                default:
+                    print(error)
                 }
             }
         }

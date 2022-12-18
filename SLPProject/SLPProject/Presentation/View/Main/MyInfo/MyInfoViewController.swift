@@ -92,22 +92,7 @@ extension MyInfoViewController {
                 
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                switch error {
-                case .tokenError:
-                    print(SLPLoginError.tokenError)
-                    
-                case .unRegisteredUser:
-                    print(SLPLoginError.unRegisteredUser)
-                    
-                case .serverError:
-                    print(SLPLoginError.serverError)
-                    
-                case .clientError:
-                    print(SLPLoginError.clientError)
-                    
-                case .unknown:
-                    print(SLPLoginError.unknown)
-                }
+                print(error)
             }
         }
     }

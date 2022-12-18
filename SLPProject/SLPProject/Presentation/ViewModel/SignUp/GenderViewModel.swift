@@ -114,28 +114,15 @@ extension GenderViewModel {
             case .failure(let error):
                 let error = SLPSignUpError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
                 switch error {
-                case .registeredUser:
-                    print(SLPSignUpError.registeredUser)
                     
                 case .invalidateNickname:
                     self.moveToNicknameVCRelay.accept(())
-                    print(SLPSignUpError.invalidateNickname)
                     
                 case .tokenError:
                     self.updateFMCtoken()
-                    print(SLPSignUpError.tokenError)
                     
-                case .unRegisteredUser:
-                    print(SLPSignUpError.unRegisteredUser)
-                    
-                case .serverError:
-                    print(SLPSignUpError.serverError)
-                    
-                case .clientError:
-                    print(SLPSignUpError.clientError)
-                    
-                case .unknown:
-                    print(SLPSignUpError.unknown)
+                default:
+                    print(error)
                 }
             }
         }

@@ -184,22 +184,7 @@ extension MySecondInfoViewController {
                     
                 case .failure(let error):
                     let error = SLPWithdrawError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                    switch error {
-                    case .tokenError:
-                        print(SLPWithdrawError.tokenError)
-                        
-                    case .unRegisteredUser:
-                        print(SLPWithdrawError.unRegisteredUser)
-                        
-                    case .serverError:
-                        print(SLPWithdrawError.serverError)
-                        
-                    case .clientError:
-                        print(SLPWithdrawError.clientError)
-                        
-                    case .unknown:
-                        print(SLPWithdrawError.unknown)
-                    }
+                    print(error)
                 }
             }
         })
@@ -215,22 +200,7 @@ extension MySecondInfoViewController {
                 
             case .failure(let error):
                 let error = SLPLoginError(rawValue: error.response?.statusCode ?? -1 ) ?? .unknown
-                switch error {
-                case .tokenError:
-                    print(SLPLoginError.tokenError)
-                    
-                case .unRegisteredUser:
-                    print(SLPLoginError.unRegisteredUser)
-                    
-                case .serverError:
-                    print(SLPLoginError.serverError)
-                    
-                case .clientError:
-                    print(SLPLoginError.clientError)
-                    
-                case .unknown:
-                    print(SLPLoginError.unknown)
-                }
+                print(error)
             }
         }
     }

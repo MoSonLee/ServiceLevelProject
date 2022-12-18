@@ -73,15 +73,12 @@ extension InitialViewModel {
                 case .unRegisteredUser:
                     self?.setInitialView()
                     
-                case .serverError:
-                    print(SLPLoginError.serverError)
-                    
                 case .clientError:
                     self?.setInitialView()
                     print(SLPLoginError.clientError)
                     
-                case .unknown:
-                    print(SLPLoginError.unknown)
+                default:
+                    print(error)
                 }
             }
         }
