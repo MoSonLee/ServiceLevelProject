@@ -55,7 +55,7 @@ final class ChatViewModel {
         input.viewDidLoad
             .subscribe(onNext: { [weak self] _ in
                 self?.fetchRealm()
-                self?.addRealmData()
+                self?.addSectionData()
                 self?.checkMyQueueState()
                 self?.manager.establishConnection()
             })
@@ -94,9 +94,13 @@ final class ChatViewModel {
         
         manager.getDataRelay.asSignal()
             .emit(onNext: { [weak self] data in
-                self?.chat = ChatMessageModel(chat: data.chat)
-                self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
                 self?.addRealm(chat: Chat(chat: self?.chat.chat ?? "", chatDate: "", id: data.id))
+                self?.chat = ChatMessageModel(chat: data.chat)
+                var array = self?.chattingSection.value
+                array?[0].items.append(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
+                guard let array = array else { return }
+                self?.chattingSection.accept(array)
+                self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
             })
             .disposed(by: disposeBag)
         
@@ -207,8 +211,8 @@ extension ChatViewModel {
             case .success(let response):
                 guard let data = try? JSONDecoder().decode(GetChatMessageModel.self, from: response.data) else { return }
                 for index in 0..<data.payload.count {
+                    self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                     if data.payload[index].from == self?.matchedId {
-                        self?.addRealm(chat: Chat(chat: data.payload[index].chat, chatDate: data.payload[index].createdAt, id: data.payload[index].id))
                         var array = self?.chattingSection.value
                         array?[0].items.append(ChatTableModel(title: data.payload[index].chat, userId: data.payload[index].id))
                         guard let array = array else { return }
@@ -270,11 +274,12 @@ extension ChatViewModel {
         }
     }
     
-    private func addRealmData() {
-        chatArray.forEach {
-            var array = chattingSection.value
-            array[0].items.append(ChatTableModel(title: $0.chat, userId: $0.id))
-            chattingSection.accept(array)
+    private func addSectionData() {
+       let chats = chatArray.map {
+            return ChatTableModel(title: $0.chat, userId: $0.id)
         }
+        var array = chattingSection.value
+        array[0].items.append(contentsOf: chats)
+        chattingSection.accept(array)
     }
 }
