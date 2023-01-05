@@ -68,7 +68,7 @@ extension SLPTarget: TargetType {
         case .getChatMessage(let id, _):
             return "/v1/chat/\(id)"
             
-        case .dodgeStudy(parameters: let parameters):
+        case .dodgeStudy(parameters: _):
             return "/v1/queue/dodge"
         }
     }
