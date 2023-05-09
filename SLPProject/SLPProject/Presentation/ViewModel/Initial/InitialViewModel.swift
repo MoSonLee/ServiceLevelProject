@@ -86,13 +86,9 @@ extension InitialViewModel {
     
     private func setInitialView() {
         if UserDefaults.showOnboarding {
-           showOnboardingVCRelay.accept(())
+            showOnboardingVCRelay.accept(())
         } else {
-            if UserDefaults.verified {
-               showNicknameVCRelay.accept(())
-            } else {
-               showLoginVCRelay.accept(())
-            }
+            UserDefaults.verified ? showNicknameVCRelay.accept(()) : showLoginVCRelay.accept(())
         }
     }
     

@@ -94,13 +94,13 @@ final class ChatViewModel {
         
         manager.getDataRelay.asSignal()
             .emit(onNext: { [weak self] data in
-                self?.addRealm(chat: Chat(chat: self?.chat.chat ?? "", chatDate: "", id: data.id))
-                self?.chat = ChatMessageModel(chat: data.chat)
-                var array = self?.chattingSection.value
-                array?[0].items.append(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
-                guard let array = array else { return }
-                self?.chattingSection.accept(array)
-                self?.addUserChatRelay.accept(ChatTableModel(title: self?.chat.chat ?? "", userId: data.id))
+                guard let self = self else { return }
+                var array = self.chattingSection.value
+                self.addRealm(chat: Chat(chat: self.chat.chat, chatDate: "", id: data.id))
+                self.chat = ChatMessageModel(chat: data.chat)
+                array[0].items.append(ChatTableModel(title: self.chat.chat, userId: data.id))
+                self.chattingSection.accept(array)
+                self.addUserChatRelay.accept(ChatTableModel(title: self.chat.chat, userId: data.id))
             })
             .disposed(by: disposeBag)
         

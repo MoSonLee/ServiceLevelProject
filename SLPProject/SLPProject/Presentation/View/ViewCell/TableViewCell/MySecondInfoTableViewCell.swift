@@ -24,6 +24,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
     private let backView = UIView()
     var showInfoButton = UIButton()
     private let lineView = UIView()
+    
     var disposeBag = DisposeBag()
     
     private let sesacLabel = UILabel()
@@ -67,9 +68,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
         }
         
         profileImage.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
+            make.left.right.top.equalToSuperview()
             make.height.equalTo(194)
         }
         backView.snp.makeConstraints { make in
@@ -168,6 +167,7 @@ final class ProfileImageButtonCell: MyPageDetailViewCell {
                 make.height.equalTo(height).priority(.low)
             }
         }
+        
         [mannerButton, timeButton, responseButton, kindButton, niceSkillButton, niceTimeButton].forEach {
             $0.backgroundColor = SLPAssets.CustomColor.white.color
             $0.setTitleColor(.black, for: .normal)

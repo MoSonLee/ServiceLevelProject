@@ -15,7 +15,7 @@ final class SocketIOManager {
     
     var manager: SocketManager!
     var socket: SocketIOClient!
-    var url = URL(string: APIURL.url)
+    var url = URL(string: APIURL.baseURL)
     let getDataRelay = PublishRelay<ChatResultModel>()
 
      init() {
@@ -26,7 +26,6 @@ final class SocketIOManager {
         socket.on(clientEvent: .connect) { data, ack in
             print("SOCKET IS CONNECTED", data, ack)
             self.socket.emit("changesocketid", UserDefaults.userId)
-            
         }
          
         socket.on(clientEvent: .disconnect) { data, ack in

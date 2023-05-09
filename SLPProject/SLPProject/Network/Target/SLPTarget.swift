@@ -30,7 +30,7 @@ enum SLPTarget {
 extension SLPTarget: TargetType {
     
     var baseURL: URL {
-        guard let url = URL(string: APIURL.url) else {
+        guard let url = URL(string: APIURL.baseURL) else {
             fatalError("fatal error -invalid api url")
         }
         return url
@@ -40,34 +40,24 @@ extension SLPTarget: TargetType {
         switch self {
         case .login, .signUp:
             return "/v1/user"
-            
         case .withdraw:
             return "/v1/user/withdraw"
-            
         case .update_fcm_token:
             return "/v1/user/update_fcm_token"
-            
         case .requestSearchSeSAC, .stopSearchSeSAC:
             return "/v1/queue"
-            
         case .searchSeSAC:
             return "/v1/queue/search"
-            
         case .myQueueState:
             return "/v1/queue/myQueueState"
-            
         case .studyrequest:
             return "/v1/queue/studyrequest"
-            
         case .studyaccept:
             return "/v1/queue/studyaccept"
-            
         case .sendChatMessage(_, let id):
             return "/v1/chat/\(id)"
-            
         case .getChatMessage(let id, _):
             return "/v1/chat/\(id)"
-            
         case .dodgeStudy(parameters: _):
             return "/v1/queue/dodge"
         }

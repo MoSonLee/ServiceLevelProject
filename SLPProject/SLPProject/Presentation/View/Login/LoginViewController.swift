@@ -121,17 +121,17 @@ final class LoginViewController: UIViewController {
         sendMessageButton.backgroundColor = SLPAssets.CustomColor.gray6.color
         lineView.backgroundColor = SLPAssets.CustomColor.gray3.color
     }
-    
+
     private func setTenNumberFormat() {
         guard let text = phoneNumberTextField.text else { return }
         phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-###-####", replacmentCharacter: "#")
     }
-    
+
     private func setElevenNumberFormat() {
         guard let text = phoneNumberTextField.text else { return }
         phoneNumberTextField.text = text.applyPatternOnNumbers(pattern: "###-####-####", replacmentCharacter: "#")
     }
-    
+
     private func bind() {
         output.becomeFirstResponder
             .emit(onNext: { [weak self] _ in

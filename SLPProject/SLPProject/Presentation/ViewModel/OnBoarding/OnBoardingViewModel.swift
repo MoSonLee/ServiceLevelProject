@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class OnBoardingViewModel{
+final class OnBoardingViewModel {
     
     struct Input {
         let startButtonTapped: Signal<Void>
